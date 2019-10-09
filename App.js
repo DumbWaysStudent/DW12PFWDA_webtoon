@@ -14,7 +14,7 @@ const AppNavigator = createStackNavigator(
     scratch : scratch
   },
   {
-    initialRouteName: 'scratch'
+    initialRouteName: 'Home'
   }
 )
 
