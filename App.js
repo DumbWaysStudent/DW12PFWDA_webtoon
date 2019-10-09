@@ -10,11 +10,9 @@ import { createStackNavigator } from 'react-navigation-stack';
 const AppNavigator = createStackNavigator(
   {
     Index: Login,
-    Home : ForYou,
-    scratch : scratch
   },
   {
-    initialRouteName: 'Home'
+    initialRouteName: 'Index'
   }
 )
 
