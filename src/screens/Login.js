@@ -4,8 +4,8 @@ import {Button,Input,Item,Text,Container, Content,Form,Label} from 'native-base'
 
 
 class Login extends Component{
-    constructor(props){
-        super(props);
+    constructor(){
+        super();
         this.state = {
             emailInput : '',
             passwordInput : '',

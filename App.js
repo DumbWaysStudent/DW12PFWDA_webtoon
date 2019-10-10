@@ -12,9 +12,9 @@ import { createStackNavigator } from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs'
 
 const ForYouStack = createStackNavigator({
-  ForYou : {screen : ForYou},
-  Details : {screen : Details},
-  Episode : {screen : Episode}
+  ForYou : {screen : ForYou,navigationOptions : ()=>({header : null})},
+  Details : {screen : Details, navigationOptions : ()=>({header : null})},
+  Episode : {screen : Episode, navigationOptions : ()=>({header : null})}
 })
 
 const BottomStack = createBottomTabNavigator({
@@ -28,7 +28,7 @@ const BottomStack = createBottomTabNavigator({
       const { routeName } = navigation.state;
       let iconName;
       if (routeName === 'Home') {
-        iconName = `th-list`;
+        iconName = `home`;
       } else if (routeName === 'Favourites') {
         iconName = `star`;
       }
@@ -38,7 +38,8 @@ const BottomStack = createBottomTabNavigator({
       // icon component from react-native-vector-icons
       return <Icon name={iconName} size={25} color={tintColor} />;
     },
-  }),
+  }
+  ),
   tabBarOptions: {
     activeTintColor: 'orange',
     inactiveTintColor: 'black',
@@ -48,7 +49,8 @@ const BottomStack = createBottomTabNavigator({
 
 export default createAppContainer(createSwitchNavigator(
   {
-    Login : {screen : Login},
+    Login : {screen : BottomStack},
     Home: { screen: BottomStack },   
   },  
 ));
+

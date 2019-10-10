@@ -1,10 +1,16 @@
 import React, {Component} from 'react'
-import {FlatList,TouchableOpacity,View,Dimensions,ImageBackground,StyleSheet,Image} from 'react-native'
-import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Button}from 'native-base'
+import {Share, FlatList,Image} from 'react-native'
+import {Content,Container,List,ListItem,Left, Thumbnail, Body,Button,Header,Right,Text}from 'native-base'
 import {Init} from '../components/Init'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 const data = [...Init.data]
-const { width } = Dimensions.get('window');
+const shareOptions = {
+  title: 'Title',
+  message: 'Message to share', // Note that according to the documentation at least one of "message" or "url" fields is required
+  url: 'www.example.com',
+  subject: 'Subject'
+};
 class Details extends Component{
     constructor(){
         super()
@@ -14,7 +20,7 @@ class Details extends Component{
             button : ''
         }
     }
-    
+    onSharePress = () => Share.share(shareOptions);
     renderItem = ({item,index}) => {
         return(
           <ListItem thumbnail onPress = {()=>this.props.navigation.navigate('Episode',{episode : index+1})}>
@@ -22,8 +28,8 @@ class Details extends Component{
               <Thumbnail square source={{uri: item.url}}/>
               </Left>   
               <Body>
-                  <Text>{item.title}</Text>
-                  <Text note numberOfLines = {1}>{item.date}</Text>
+                  <Text>Episode {data.length-index}</Text>
+                  <Text note numberOfLines = {1}>Lorem Ipsum</Text>
               </Body>
           </ListItem>
         )
@@ -32,6 +38,21 @@ class Details extends Component{
     render(){
         return(
             <Container>
+                <Header style = {{backgroundColor : 'white'}}>
+                    <Left>
+                        <Button transparent>
+                        <Icon name='arrow-left' />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Text>{this.props.navigation.getParam('title')}</Text>
+                    </Body>
+                    <Right>
+                        <Button transparent onPress={this.onSharePress}>
+                        <Icon name='share-alt' />
+                        </Button>
+                    </Right>
+                </Header>
               <Content>
                   <Image style = {{height : 200,width : 200}} source ={{uri :'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90'}}></Image>
                   <List>

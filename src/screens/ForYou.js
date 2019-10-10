@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import {FlatList,TouchableOpacity,View,Dimensions,ImageBackground,StyleSheet} from 'react-native'
-import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Button}from 'native-base'
+import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Button,Header,Right}from 'native-base'
 import Slideshow from 'react-native-image-slider-show'
 import Carousel from 'react-native-anchor-carousel'
 import {Init} from '../components/Init'
-
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 const data = [...Init.data]
 const { width } = Dimensions.get('window');
@@ -72,6 +72,18 @@ class ForYou extends Component{
     render(){
         return(
             <Container>
+              <Header style = {{backgroundColor : 'white'}}>
+                    <Left>
+                        <Button transparent>
+                        <Icon name='list' />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Text>Webtoon</Text>
+                    </Body>
+                    <Right>
+                    </Right>
+                </Header>
                 <Content>
                         <List>
                             <ListItem itemDivider><Text>For You</Text></ListItem>

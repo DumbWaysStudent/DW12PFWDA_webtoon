@@ -1,31 +1,59 @@
 import React, {Component} from 'react'
-import {FlatList,TouchableOpacity,View,Dimensions,ImageBackground,Image,StyleSheet,ScrollView} from 'react-native'
-import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body}from 'native-base'
-import Slideshow from 'react-native-image-slider-show'
-import Carousel from 'react-native-anchor-carousel'
-const data = [{
-    title: 'The Secret of Angel',
-    url: 'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
-    caption : 'Lorem Ipsum'
-    }, {
-    title: 'Pasutri Gaje',
-    url: 'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
-    caption : 'Dolor Sit Amet'
-    }, {
-    title: 'Young Mom',
-    url: 'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
-    caption : 'Lorem Ipsum 1'              
-    }, {
-    title: 'Lorem Ipsum',
-    url: 'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
-    caption : 'Lorem Ipsum 1'              
-    }
-]
+import {FlatList} from 'react-native'
+import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Header,Right,Button}from 'native-base'
+import Icon from 'react-native-vector-icons/FontAwesome'
+import {Init} from '../components/Init'
+
+
+const data = [...Init.data]
 
 class Details extends Component{
+  renderRecent = ({item,index}) => {
+    return(
+        <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{id : index})}}>
+            <Left>
+            <Thumbnail square source={{uri: item.url}}/>
+            </Left>   
+            <Body>
+                <Text>{item.title}</Text>
+                <Text note numberOfLines={1}>{item.caption}</Text>
+            </Body>
+            <Right>
+                <Button transparent>
+                  <Text>View</Text>
+                </Button>
+              </Right>
+        </ListItem>
+    )
+  }
   render(){
     return(
-      <View><Text>Favourites</Text></View>
+      <Container>
+      <Header style = {{backgroundColor : 'white'}}>
+            <Left>
+                <Button transparent>
+                <Icon name='arrow-left' />
+                </Button>
+            </Left>
+            <Body>
+                <Text>My Fvourites</Text>
+            </Body>
+            <Right>
+                <Button transparent onPress={this.onSharePress}>
+                <Icon name='share-alt' />
+                </Button>
+            </Right>
+        </Header>
+        <Content>
+                <List>
+                    <ListItem itemDivider><Text>Recent Updates</Text></ListItem>
+                        <FlatList
+                            data = {data}
+                            renderItem = {this.renderRecent}
+                        />
+                </List>
+        </Content>
+    </Container> 
     )
   }
 }
