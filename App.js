@@ -13,10 +13,6 @@ import {createBottomTabNavigator} from 'react-navigation-tabs'
 
 const ForYouStack = createStackNavigator({
   ForYou : {screen : ForYou},
-  DetailsStack : {screen : DetailsStack}
-})
-
-const DetailsStack = createStackNavigator({
   Details : {screen : Details},
   Episode : {screen : Episode}
 })
