@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {FlatList,TouchableOpacity,View,Dimensions,ImageBackground,StyleSheet,Image} from 'react-native'
 import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Button}from 'native-base'
-import {Init} from './Init'
+import {Init} from '../components/Init'
 
 const data = [...Init.data]
 const { width } = Dimensions.get('window');

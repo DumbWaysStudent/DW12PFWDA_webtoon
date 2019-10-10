@@ -3,7 +3,7 @@ import {FlatList,TouchableOpacity,View,Dimensions,ImageBackground,StyleSheet} fr
 import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Button}from 'native-base'
 import Slideshow from 'react-native-image-slider-show'
 import Carousel from 'react-native-anchor-carousel'
-import {Init} from './Init'
+import {Init} from '../components/Init'
 
 
 const data = [...Init.data]
