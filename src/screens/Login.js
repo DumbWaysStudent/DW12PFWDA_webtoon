@@ -4,12 +4,12 @@ import {Button,Input,Item,Text,Container, Content,Form,Label} from 'native-base'
 
 
 class Login extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             emailInput : '',
             passwordInput : '',
-            data : {email : 'f@gmail.com', password : '12345'},
+            data : {email : 'a@a.a', password : 'a'},
             emailRegex : '[a-z0-9]*[a-z0-9\.]+@[a-z0-9]+(\.[a-z0-9]+)*(\.[a-z0-9]+)'
         }
     }
