@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import Login from './src/screens/Login'
 import ForYou from './src/screens/ForYou'
-import scratch from './src/screens/scratch'
+import Details from './src/screens/Details'
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
@@ -11,7 +11,8 @@ const AppNavigator = createStackNavigator(
   {
     Index: Login,
     Home : ForYou,
-    scratch : scratch
+    Details : Details
+    
   },
   {
     initialRouteName: 'Home'
