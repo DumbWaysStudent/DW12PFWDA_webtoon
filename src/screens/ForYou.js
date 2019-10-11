@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {FlatList,TouchableOpacity,View,Dimensions,ImageBackground,StyleSheet} from 'react-native'
-import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Button,Header,Right}from 'native-base'
+import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Button,Header,Right,Input}from 'native-base'
 import Slideshow from 'react-native-image-slider-show'
 import Carousel from 'react-native-anchor-carousel'
 import {Init} from '../components/Init'
@@ -12,7 +12,9 @@ class ForYou extends Component{
     constructor(){
         super()
         this.state = {
-            input : ''
+            position : 0,
+            interval : null,
+            button : ''
         }
     }
     onSharePress = () => Share.share(shareOptions);
@@ -29,6 +31,44 @@ class ForYou extends Component{
     componentWillUnmount() {
     clearInterval(this.state.interval);
     }
+    renderFavourites = ({ item, index }) => {
+        const { url, title, caption } = item;
+        return (
+          <TouchableOpacity onPress = {()=>this.props.navigation.navigate('Details', {title : item.title})}
+                activeOpacity = {0.4}
+                style={styles.item}
+            >
+            <ImageBackground 
+              source={{ uri: url }}
+              style={styles.imageBackground}
+            >
+              <View style={styles.rightTextContainer}>
+                <Text style={styles.rightText}>{item.status}</Text>
+              </View>
+            </ImageBackground>
+            <View style={styles.lowerContainer}>
+              <Text style={styles.titleText}>{title}</Text>
+              <Text style={styles.contentText}>{caption}</Text>
+            </View>
+          </TouchableOpacity>
+        );
+      };
+    renderRecent = ({item,index}) => {
+        return(
+            <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{id : index})}}>
+                <Left>
+                <Thumbnail square source={{uri: item.url}}/>
+                </Left>   
+                <Body>
+                    <Text>{item.title}</Text>
+                    <Button style = {{width : 150}} iconLeft warning>
+                        <Text> + Favourite</Text>
+                    </Button>
+                </Body>
+            </ListItem>
+        )
+    }
+    
     render(){
         return(
             <Container>
@@ -46,7 +86,7 @@ class ForYou extends Component{
                 </Header>   
                   <Content>
                         <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
-                            <Input onChangeText = {(e)=>this.setState({input : e})}/>
+                            <Input></Input>
                             <Icon style={{paddingVertical: 10,paddingRight : 10}} name = 'search' size={25}></Icon>
                         </View>
                         <ListItem><Text>For You</Text></ListItem>
@@ -55,7 +95,6 @@ class ForYou extends Component{
                             position = {this.state.position}
                             onPositionChanged={position => this.setState({ position })}
                         />
-                        <ListItem><Text>Favourites</Text></ListItem>
                         <View style = {styles.carouselContainer2}>
                         <Carousel
                             style={styles.carousel}
@@ -69,11 +108,10 @@ class ForYou extends Component{
                             }}
                         />
                         </View>
-                        <ListItem><Text>Recent Updates</Text></ListItem>
                         {data.map((item, index) => {
                           return (
                           <List key = {index}>
-                            <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{title : item.title})}}>
+                            <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{id : index})}}>
                               <Left>
                               <Thumbnail square source={{uri: item.url}}/>
                               </Left>   
