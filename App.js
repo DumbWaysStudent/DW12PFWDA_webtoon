@@ -67,33 +67,3 @@ export default createAppContainer(createSwitchNavigator(
     Home: HomeStack,   
   },  
 ));
-
-//FAVBEXAMOPLE
-// import React, { Component } from 'react';
-// import { Container, Header, View, Button, Icon, Fab } from 'native-base';
-// export default class FABExample extends Component {
-//   constructor(props) {
-//     super(props)
-//     this.state = {
-//       active: false
-//     };
-//   }
-//   render() {
-//     return (  
-//       <Container>
-//         <Header />
-//         <View style={{ flex: 1 }}>
-//           <Fab
-//             active={this.state.active}
-//             direction="up"
-//             containerStyle={{ }}
-//             style={{ backgroundColor: '#5067FF' }}
-//             position="bottomRight">            
-//             <Icon name="share" />
-            
-//           </Fab>
-//         </View>
-//       </Container>
-//     );
-//   }
-// }

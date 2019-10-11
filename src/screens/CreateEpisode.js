@@ -40,9 +40,7 @@ class CreateEpisode extends Component{
                         <Text style = {{marginBottom : 10}}>Episode {data.length-index}</Text>
                         <Button block danger style = {{height : 35,marginRight :150,borderWidth : 2,borderColor : 'black'}}><Text>Delete</Text></Button>                  
                     </Body>
-                    <Right>
-                        <Button transparent></Button>
-                      </Right>
+                    <Right></Right>
                 </ListItem>
               </List>
               )
