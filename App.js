@@ -8,6 +8,9 @@ import Favourites from './src/screens/Favourites'
 import Profile from './src/screens/Profile'
 import EditProfile from './src/screens/EditProfile'
 import EditWebtoon from './src/screens/EditWebtoon'
+import EditEpisode from './src/screens/EditEpisode'
+import CreateWebtoon from './src/screens/CreateWebtoon'
+import CreateEpisode from './src/screens/CreateEpisode'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -49,7 +52,10 @@ const HomeStack = createStackNavigator({
   Episode : {screen : Episode, navigationOptions : ()=>({header : null})},
   EditProfile : {screen : EditProfile, navigationOptions : ()=>({header : null})},
   Creation : {screen : Creation, navigationOptions : ()=>({header : null})},
-  EditWebtoon : {screen : EditWebtoon, navigationOptions : ()=>({header : null})}
+  EditWebtoon : {screen : EditWebtoon, navigationOptions : ()=>({header : null})},
+  EditEpisode : {screen : EditEpisode, navigationOptions : ()=>({header : null})},
+  CreateWebtoon : {screen : CreateWebtoon, navigationOptions : ()=>({header : null})},
+  CreateEpisode : {screen : CreateEpisode, navigationOptions : ()=>({header : null})}
 },{initialRouteName : 'BottomStack'}
 )
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {FlatList} from 'react-native'
-import {Text,Content,Container,ListItem,Left, Thumbnail, Body,Header,Right,Button, Label}from 'native-base'
+import {Input,Text,Content,Container,ListItem,Left, Thumbnail, Body,Header,Right,Button, Label}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {Init} from '../components/Init'
 
@@ -37,7 +37,7 @@ class EditEpisode extends Component{
                 </Button>
             </Left>
             <Body>
-                <Text>Create Episode</Text>
+                <Text>Edit Episode</Text>
             </Body>
             <Right>
                 <Button transparent>

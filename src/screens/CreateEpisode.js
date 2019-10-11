@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
-import {FlatList} from 'react-native'
-import {Text,Content,Container,ListItem,Left, Thumbnail, Body,Header,Right,Button, Label}from 'native-base'
+import {List,Text,Content,Container,ListItem,Left, Thumbnail, Body,Header,Right,Button, Label,View,Input}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {Init} from '../components/Init'
 
@@ -47,11 +46,27 @@ class CreateEpisode extends Component{
         </Header>
         <Content>
             <Label>Name</Label>
-            <Input onChangeText = {(e)=>this.setState({input : e})}/>
-            <FlatList
-                data = {data}
-                renderItem = {this.renderRecent}
-            /> 
+            <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
+                <Input value = {this.props.navigation.getParam('title')}/>
+            </View>
+            {data.map((item, index) => {
+              return (
+              <List key = {index}>
+                <ListItem thumbnail>
+                    <Left>
+                    <Thumbnail square source={{uri: item.url}}/>
+                    </Left>   
+                    <Body>
+                        <Text>{item.title}</Text>
+                        <Text note numberOfLines={1}>{item.caption}</Text>
+                    </Body>
+                    <Right>
+                        <Button transparent></Button>
+                      </Right>
+                </ListItem>
+              </List>
+              )
+            })}
             <Button onPress = {()=>this.props.navigation.navigate('CreateEpisode')} block bordered><Text>+ Image</Text></Button>          
         </Content>
     </Container> 

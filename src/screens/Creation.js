@@ -61,10 +61,10 @@ class Creation extends Component{
             })}
         </Content>
         <Fab
-              style={{ backgroundColor: '#5067FF' }}
-              position="bottomRight">            
-              <Icon onPress = {()=>this.props.navigation.navigate('CreateWebtoon')} name="plus" />
-            </Fab>
+          style={{ backgroundColor: '#5067FF' }}
+          position="bottomRight">            
+          <Icon onPress = {()=>this.props.navigation.navigate('CreateWebtoon')} name="plus" />
+        </Fab>
     </Container> 
     )
   }

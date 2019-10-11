@@ -46,12 +46,12 @@ class EditWebtoon extends Component{
         <Content>
             <Label>Title</Label>
             <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
-                <Input onChangeText = {(e)=>this.setState({emailInput : e})}/>
+                <Input value = {this.props.navigation.getParam('title')}/>
             </View>
             {data.map((item, index) => {
               return (
               <List key = {index}>
-                <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('EditEpisode',{title : item.title})}}>
+                <ListItem thumbnail>
                     <Left>
                     <Thumbnail square source={{uri: item.url}}/>
                     </Left>   
@@ -59,13 +59,15 @@ class EditWebtoon extends Component{
                         <Text>{item.title}</Text>
                         <Text note numberOfLines={1}>{item.caption}</Text>
                     </Body>
-                    <Right></Right>
+                    <Right>
+                        <Button transparent></Button>
+                      </Right>
                 </ListItem>
               </List>
               )
             })}
             <Button  transparent dark style = {{marginBottom : 20}} onPress = {()=>this.props.navigation.navigate('CreateEpisode')} block bordered><Text>+ Add Episode</Text></Button>  
-            <Button block danger borderWidth = {2} onPress = {()=>this.props.navigation.navigate('CreateEpisode')}><Text>- Delete Webtoon</Text></Button>                  
+            <Button block danger borderWidth = {2}><Text>- Delete Webtoon</Text></Button>                  
         </Content>
     </Container> 
     )
