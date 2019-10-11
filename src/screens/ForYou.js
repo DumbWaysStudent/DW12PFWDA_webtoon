@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {FlatList,TouchableOpacity,View,Dimensions,ImageBackground,StyleSheet} from 'react-native'
+import {TouchableOpacity,View,Dimensions,ImageBackground,StyleSheet} from 'react-native'
 import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Button,Header,Right,Input}from 'native-base'
 import Slideshow from 'react-native-image-slider-show'
 import Carousel from 'react-native-anchor-carousel'
