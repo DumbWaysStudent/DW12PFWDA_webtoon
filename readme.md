@@ -1,7 +1,3 @@
-<h1 align="center">
-  <img src="./logo.png" width="300"/><br>
-</h1>
-
 ## WTHub
 Love webtoon? Got some creations you want to share? Or just wanna enjoy reading "Freedom" arts? Here's WTH for you !! 
 
