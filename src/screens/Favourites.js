@@ -1,10 +1,16 @@
 import React, {Component} from 'react'
+import {Share} from'react-native'
 import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Header,Right,Button,View,Input}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {Init} from '../components/Init'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-
+const shareOptions = {
+  title: 'Title',
+  message: 'Message to share', // Note that according to the documentation at least one of "message" or "url" fields is required
+  url: 'www.example.com',
+  subject: 'Subject'
+};
 const data = [...Init.data]
 
 class Details extends Component{

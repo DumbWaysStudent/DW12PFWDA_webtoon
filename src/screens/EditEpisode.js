@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import {FlatList} from 'react-native'
-import {Input,Text,Content,Container,ListItem,Left, Thumbnail, Body,Header,Right,Button, Label}from 'native-base'
+
+import {Text,Content,Container,ListItem,Left, Thumbnail, Body,Header,Right,Button, Label,View,Input,List}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import {Init} from '../components/Init'
+import {Init} from '../components/Details'
 
 
 const data = [...Init.data]
@@ -15,9 +15,8 @@ class EditEpisode extends Component{
             <Thumbnail square source={{uri: item.url}}/>
             </Left>   
             <Body>
-                <Button transparent>
-                    <Text>View</Text>
-                </Button>
+                <Text>{item.title}</Text>
+                <Text note numberOfLines={1}>Lorem Ipsum</Text>
             </Body>
             <Right>
                 <Button transparent>
@@ -32,8 +31,8 @@ class EditEpisode extends Component{
       <Container>
       <Header style = {{backgroundColor : 'white'}}>
             <Left>
-                <Button transparent onPress = {()=>{}}>
-                <Icon name='list'/>
+            <Button transparent onPress = {()=>this.props.navigation.goBack()}>
+                <Icon name='arrow-left'/>
                 </Button>
             </Left>
             <Body>
@@ -46,13 +45,30 @@ class EditEpisode extends Component{
             </Right>
         </Header>
         <Content>
-            <Label>Name</Label>
-            <Input onChangeText = {(e)=>this.setState({input : e})}/>
-            <FlatList
-                data = {data}
-                renderItem = {this.renderRecent}
-            /> 
-            <Button onPress = {()=>this.props.navigation.navigate('EditEpisode')} block bordered><Text>+ Image</Text></Button>          
+            <Label style = {{marginHorizontal : 20,marginTop : 10}}>Title</Label>
+            <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
+                <Input value = {'Episode '+this.props.navigation.getParam('episode')}/>
+            </View>
+            {data.map((item, index) => {
+              return (
+              <List key = {index}>
+                <ListItem thumbnail onPress = {()=>this.props.navigation.navigate('EditEpisode',{episode :data.length-index})}>
+                    <Left>
+                    <Thumbnail square source={{uri: item.url}}/>
+                    </Left>   
+                    <Body>
+                        <Text>Episode {data.length-index}</Text>
+                        <Text note numberOfLines={1}>Lorem Ipsum</Text>
+                    </Body>
+                    <Right>
+                        <Button transparent></Button>
+                      </Right>
+                </ListItem>
+              </List>
+              )
+            })}
+            <Button  transparent style = {{color : 'black', marginBottom : 20,marginHorizontal : 80,borderWidth : 2,borderColor : 'black'}} block bordered><Text style = {{color : 'black'}}>+ Image</Text></Button>  
+            <Button block danger style = {{marginHorizontal : 80,borderWidth : 2,borderColor : 'black'}}><Text>Delete Episode</Text></Button>                  
         </Content>
     </Container> 
     )

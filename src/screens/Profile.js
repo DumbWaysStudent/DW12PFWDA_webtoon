@@ -1,9 +1,14 @@
 import React, {Component} from 'react'
-import {TouchableOpacity} from 'react-native'
-import {View,Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Button, Right,Header}from 'native-base'
+import {TouchableOpacity,Share} from 'react-native'
+import {View,Text,Content,Container,ListItem,Left, Thumbnail, Body,Button, Right,Header}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-const name = "Jaina P"
+const shareOptions = {
+    title: 'Title',
+    message: 'Message to share', // Note that according to the documentation at least one of "message" or "url" fields is required
+    url: 'www.example.com',
+    subject: 'Subject'
+  };
 class Profile extends Component{
     constructor(){
         super()
@@ -13,6 +18,8 @@ class Profile extends Component{
             button : ''
         }
     }
+    onSharePress = () => Share.share(shareOptions);
+
     render(){
         return(
             <Container>
@@ -20,7 +27,7 @@ class Profile extends Component{
                 <Header style = {{backgroundColor : 'white'}}>
                     <Left>
                         <Button transparent>
-                        <Icon name='arrow-left' />
+                        <Icon name='list' />
                         </Button>
                     </Left>
                     <Body>

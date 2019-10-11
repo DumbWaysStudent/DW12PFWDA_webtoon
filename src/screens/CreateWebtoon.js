@@ -66,7 +66,7 @@ class CreateWebtoon extends Component{
               </List>
               )
             })}
-            <Button onPress = {()=>this.props.navigation.navigate('CreateEpisode')} block bordered><Text>+ Add Episode</Text></Button>          
+            <Button  transparent style = {{color : 'black', marginBottom : 20,marginHorizontal : 80,borderWidth : 2,borderColor : 'black'}}block bordered><Text style = {{color : 'black'}}>Create Webtoon</Text></Button>  
         </Content>
     </Container> 
     )

@@ -31,8 +31,8 @@ class EditWebtoon extends Component{
       <Container>
       <Header style = {{backgroundColor : 'white'}}>
             <Left>
-                <Button transparent onPress = {()=>{}}>
-                <Icon name='list'/>
+                <Button transparent onPress = {()=>this.props.navigation.goBack()}>
+                <Icon name='arrow-left'/>
                 </Button>
             </Left>
             <Body>
@@ -52,7 +52,7 @@ class EditWebtoon extends Component{
             {data.map((item, index) => {
               return (
               <List key = {index}>
-                <ListItem thumbnail>
+                <ListItem thumbnail onPress = {()=>this.props.navigation.navigate('EditEpisode',{episode :data.length-index})}>
                     <Left>
                     <Thumbnail square source={{uri: item.url}}/>
                     </Left>   

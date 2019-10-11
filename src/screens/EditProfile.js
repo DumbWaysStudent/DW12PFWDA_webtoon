@@ -18,7 +18,7 @@ class MyFavourites extends Component{
             <Container>
                 <Header style = {{backgroundColor : 'white'}}>
                     <Left>
-                        <Button transparent>
+                        <Button transparent onPress = {()=>this.props.navigation.goBack()}>
                         <Icon name='arrow-left' />
                         </Button>
                     </Left>

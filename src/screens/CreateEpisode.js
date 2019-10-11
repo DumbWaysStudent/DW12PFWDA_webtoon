@@ -47,7 +47,7 @@ class CreateEpisode extends Component{
               </List>
               )
             })}
-            <Button  transparent style = {{color : 'black', marginBottom : 20,marginHorizontal : 80,borderWidth : 2,borderColor : 'black'}} onPress = {()=>this.props.navigation.navigate('CreateEpisode')} block bordered><Text style = {{color : 'black'}}>+ Image</Text></Button>  
+            <Button  transparent style = {{color : 'black', marginBottom : 20,marginHorizontal : 80,borderWidth : 2,borderColor : 'black'}} block bordered><Text style = {{color : 'black'}}>+ Image</Text></Button>  
         </Content>
     </Container> 
     )
