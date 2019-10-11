@@ -21,26 +21,13 @@ class Details extends Component{
         }
     }
     onSharePress = () => Share.share(shareOptions);
-    renderItem = ({item,index}) => {
-        return(
-          <ListItem thumbnail onPress = {()=>this.props.navigation.navigate('Episode',{episode : index+1})}>
-              <Left>
-              <Thumbnail square source={{uri: item.url}}/>
-              </Left>   
-              <Body>
-                  <Text>Episode {data.length-index}</Text>
-                  <Text note numberOfLines = {1}>Lorem Ipsum</Text>
-              </Body>
-          </ListItem>
-        )
-    }
     
     render(){
         return(
             <Container>
                 <Header style = {{backgroundColor : 'white'}}>
                     <Left>
-                        <Button transparent>
+                        <Button transparent onPress = {()=>this.props.navigation.goBack()}>
                         <Icon name='arrow-left' />
                         </Button>
                     </Left>
@@ -55,12 +42,21 @@ class Details extends Component{
                 </Header>
               <Content>
                   <Image style = {{height : 200,width : 200}} source ={{uri :'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90'}}></Image>
-                  <List>
-                    <FlatList
-                        data = {data}
-                        renderItem = {this.renderItem}
-                    />
-                  </List>
+                  {data.map((item, index) => {
+                          return (
+                          <List key = {index}>
+                            <ListItem thumbnail onPress = {()=>this.props.navigation.navigate('Episode',{title : item.title, episode : data.length-index})}>
+                                <Left>
+                                <Thumbnail square source={{uri: item.url}}/>
+                                </Left>   
+                                <Body>
+                                    <Text>Episode {data.length-index}</Text>
+                                    <Text note numberOfLines = {1}>Lorem Ipsum</Text>
+                                </Body>
+                            </ListItem>
+                          </List>
+                          )
+                        })}
               </Content>
             </Container>   
                   

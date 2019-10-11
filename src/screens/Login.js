@@ -1,19 +1,25 @@
 import React,{Component} from 'react';
-import {Keyboard}from 'react-native';
-import {Button,Input,Item,Text,Container, Content,Form,Label} from 'native-base';
+import {Keyboard,View,Image,Dimensions}from 'react-native';
+import {Button,Input,Text,Container,Form,Label} from 'native-base';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
+const {width} = Dimensions.get('window') 
 class Login extends Component{
     constructor(){
         super();
         this.state = {
             emailInput : '',
             passwordInput : '',
+            hidePassword : true,
+            eye : 'eye-slash',
             data : {email : 'a@a.a', password : 'a'},
             emailRegex : '[a-z0-9]*[a-z0-9\.]+@[a-z0-9]+(\.[a-z0-9]+)*(\.[a-z0-9]+)'
         }
     }
-
+    changeeyeState = ()=>{
+        {this.state.eye=='eye' ? this.setState({eye : 'eye-slash',hidePassword : true}): this.setState({eye : 'eye',hidePassword : false})}
+    }
     inputChecker=()=>{  
         Keyboard.dismiss()
         const email = String(this.state.emailInput).toLowerCase()
@@ -39,22 +45,23 @@ class Login extends Component{
     }
     render(){
         return(
-            <Container>
-                <Content>
-                    <Text>LOG IN</Text>
-                    <Text>Login with your WEBTOON account</Text>
+            <Container style = {{justifyContent : 'center'}}>
+                    <View style = {{alignItems : 'center'}}>
+                    <Image style = {{width : width,height : 200}} source = {{uri : 'https://static01.nyt.com/images/2015/07/06/business/06webtoons/06webtoons-articleLarge.jpg?quality=90&auto=webp'}}/>
+                    <Text style = {{paddingBottom : 15,fontSize : 20}} >Login with your WEBTOON account</Text>
+                    </View>
                     <Form>
-                        <Item stackedLabel>
-                            <Label>Email</Label>
+                        <Label style = {{marginLeft : 20}}>Email</Label>
+                        <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
                             <Input onChangeText = {(e)=>this.setState({emailInput : e})}/>
-                        </Item>
-                        <Item stackedLabel> 
-                            <Label>Password</Label>
-                            <Input onChangeText = {(e)=>this.setState({passwordInput : e})}/>
-                        </Item>
-                        <Button primary onPress = {()=>this.inputChecker()}><Text>Log In</Text></Button>
-                    </Form>
-                </Content>
+                        </View>
+                        <Label style = {{marginLeft : 20}}>Password</Label>
+                        <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
+                            <Input secureTextEntry = {this.state.hidePassword} onChangeText = {(e)=>this.setState({passwordInput : e})}/>
+                            <Icon style={{paddingVertical: 10,paddingRight : 10}} name = {this.state.eye} size={25} onPress = {()=>this.changeeyeState()}></Icon>
+                        </View>
+                        <Button success block rounded style = {{borderColor : 'black', marginHorizontal : 60,marginVertical : 10}} onPress = {()=>this.inputChecker()}><Text>Log In</Text></Button>
+                    </Form>   
             </Container>
         )
     }

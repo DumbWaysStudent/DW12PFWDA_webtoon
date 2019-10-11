@@ -1,30 +1,24 @@
 import React, { Component } from 'react'
-
 import Login from './src/screens/Login'
 import Episode from './src/screens/Episode'
 import ForYou from './src/screens/ForYou'
 import Details from './src/screens/Details'
 import Favourites from './src/screens/Favourites'
 import Profile from './src/screens/Profile'
+import EditProfile from './src/screens/EditProfile'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs'
 
-const ForYouStack = createStackNavigator({
-  ForYou : {screen : ForYou,navigationOptions : ()=>({header : null})},
-  Details : {screen : Details, navigationOptions : ()=>({header : null})},
-  Episode : {screen : Episode, navigationOptions : ()=>({header : null})}
-})
-
 const BottomStack = createBottomTabNavigator({
-  Home: { screen: ForYouStack },
-  Favourites: { screen: Favourites },
-  Profile: { screen: Profile },  
+  ForYou: ForYou,
+  Favourites: Favourites,
+  MyProfile: Profile
 },
 {
   defaultNavigationOptions: ({ navigation }) => ({
-    tabBarIcon: ({ focused, tintColor }) => {
+    tabBarIcon: ({ tintColor }) => {
       const { routeName } = navigation.state;
       let iconName;
       if (routeName === 'Home') {
@@ -47,10 +41,49 @@ const BottomStack = createBottomTabNavigator({
 }
 )
 
+const HomeStack = createStackNavigator({
+  BottomStack : {screen: BottomStack,navigationOptions : ()=>({header : null})},
+  Details : {screen : Details, navigationOptions : ()=>({header : null})},
+  Episode : {screen : Episode, navigationOptions : ()=>({header : null})},
+  EditProfile : {screen : EditProfile, navigationOptions : ()=>({header : null})}
+},{initialRouteName : 'BottomStack'}
+)
+
+
+
 export default createAppContainer(createSwitchNavigator(
   {
-    Login : {screen : BottomStack},
-    Home: { screen: BottomStack },   
+    Login : HomeStack,
+    Home: HomeStack,   
   },  
 ));
 
+//FAVBEXAMOPLE
+// import React, { Component } from 'react';
+// import { Container, Header, View, Button, Icon, Fab } from 'native-base';
+// export default class FABExample extends Component {
+//   constructor(props) {
+//     super(props)
+//     this.state = {
+//       active: false
+//     };
+//   }
+//   render() {
+//     return (  
+//       <Container>
+//         <Header />
+//         <View style={{ flex: 1 }}>
+//           <Fab
+//             active={this.state.active}
+//             direction="up"
+//             containerStyle={{ }}
+//             style={{ backgroundColor: '#5067FF' }}
+//             position="bottomRight">            
+//             <Icon name="share" />
+            
+//           </Fab>
+//         </View>
+//       </Container>
+//     );
+//   }
+// }

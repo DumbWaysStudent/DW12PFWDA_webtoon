@@ -17,7 +17,7 @@ class ForYou extends Component{
             button : ''
         }
     }
-
+    onSharePress = () => Share.share(shareOptions);
     componentWillMount() {
         this.setState({
             interval: setInterval(() => {
@@ -53,21 +53,7 @@ class ForYou extends Component{
           </TouchableOpacity>
         );
       };
-    renderRecent = ({item,index}) => {
-        return(
-            <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{id : index})}}>
-                <Left>
-                <Thumbnail square source={{uri: item.url}}/>
-                </Left>   
-                <Body>
-                    <Text>{item.title}</Text>
-                    <Button style = {{width : 150}} iconLeft warning>
-                        <Text> + Favourite</Text>
-                    </Button>
-                </Body>
-            </ListItem>
-        )
-    }
+
     
     render(){
         return(
@@ -83,36 +69,47 @@ class ForYou extends Component{
                     </Body>
                     <Right>
                     </Right>
-                </Header>
-                <Content>
-                        <List>
-                            <ListItem itemDivider><Text>For You</Text></ListItem>
-                                <Slideshow 
-                                    dataSource = {data}
-                                    position = {this.state.position}
-                                    onPositionChanged={position => this.setState({ position })}
-                                />
-                            <ListItem itemDivider><Text>Favourites</Text></ListItem>
-                                <View style = {styles.carouselContainer2}>
-                                <Carousel
-                                    style={styles.carousel}
-                                    data={data}
-                                    renderItem={this.renderFavourites}
-                                    itemWidth={0.7 * width}
-                                    inActiveOpacity={0.3}
-                                    containerWidth={width - 10}
-                                    ref={(c) => {
-                                    this.numberCarousel = c;
-                                    }}
-                                />
-                                </View>
-                            <ListItem itemDivider><Text>Recent Updates</Text></ListItem>
-                                <FlatList
-                                    data = {data}
-                                    renderItem = {this.renderRecent}
-                                />
-                        </List>
-                </Content>
+                </Header>   
+                  <Content>
+                        <ListItem><Text>For You</Text></ListItem>
+                        <Slideshow 
+                            dataSource = {data}
+                            position = {this.state.position}
+                            onPositionChanged={position => this.setState({ position })}
+                        />
+                        <ListItem><Text>Favourites</Text></ListItem>
+                        <View style = {styles.carouselContainer2}>
+                        <Carousel
+                            style={styles.carousel}
+                            data={data}
+                            renderItem={this.renderFavourites}
+                            itemWidth={0.7 * width}
+                            inActiveOpacity={0.3}
+                            containerWidth={width - 10}
+                            ref={(c) => {
+                            this.numberCarousel = c;
+                            }}
+                        />
+                        </View>
+                        <ListItem><Text>Recent Updates</Text></ListItem>
+                        {data.map((item, index) => {
+                          return (
+                          <List key = {index}>
+                            <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{title : item.title})}}>
+                              <Left>
+                              <Thumbnail square source={{uri: item.url}}/>
+                              </Left>   
+                              <Body>
+                                  <Text>{item.title}</Text>
+                                  <Button style = {{width : 150}} iconLeft warning>
+                                      <Text> + Favourite</Text>
+                                  </Button>
+                              </Body>
+                            </ListItem>
+                          </List>
+                          )
+                        })}
+                  </Content>         
             </Container>   
                   
         )

@@ -3,8 +3,8 @@ import {TouchableOpacity,Dimensions} from 'react-native'
 import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Button, Right,Header}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-const { width } = Dimensions.get('window');
-class MyFavourites extends Component{
+const name = "Jaina P"
+class Profile extends Component{
     constructor(){
         super()
         this.state = {
@@ -13,8 +13,6 @@ class MyFavourites extends Component{
             button : ''
         }
     }
-
-    
     render(){
         return(
             <Container>
@@ -34,14 +32,19 @@ class MyFavourites extends Component{
                     </Right>
                 </Header>
               <Content>
-                  <TouchableOpacity>
+                  <TouchableOpacity  onPress = {()=>this.props.navigation.navigate('EditProfile',{profileName : 'Jaina P'})}>
                       <Body>
-                      <Thumbnail large source = {{uri: 'https://i.ytimg.com/vi/01Y1F9mWXiQ/maxresdefault.jpg'}}></Thumbnail>
+                      <Thumbnail large 
+                      source = {{uri: 'https://i.ytimg.com/vi/01Y1F9mWXiQ/maxresdefault.jpg'}}
+                      ></Thumbnail>
+                        {this.props.navigation.getParam('profileName')==null? 
                         <Text>Jaina P</Text>
+                         : 
+                        <Text>{this.props.navigation.getParam('profileName')}</Text>}
                       </Body>
                   </TouchableOpacity>
                   <List>
-                    <ListItem noIndent onPress = {()=>{}}>
+                    <ListItem noIndent onPress = {()=>this.props.navigation.navigate('Creation')}>
                         <Left>
                             <Text>My Webtoon Creation</Text>
                         </Left>
@@ -62,4 +65,4 @@ class MyFavourites extends Component{
     }
 }
 
-export default MyFavourites
+export default Profile
