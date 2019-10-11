@@ -61,7 +61,6 @@ class EditEpisode extends Component{
                         <Text note numberOfLines={1}>Lorem Ipsum</Text>
                     </Body>
                     <Right>
-                        <Button transparent></Button>
                       </Right>
                 </ListItem>
               </List>
