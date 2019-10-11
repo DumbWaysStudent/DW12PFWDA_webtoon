@@ -33,7 +33,7 @@ class Login extends Component{
                     if(email == this.state.data.email && password == this.state.data.password){
                         this.props.navigation.navigate('Home')
                     }
-                    else console.log(this.state.data.password)
+                    else alert('Invalid Email / Password')
                 }
                 else alert('Invalid Email Syntax')
             }
