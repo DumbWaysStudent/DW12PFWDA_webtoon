@@ -27,7 +27,7 @@ class MyFavourites extends Component{
                     </Body>
                     <Right>
                         <Button transparent onPress={()=>this.props.navigation.navigate('Profile',{profileName : this.state.profileName})}>
-                        <Icon name='check' />
+                        <Icon color = '#ffcc00' name='check' />
                         </Button>
                     </Right>
                 </Header>

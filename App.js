@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import Login from './src/screens/Login'
 import Episode from './src/screens/Episode'
 import ForYou from './src/screens/ForYou'
+import Creation from './src/screens/Creation'
 import Details from './src/screens/Details'
 import Favourites from './src/screens/Favourites'
 import Profile from './src/screens/Profile'
 import EditProfile from './src/screens/EditProfile'
+import EditWebtoon from './src/screens/EditWebtoon'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -14,7 +16,7 @@ import {createBottomTabNavigator} from 'react-navigation-tabs'
 const BottomStack = createBottomTabNavigator({
   ForYou: ForYou,
   Favourites: Favourites,
-  MyProfile: Profile
+  Profile: Profile
 },
 {
   defaultNavigationOptions: ({ navigation }) => ({
@@ -45,7 +47,9 @@ const HomeStack = createStackNavigator({
   BottomStack : {screen: BottomStack,navigationOptions : ()=>({header : null})},
   Details : {screen : Details, navigationOptions : ()=>({header : null})},
   Episode : {screen : Episode, navigationOptions : ()=>({header : null})},
-  EditProfile : {screen : EditProfile, navigationOptions : ()=>({header : null})}
+  EditProfile : {screen : EditProfile, navigationOptions : ()=>({header : null})},
+  Creation : {screen : Creation, navigationOptions : ()=>({header : null})},
+  EditWebtoon : {screen : EditWebtoon, navigationOptions : ()=>({header : null})}
 },{initialRouteName : 'BottomStack'}
 )
 

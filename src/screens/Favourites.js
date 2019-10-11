@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Header,Right,Button}from 'native-base'
+import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Header,Right,Button,View}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {Init} from '../components/Init'
 import { TouchableOpacity } from 'react-native-gesture-handler'

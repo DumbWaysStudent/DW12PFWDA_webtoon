@@ -12,9 +12,7 @@ class ForYou extends Component{
     constructor(){
         super()
         this.state = {
-            position : 0,
-            interval : null,
-            button : ''
+            input : ''
         }
     }
     onSharePress = () => Share.share(shareOptions);
@@ -31,30 +29,6 @@ class ForYou extends Component{
     componentWillUnmount() {
     clearInterval(this.state.interval);
     }
-    renderFavourites = ({ item, index }) => {
-        const { url, title, caption } = item;
-        return (
-          <TouchableOpacity onPress = {()=>this.props.navigation.navigate('Details', {title : item.title})}
-                activeOpacity = {0.4}
-                style={styles.item}
-            >
-            <ImageBackground 
-              source={{ uri: url }}
-              style={styles.imageBackground}
-            >
-              <View style={styles.rightTextContainer}>
-                <Text style={styles.rightText}>{item.status}</Text>
-              </View>
-            </ImageBackground>
-            <View style={styles.lowerContainer}>
-              <Text style={styles.titleText}>{title}</Text>
-              <Text style={styles.contentText}>{caption}</Text>
-            </View>
-          </TouchableOpacity>
-        );
-      };
-
-    
     render(){
         return(
             <Container>
@@ -71,6 +45,10 @@ class ForYou extends Component{
                     </Right>
                 </Header>   
                   <Content>
+                        <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
+                            <Input onChangeText = {(e)=>this.setState({input : e})}/>
+                            <Icon style={{paddingVertical: 10,paddingRight : 10}} name = 'search' size={25}></Icon>
+                        </View>
                         <ListItem><Text>For You</Text></ListItem>
                         <Slideshow 
                             dataSource = {data}

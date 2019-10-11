@@ -42,18 +42,27 @@ class Creation extends Component{
             </Right>
         </Header>
         <Content>
-                <List>
-                    <ListItem itemDivider><Text>Recent Updates</Text></ListItem>
-                        <FlatList
-                            data = {data}
-                            renderItem = {this.renderRecent}
-                        />
-                </List>
-                <Fab
-                  style={{ backgroundColor: '#5067FF' }}
-                  position="bottomRight">            
-                  <Icon onPress = {()=>this.props.navigation.navigate('CreateWebtoon')} name="plus" />
-                </Fab>
+        {data.map((item, index) => {
+              return (
+              <List key = {index}>
+                <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('EditWebtoon',{title : item.title, episode : data.length-index})}}>
+                    <Left>
+                    <Thumbnail square source={{uri: item.url}}/>
+                    </Left>   
+                    <Body>
+                        <Text>{item.title}</Text>
+                        <Text note numberOfLines={1}>{item.caption}</Text>
+                    </Body>
+                    <Right></Right>
+                </ListItem>
+              </List>
+              )
+            })}
+            <Fab
+              style={{ backgroundColor: '#5067FF' }}
+              position="bottomRight">            
+              <Icon onPress = {()=>this.props.navigation.navigate('CreateWebtoon')} name="plus" />
+            </Fab>
         </Content>
     </Container> 
     )
