@@ -1,31 +1,11 @@
 import React, {Component} from 'react'
 import {List,Text,Content,Container,ListItem,Left, Thumbnail, Body,Header,Right,Button, Label,View,Input}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import {Init} from '../components/Init'
+import {Init} from '../components/Details'
 
 
 const data = [...Init.data]
-
 class CreateEpisode extends Component{
-  renderRecent = ({item,index}) => {
-    return(
-        <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{id : index})}}>
-            <Left>
-            <Thumbnail square source={{uri: item.url}}/>
-            </Left>   
-            <Body>
-                <Button transparent>
-                    <Text>View</Text>
-                </Button>
-            </Body>
-            <Right>
-                <Button transparent>
-                  <Text>View</Text>
-                </Button>
-              </Right>
-        </ListItem>
-    )
-  }
   render(){
     return(
       <Container>
@@ -45,9 +25,9 @@ class CreateEpisode extends Component{
             </Right>
         </Header>
         <Content>
-            <Label>Name</Label>
+            <Label style = {{marginLeft : 20}}>Name</Label>
             <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
-                <Input value = {this.props.navigation.getParam('title')}/>
+                <Input value = {'Episode ' + (data.length+1)}/>
             </View>
             {data.map((item, index) => {
               return (
@@ -57,8 +37,8 @@ class CreateEpisode extends Component{
                     <Thumbnail square source={{uri: item.url}}/>
                     </Left>   
                     <Body>
-                        <Text>{item.title}</Text>
-                        <Text note numberOfLines={1}>{item.caption}</Text>
+                        <Text style = {{marginBottom : 10}}>Episode {data.length-index}</Text>
+                        <Button block danger style = {{height : 35,marginRight :150,borderWidth : 2,borderColor : 'black'}}><Text>Delete</Text></Button>                  
                     </Body>
                     <Right>
                         <Button transparent></Button>
@@ -67,7 +47,7 @@ class CreateEpisode extends Component{
               </List>
               )
             })}
-            <Button onPress = {()=>this.props.navigation.navigate('CreateEpisode')} block bordered><Text>+ Image</Text></Button>          
+            <Button  transparent style = {{color : 'black', marginBottom : 20,marginHorizontal : 80,borderWidth : 2,borderColor : 'black'}} onPress = {()=>this.props.navigation.navigate('CreateEpisode')} block bordered><Text style = {{color : 'black'}}>+ Image</Text></Button>  
         </Content>
     </Container> 
     )

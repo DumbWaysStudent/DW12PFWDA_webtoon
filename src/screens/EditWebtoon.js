@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
+
 import {Text,Content,Container,ListItem,Left, Thumbnail, Body,Header,Right,Button, Label,View,Input,List}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import {Init} from '../components/Init'
+import {Init} from '../components/Details'
 
 
 const data = [...Init.data]
@@ -15,7 +16,7 @@ class EditWebtoon extends Component{
             </Left>   
             <Body>
                 <Text>{item.title}</Text>
-                <Text note numberOfLines={1}>{item.caption}</Text>
+                <Text note numberOfLines={1}>Lorem Ipsum</Text>
             </Body>
             <Right>
                 <Button transparent>
@@ -44,7 +45,7 @@ class EditWebtoon extends Component{
             </Right>
         </Header>
         <Content>
-            <Label>Title</Label>
+            <Label style = {{marginHorizontal : 20,marginTop : 10}}>Title</Label>
             <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
                 <Input value = {this.props.navigation.getParam('title')}/>
             </View>
@@ -56,8 +57,8 @@ class EditWebtoon extends Component{
                     <Thumbnail square source={{uri: item.url}}/>
                     </Left>   
                     <Body>
-                        <Text>{item.title}</Text>
-                        <Text note numberOfLines={1}>{item.caption}</Text>
+                        <Text>Episode {data.length-index}</Text>
+                        <Text note numberOfLines={1}>Lorem Ipsum</Text>
                     </Body>
                     <Right>
                         <Button transparent></Button>
@@ -66,8 +67,8 @@ class EditWebtoon extends Component{
               </List>
               )
             })}
-            <Button  transparent dark style = {{marginBottom : 20}} onPress = {()=>this.props.navigation.navigate('CreateEpisode')} block bordered><Text>+ Add Episode</Text></Button>  
-            <Button block danger borderWidth = {2}><Text>- Delete Webtoon</Text></Button>                  
+            <Button  transparent style = {{color : 'black', marginBottom : 20,marginHorizontal : 80,borderWidth : 2,borderColor : 'black'}} onPress = {()=>this.props.navigation.navigate('CreateEpisode')} block bordered><Text style = {{color : 'black'}}>+ Add Episode</Text></Button>  
+            <Button block danger style = {{marginHorizontal : 80,borderWidth : 2,borderColor : 'black'}}><Text>Delete Webtoon</Text></Button>                  
         </Content>
     </Container> 
     )

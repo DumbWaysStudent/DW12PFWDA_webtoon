@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
-import {Share, FlatList,Image} from 'react-native'
+import {Share, Dimensions,Image} from 'react-native'
 import {Content,Container,List,ListItem,Left, Thumbnail, Body,Button,Header,Right,Text}from 'native-base'
-import {Init} from '../components/Init'
+import {Init} from '../components/Details'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 const data = [...Init.data]
+const {height,width} = Dimensions.get('window')
 const shareOptions = {
   title: 'Title',
   message: 'Message to share', // Note that according to the documentation at least one of "message" or "url" fields is required
@@ -41,7 +42,7 @@ class Details extends Component{
                     </Right>
                 </Header>
               <Content>
-                  <Image style = {{height : 200,width : 200}} source ={{uri :'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90'}}></Image>
+                  <Image style = {{height : 200,width : width}} source ={{uri :this.props.navigation.getParam('url')}}></Image>
                   {data.map((item, index) => {
                           return (
                           <List key = {index}>

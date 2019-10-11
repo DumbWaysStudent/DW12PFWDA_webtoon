@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import {TouchableOpacity,Dimensions,TextInput} from 'react-native'
-import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Button, Right,Header}from 'native-base'
+import {TouchableOpacity,Dimensions,TextInput,View} from 'react-native'
+import {Text,Content,Container,Left, Thumbnail, Body,Button, Right,Header}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 const { width } = Dimensions.get('window');
@@ -38,7 +38,9 @@ class MyFavourites extends Component{
                       <Thumbnail large source = {{uri: 'https://i.ytimg.com/vi/01Y1F9mWXiQ/maxresdefault.jpg'}}></Thumbnail>
                     </TouchableOpacity>
                     
-                    <TextInput value = {this.state.profileName}onChangeText = {(text) =>{this.setState({profileName : text})}}/>
+                  
+                    <TextInput style ={{borderWidth : 2,width : width*0.6,textAlign : 'center',marginTop : 20}} value = {this.state.profileName}onChangeText = {(text) =>{this.setState({profileName : text})}}/>
+                    
 
                     </Body>
               </Content>

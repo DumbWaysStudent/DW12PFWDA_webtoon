@@ -26,7 +26,7 @@ const BottomStack = createBottomTabNavigator({
     tabBarIcon: ({ tintColor }) => {
       const { routeName } = navigation.state;
       let iconName;
-      if (routeName === 'Home') {
+      if (routeName === 'ForYou') {
         iconName = `home`;
       } else if (routeName === 'Favourites') {
         iconName = `star`;

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Image,Dimensions} from 'react-native'
 import {Text,Content,Container,List,Left, Body,Button,Header,Right}from 'native-base'
-import {Init} from '../components/Init'
+import {Init} from '../components/Details'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 
@@ -40,7 +40,7 @@ class Episode extends Component{
                         {data.map((item, index) => {
                           return (
                           <List key = {index}>
-                                <Image style = {{height : height,width : width}} source ={{uri :'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90'}}></Image>
+                                <Image style = {{height : height,width : width}} source ={{uri : item.url}}></Image>
                           </List>
                           )
                         })}
