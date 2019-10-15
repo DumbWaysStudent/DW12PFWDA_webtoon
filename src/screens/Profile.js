@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {TouchableOpacity,Share} from 'react-native'
 import {View,Text,Content,Container,ListItem,Left, Thumbnail, Body,Button, Right,Header}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import HeaderMain from '../components/Headers/HeaderMain'
 
 const shareOptions = {
     title: 'Title',
@@ -21,29 +22,19 @@ class Profile extends Component{
     onSharePress = () => Share.share(shareOptions);
 
     render(){
+        this.props.navigation.getParam('profileName')==''?profileName = 'Jaina P'
+        : profileName = this.props.navigation.getParam('profileName')
+        this.props.navigation.getParam('imageUrl')==''?imageUrl = 'https://i.ytimg.com/vi/01Y1F9mWXiQ/maxresdefault.jpg'
+        : imageUrl = this.props.navigation.getParam('imageUrl')
         return(
             <Container>
                 <Content>
-                <Header style = {{backgroundColor : 'white'}}>
-                    <Left>
-                        <Button transparent>
-                        <Icon name='list' />
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Text>My Profile</Text>
-                    </Body>
-                    <Right>
-                        <Button transparent onPress={this.onSharePress}>
-                        <Icon name='share-alt' />
-                        </Button>
-                    </Right>
-                </Header>
+                <HeaderMain title = 'My Profile'/>
                   <View>
-                    <TouchableOpacity  onPress = {()=>this.props.navigation.navigate('EditProfile',{profileName : 'Jaina P'})}>
+                    <TouchableOpacity  onPress = {()=>this.props.navigation.navigate('EditProfile',{profileName : profileName,title : 'Edit Profile'})}>
                         <Body>
                         <Thumbnail large 
-                        source = {{uri: 'https://i.ytimg.com/vi/01Y1F9mWXiQ/maxresdefault.jpg'}}
+    
                         ></Thumbnail>
                             {this.props.navigation.getParam('profileName')==null? 
                             <Text>Jaina P</Text>
@@ -52,7 +43,7 @@ class Profile extends Component{
                         </Body>
                     </TouchableOpacity>
                     <View>
-                        <ListItem noIndent onPress = {()=>this.props.navigation.navigate('Creation')}>
+                        <ListItem noIndent onPress = {()=>this.props.navigation.navigate('Creation',{title : 'My Webtoon Creation'})}>
                             <Left>
                                 <Text>My Webtoon Creation</Text>
                             </Left>

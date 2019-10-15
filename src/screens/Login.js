@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Keyboard,View,Image,Dimensions}from 'react-native';
+import {Keyboard,View,Image,Dimensions,StyleSheet}from 'react-native';
 import {Button,Input,Text,Container,Form,Label} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -47,7 +47,7 @@ class Login extends Component{
         return(
             <Container style = {{justifyContent : 'center'}}>
                     <View style = {{alignItems : 'center'}}>
-                    <Image style = {{width : width,height : 200}} source = {{uri : 'https://static01.nyt.com/images/2015/07/06/business/06webtoons/06webtoons-articleLarge.jpg?quality=90&auto=webp'}}/>
+                    <Image style = {styles.Image} source = {{uri : 'https://static01.nyt.com/images/2015/07/06/business/06webtoons/06webtoons-articleLarge.jpg?quality=90&auto=webp'}}/>
                     <Text style = {{paddingBottom : 15,fontSize : 20}} >Login with your WEBTOON account</Text>
                     </View>
                     <Form>
@@ -58,9 +58,9 @@ class Login extends Component{
                         <Label style = {{marginLeft : 20}}>Password</Label>
                         <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
                             <Input secureTextEntry = {this.state.hidePassword} onChangeText = {(e)=>this.setState({passwordInput : e})}/>
-                            <Icon style={{paddingVertical: 10,paddingRight : 10}} name = {this.state.eye} size={25} onPress = {()=>this.changeeyeState()}></Icon>
+                            <Icon style={styles.Button} onPress = {()=>this.changeeyeState()}></Icon>
                         </View>
-                        <Button success block rounded style = {{borderColor : 'black', marginHorizontal : 60,marginVertical : 10}} onPress = {()=>this.inputChecker()}><Text>Log In</Text></Button>
+                        <Button success block rounded style = {styles.Button} onPress = {()=>this.inputChecker()}><Text>Log In</Text></Button>
                     </Form>   
             </Container>
         )
@@ -68,3 +68,16 @@ class Login extends Component{
 }
 
 export default Login;
+const styles = StyleSheet.create({
+  Button : {
+    marginBottom : 20,
+    marginHorizontal : 80,
+    borderWidth : 2,
+    borderColor : 'black'
+  },
+  Image : {
+      width,
+      height : 200
+  }
+
+})

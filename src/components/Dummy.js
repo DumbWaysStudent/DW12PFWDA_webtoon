@@ -1,4 +1,4 @@
-export const Init = {
+export const Dummy = {
     data : [{
         title: 'The Secret of Angel',
         url: 'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',

@@ -1,29 +1,16 @@
 import React, {Component} from 'react'
 import {List,Text,Content,Container,ListItem,Left, Thumbnail, Body,Header,Right,Button, Label,View,Input}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import {Init} from '../components/Details'
+import {Dummy} from '../components/Dummy'
+import HeaderShare from '../components/Headers/HeaderShare'
 
 
-const data = [...Init.data]
+const data = [...Dummy.data]
 class CreateEpisode extends Component{
   render(){
     return(
       <Container>
-      <Header style = {{backgroundColor : 'white'}}>
-            <Left>
-                <Button transparent onPress = {()=>{}}>
-                <Icon name='list'/>
-                </Button>
-            </Left>
-            <Body>
-                <Text>Create Episode</Text>
-            </Body>
-            <Right>
-                <Button transparent>
-                <Icon color = 'orange' name='check' />
-            </Button>
-            </Right>
-        </Header>
+        <HeaderShare title = {this.props.navigation.getParam('title')}/>
         <Content>
             <Label style = {{marginLeft : 20}}>Name</Label>
             <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>

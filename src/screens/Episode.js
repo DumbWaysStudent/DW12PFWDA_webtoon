@@ -1,40 +1,21 @@
 import React, {Component} from 'react'
 import {Image,Dimensions} from 'react-native'
-import {Text,Content,Container,List,Left, Body,Button,Header,Right}from 'native-base'
-import {Init} from '../components/Details'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import {Content,Container,List}from 'native-base'
+import {Dummy} from '../components/Dummy'
+import HeaderShare from '../components/Headers/HeaderShare'
 
 
 const { width,height } = Dimensions.get('window');
-const data = [...Init.data]
-class Episode extends Component{
-    constructor(){
-        super()
-        this.state = {
-            position : 0,
-            
-        }
-    }
-    onSharePress = () => Share.share(shareOptions);    
+const data = [...Dummy.data]
+
+class Episode extends Component{ 
     render(){
+        
+        const webtoonTitle = this.props.navigation.getParam('title')
         return(
             <Container>
                 <Content>
-                    <Header style = {{backgroundColor : 'white'}}>
-                        <Left>
-                            <Button transparent onPress = {()=>this.props.navigation.navigate('Details')}>
-                            <Icon name='arrow-left' />
-                            </Button>
-                        </Left>
-                        <Body>
-                            <Text>{this.props.navigation.getParam('title')} Episode {this.props.navigation.getParam('episode')}</Text>
-                        </Body>
-                        <Right>
-                            <Button transparent onPress={this.onSharePress}>
-                            <Icon name='share-alt' />
-                            </Button>
-                        </Right>
-                    </Header>
+                    <HeaderShare title = {webtoonTitle} navigation = {this.props.navigation}/>
                     <List>
                         <List>
                         {data.map((item, index) => {

@@ -63,7 +63,7 @@ const HomeStack = createStackNavigator({
 
 export default createAppContainer(createSwitchNavigator(
   {
-    Login : Login,
+    Login : HomeStack,
     Home: HomeStack,   
   },  
 ));

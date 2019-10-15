@@ -1,53 +1,94 @@
-import React, {Component} from 'react'
-import {TouchableOpacity,Dimensions,TextInput,View} from 'react-native'
-import {Text,Content,Container,Left, Thumbnail, Body,Button, Right,Header}from 'native-base'
+import React, { Component } from 'react'
+import { TouchableOpacity, Dimensions, TextInput, View, StyleSheet, Image } from 'react-native'
+import { Text, Content, Container,Body} from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import ImagePicker from 'react-native-image-picker';
+import HeaderEdit from '../components/Headers/HeaderEdit'
+
 
 const { width } = Dimensions.get('window');
-class MyFavourites extends Component{
-    constructor(){
+class EditProfile extends Component {
+    constructor() {
         super()
 
         this.state = {
-            profileName : 'Jaina P'
+            profileName: 'Jaina P',
+            imageUrl: ''
         }
     }
-    render(){
-        const profileName =  this.props.navigation.getParam('profileName')
-        return(
+
+    handlerCamera() {
+        const options = {
+            title: 'Select Avatar',
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        };
+
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                const source = { uri: response.uri };
+
+                // You can also display the image using data:
+                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+                this.setState({
+                    imageUrl: source,
+                });
+            }
+        });
+    }
+
+    renderProfile() {
+        if (this.state.imageUrl === '') {
+            return <Image source={{ uri: 'https://i.ytimg.com/vi/01Y1F9mWXiQ/maxresdefault.jpg' }} style={styles.profileStyle} />;
+        }
+        return <Image source={this.state.imageUrl} style={styles.profileStyle} />;
+    }
+
+    render() {
+        return (
             <Container>
-                <Header style = {{backgroundColor : 'white'}}>
-                    <Left>
-                        <Button transparent onPress = {()=>this.props.navigation.goBack()}>
-                        <Icon name='arrow-left' />
-                        </Button>
-                    </Left>
+                <HeaderEdit title = {this.props.navigation.getParam('title')} navigation = {this.props.navigation}/>
+                <Content>
                     <Body>
-                        <Text>Edit Profile</Text>
+                        {this.renderProfile()}
+                        <TouchableOpacity onPress={() => console.log(this.props)} style={styles.cameraStyle}>
+                            <Icon name='camera' size={25} />
+                        </TouchableOpacity>
+                        <TextInput style={{ borderWidth: 2, width: width * 0.6, textAlign: 'center', marginTop: 20 }} value={this.state.profileName} onChangeText={(text) => { this.setState({ profileName: text }) }} />
                     </Body>
-                    <Right>
-                        <Button transparent onPress={()=>this.props.navigation.navigate('Profile',{profileName : this.state.profileName})}>
-                        <Icon color = '#ffcc00' name='check' />
-                        </Button>
-                    </Right>
-                </Header>
-              <Content>
-                  <Body>
-                    <TouchableOpacity>
+                </Content>
+            </Container>
 
-                      <Thumbnail large source = {{uri: 'https://i.ytimg.com/vi/01Y1F9mWXiQ/maxresdefault.jpg'}}></Thumbnail>
-                    </TouchableOpacity>
-                    
-                  
-                    <TextInput style ={{borderWidth : 2,width : width*0.6,textAlign : 'center',marginTop : 20}} value = {this.state.profileName}onChangeText = {(text) =>{this.setState({profileName : text})}}/>
-                    
-
-                    </Body>
-              </Content>
-            </Container>   
-                  
         )
     }
 }
 
-export default MyFavourites
+export default EditProfile;
+
+const styles = StyleSheet.create({
+    profileStyle: {
+        height: 140,
+        width: 140,
+        borderRadius: 70
+    },
+    cameraStyle: {
+        marginTop: -30,
+        marginLeft: 80
+    },
+    textinput : {
+        borderWidth : 2,
+        width : width*0.6,
+        
+    }
+});

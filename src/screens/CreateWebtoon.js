@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import {View,Text,Content,Container,ListItem,Left, Thumbnail, Body,Header,Right,Button, Label,Input,List}from 'native-base'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import {Init} from '../components/Init'
+import HeaderShare from '../components/Headers/HeaderShare'
+import {Dummy} from '../components/Dummy'
 
 
-const data = [...Init.data]
+const data = [...Dummy.data]
 
 class CreateWebtoon extends Component{
   renderRecent = ({item,index}) => {
@@ -28,21 +28,8 @@ class CreateWebtoon extends Component{
   render(){
     return(
       <Container>
-      <Header style = {{backgroundColor : 'white'}}>
-            <Left>
-                <Button transparent onPress = {()=>{}}>
-                <Icon name='list'/>
-                </Button>
-            </Left>
-            <Body>
-                <Text>Create Webtoon</Text>
-            </Body>
-            <Right>
-                <Button transparent>
-                <Icon color = 'orange' name='check' />
-            </Button>
-            </Right>
-        </Header>
+      <HeaderShare title = 'Create Webtoon' navigation = {this.props.navigation}/>
+
         <Content>
             <Label style = {{marginLeft :20}}>Title</Label>
             <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>

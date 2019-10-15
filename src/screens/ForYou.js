@@ -1,13 +1,15 @@
 import React, {Component} from 'react'
-import {TouchableOpacity,View,Dimensions,ImageBackground,StyleSheet} from 'react-native'
-import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Button,Header,Right,Input}from 'native-base'
+import {TouchableOpacity,View,Dimensions,ImageBackground,StyleSheet,StatusBar} from 'react-native'
+import {Text,Content,Container,List,ListItem,Left,Title, Thumbnail, Body,Right,Button, Image}from 'native-base'
 import Slideshow from 'react-native-image-slider-show'
 import Carousel from 'react-native-anchor-carousel'
-import {Init} from '../components/Init'
+import {Dummy} from '../components/Dummy'
+import HeaderHome from '../components/Headers/HeaderHome'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-const data = [...Init.data]
-const { width } = Dimensions.get('window');
+
+const data = [...Dummy.data]
+const {height, width } = Dimensions.get('window');
 class ForYou extends Component{
     constructor(){
         super()
@@ -34,7 +36,7 @@ class ForYou extends Component{
     renderItem = ({ item, index }) => {
         const { url, title, caption } = item;
         return (
-          <TouchableOpacity onPress = {()=>this.props.navigation.navigate('Details', {url : item.url, title : item.title})}
+          <TouchableOpacity onPress = {()=>this.props.navigation.navigate('Details', {url : item.url, webtoonTitle : item.title})}
                 activeOpacity = {0.4}
                 style={styles.item}
             >
@@ -56,64 +58,56 @@ class ForYou extends Component{
     
     render(){
         return(
-            <Container>
-              <Header style = {{backgroundColor : 'white'}}>
-                    <Left>
-                        <Button transparent>
-                        <Icon name='list' />
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Text>Webtoon</Text>
-                    </Body>
-                    <Right>
-                    </Right>
-                </Header>   
-                  <Content>
-                        <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginTop : 10}}>
-                            <Input></Input>
-                            <Icon style={{paddingVertical: 10,paddingRight : 10}} name = 'search' size={25}></Icon>
-                        </View>
-                        <ListItem><Text>For You</Text></ListItem>
-                        <Slideshow 
-                            dataSource = {data}
-                            position = {this.state.position}
-                            onPositionChanged={position => this.setState({ position })}
-                        />
-                        <ListItem><Text>For You</Text></ListItem>
-                        <View style = {styles.carouselContainer2}>
-                        <Carousel
-                            style={styles.carousel}
-                            data={data}
-                            renderItem={this.renderItem}
-                            itemWidth={0.7 * width}
-                            inActiveOpacity={0.3}
-                            containerWidth={width - 10}
-                            ref={(c) => {
-                            this.numberCarousel = c;
-                            }}
-                        />
-                        </View>
-                        {data.map((item, index) => {
-                          return (
-                          <List key = {index}>
-                            <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{title : item.title, url : item.url})}}>
-                              <Left>
-                              <Thumbnail square source={{uri: item.url}}/>
-                              </Left>   
-                              <Body>
-                                  <Text>{item.title}</Text>
-                                  <Button style = {{width : 130,borderWidth : 2}} iconLeft warning>
-                                      <Text> + Favourite</Text>
-                                  </Button>
-                              </Body>
-                            </ListItem>
-                          </List>
-                          )
-                        })}
+
+          
+             <Container>
+              <HeaderHome/>            
+              <Content imageBackground = ''>
+                      <Slideshow 
+                        dataSource = {data}
+                        position = {this.state.position}
+                        onPositionChanged={position => this.setState({ position })}
+                    />
+                    <ListItem><Text>Favoutites</Text></ListItem>
+                    <View style = {styles.carouselContainer2}>
+                    <Carousel
+                        style={styles.carousel}
+                        data={data}
+                        renderItem={this.renderItem}
+                        itemWidth={0.7 * width}
+                        inActiveOpacity={0.3}
+                        containerWidth={width - 10}
+                        ref={(c) => {
+                        this.numberCarousel = c;
+                        }}
+                    />
+                    </View>
+                    <ListItem><Text>Recently Updated</Text></ListItem>
+                    {data.map((item, index) => {
+                      return (
+                      <List key = {index}>
+                        <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{title : item.title, url : item.url})}}>
+                          <Left>
+                          <Thumbnail square source={{uri: item.url}}/>
+                          </Left>   
+                          <Body>
+                              <Text>{item.title}</Text>
+                          </Body>
+                          <Right>
+                            <TouchableOpacity>
+                              <Icon color = 'orange' size = {25} name = 'star'/>
+                            </TouchableOpacity>
+                          </Right>
+                        </ListItem>
+                      </List>
+                      )
+                    })}
                   </Content>         
-            </Container>   
-                  
+            
+          </Container>  
+          
+          
+         
         )
     }
 }
@@ -135,7 +129,7 @@ const styles = StyleSheet.create({
     },
     carouselContainer2: { 
       width: width,
-      height:width*0.7, 
+      height:width*0.6, 
       marginTop:10
     }, 
     carousel: {
@@ -176,5 +170,6 @@ const styles = StyleSheet.create({
       },
       contentText: { 
         fontSize:12
-      }
+      },
+
   });

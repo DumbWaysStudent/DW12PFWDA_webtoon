@@ -1,17 +1,12 @@
 import React, {Component} from 'react'
-import {Share} from'react-native'
-import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Header,Right,Button,View,Input}from 'native-base'
+import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Right,Button,View,Input}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import {Init} from '../components/Init'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import {Dummy} from '../components/Dummy'
+import HeaderMain from '../components/Headers/HeaderMain'
 
-const shareOptions = {
-  title: 'Title',
-  message: 'Message to share', // Note that according to the documentation at least one of "message" or "url" fields is required
-  url: 'www.example.com',
-  subject: 'Subject'
-};
-const data = [...Init.data]
+
+const data = [...Dummy.data]
 
 class Details extends Component{
   constructor(){
@@ -20,25 +15,10 @@ class Details extends Component{
       input : ''
     }
   }
-  onSharePress = () => Share.share(shareOptions);
   render(){
     return(
       <Container>
-      <Header style = {{backgroundColor : 'white'}}>
-            <Left>
-                <Button transparent onPress = {()=>{}}>
-                <Icon name='list'/>
-                </Button>
-            </Left>
-            <Body>
-                <Text>My Favourites</Text>
-            </Body>
-            <Right>
-                <Button transparent onPress={this.onSharePress}>
-                <Icon name='share-alt' />
-                </Button>
-            </Right>
-        </Header>
+      <HeaderMain title = 'My Favourites'/>
         <Content>
             <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
                 <Input onChangeText = {(e)=>this.setState({input : e})}/>
@@ -49,7 +29,7 @@ class Details extends Component{
             {data.map((item, index) => {
               return (
               <List key = {index}>
-                <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Episode',{title : item.title, episode : data.length-index})}}>
+                <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{title : item.title, url : item.url})}}>
                     <Left>
                     <Thumbnail square source={{uri: item.url}}/>
                     </Left>   

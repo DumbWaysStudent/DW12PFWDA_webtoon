@@ -1,76 +1,82 @@
 import React, {Component} from 'react'
-
+import {StyleSheet} from 'react-native'
 import {Text,Content,Container,ListItem,Left, Thumbnail, Body,Header,Right,Button, Label,View,Input,List}from 'native-base'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import {Init} from '../components/Details'
+import {Dummy} from '../components/Dummy'
+import HeaderEdit from '../components/Headers/HeaderEdit'
+import ImagePicker from 'react-native-image-picker';
 
 
-const data = [...Init.data]
+
+
+const data = [...Dummy.data]
 
 class EditEpisode extends Component{
-  renderRecent = ({item,index}) => {
-    return(
-        <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{id : index})}}>
-            <Left>
-            <Thumbnail square source={{uri: item.url}}/>
-            </Left>   
-            <Body>
-                <Text>{item.title}</Text>
-                <Text note numberOfLines={1}>Lorem Ipsum</Text>
-            </Body>
-            <Right>
-                <Button transparent>
-                  <Text>View</Text>
-                </Button>
-              </Right>
-        </ListItem>
-    )
-  }
+  handlerCamera() {
+    const options = {
+        title: 'Select Avatar',
+        storageOptions: {
+            skipBackup: true,
+            path: 'images',
+        },
+    };
+
+    ImagePicker.showImagePicker(options, (response) => {
+        console.log('Response = ', response);
+
+        if (response.didCancel) {
+            console.log('User cancelled image picker');
+        } else if (response.error) {
+            console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+            console.log('User tapped custom button: ', response.customButton);
+        } else {
+            const source = { uri: response.uri };
+
+            // You can also display the image using data:
+            // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+            this.setState({
+                imageUrl: source,
+            });
+        }
+    });
+}
   render(){
     return(
       <Container>
-      <Header style = {{backgroundColor : 'white'}}>
-            <Left>
-            <Button transparent onPress = {()=>this.props.navigation.goBack()}>
-                <Icon name='arrow-left'/>
-                </Button>
-            </Left>
-            <Body>
-                <Text>Edit Episode</Text>
-            </Body>
-            <Right>
-                <Button transparent>
-                <Icon color = 'orange' name='check' />
-            </Button>
-            </Right>
-        </Header>
+        <HeaderEdit title = 'Edit Episode' navigation = {this.props.navigation}/>
         <Content>
             <Label style = {{marginHorizontal : 20,marginTop : 10}}>Title</Label>
             <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
-                <Input value = {'Episode '+this.props.navigation.getParam('episode')}/>
+                <Input value = {this.props.navigation.getParam('episode')}/>
             </View>
-            {data.map((item, index) => {
-              return (
-              <List key = {index}>
-                <ListItem thumbnail onPress = {()=>this.props.navigation.navigate('EditEpisode',{episode :data.length-index})}>
+              <List>
+                <ListItem thumbnail>
                     <Left>
-                    <Thumbnail square source={{uri: item.url}}/>
+                    <Thumbnail square source={{uri: this.props.navigation.getParam('url')}}/>
                     </Left>   
                     <Body>
-                        <Text>Episode {data.length-index}</Text>
+                        <Text>{this.props.navigation.getParam('episode')}</Text>
                         <Text note numberOfLines={1}>Lorem Ipsum</Text>
                     </Body>
                     <Right>
                       </Right>
                 </ListItem>
-              </List>
-              )
-            })}
-            <Button  transparent style = {{color : 'black', marginBottom : 20,marginHorizontal : 80,borderWidth : 2,borderColor : 'black'}} block bordered><Text style = {{color : 'black'}}>+ Image</Text></Button>  
-            <Button block danger style = {{marginHorizontal : 80,borderWidth : 2,borderColor : 'black'}}><Text>Delete Episode</Text></Button>                  
+              </List>           
+            <Button onPress = {()=>this.handlerCamera()} transparent style = {styles.Button} block bordered><Text style = {{color : 'black'}}>+ Image</Text></Button>  
+            <Button block danger style = {styles.Button}><Text>Delete Episode</Text></Button>                  
         </Content>
     </Container> 
     )
   }
 }
 export default EditEpisode
+const styles = StyleSheet.create({
+  Button : {
+    marginBottom : 20,
+    marginHorizontal : 80,
+    borderWidth : 2,
+    borderColor : 'black'
+  },
+
+})
