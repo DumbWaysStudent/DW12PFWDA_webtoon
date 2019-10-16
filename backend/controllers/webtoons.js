@@ -1,6 +1,7 @@
 const models = require('../models')
 const webtoon = models.webtoons
 const detailWebtoon = models.detail_webtoon
+const detailEpisode = models.detail_episode
 const user = models.user
 
 exports.index = (req, res) => {
@@ -22,11 +23,20 @@ exports.index = (req, res) => {
     
 // }
 
-exports.showDetail = async(req, res) => {
-    const webtoonId = req.params.id
+exports.showDetails = async(req, res) => {
     try {
     const result = await detailWebtoon.findOne({
     where:{id:req.params.id}})
+     res.send(result)   
+    } catch (error) {
+        res.send(error)
+    }  
+}
+
+exports.showEpisodes = async(req, res) => {
+    try {
+    const result = await detailEpisode.findAll({
+    where:{id_webtoon:req.params.idWebtoon,id_episode:req.params.idEpisode}})
      res.send(result)   
     } catch (error) {
         res.send(error)
