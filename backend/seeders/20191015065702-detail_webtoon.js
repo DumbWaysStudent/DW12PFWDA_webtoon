@@ -46,7 +46,7 @@ module.exports = {
       title: 'Who',
       image: 'https://66.media.tumblr.com/5ae738908ee22c45f5e375640056511b/tumblr_om3ustrrgd1slpxhzo1_400.jpg',
       id_webtoon : 3,
-    },], {});
+    },], {}); 
     /*
       Add altering commands here.
       Return a promise to correctly handle asynchronicity.
