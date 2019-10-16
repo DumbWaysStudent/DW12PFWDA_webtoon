@@ -9,7 +9,6 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios'
 
 
-const data = [...Dummy.data]
 const {height, width } = Dimensions.get('window');
 class ForYou extends Component{
     constructor(){
@@ -26,23 +25,14 @@ class ForYou extends Component{
         this.setState({
             interval: setInterval(() => {
             this.setState({
-                position: this.state.position === data.length-1 ? 0 : this.state.position + 1
+                position: this.state.position === this.state.data.length-1 ? 0 : this.state.position + 1
             });
             }, 3500)
         });
+        this.setState({data:this.props.navigation.getParam('data'),ready:true})
     }
     componentDidMount() {
-      axios.get('http://192.168.43.24:9876/api/v1/webtoons')
-      .then(result=>{
-        setTimeout(() => {
-        this.setState({data: result.data,ready:true})
-        console.log(this.state.data)
-        }, 2000);
-        
-      })
-      .catch(error=>{
-        console.log(error)
-      })
+
     }
     componentWillUnmount() {
     clearInterval(this.state.interval);
@@ -69,10 +59,11 @@ class ForYou extends Component{
           </TouchableOpacity>
         );
       };
-    
+
     render(){
       if(this.state.ready==true){
         return(
+          
              <Container>
               <HeaderHome/>
               <Content>
@@ -95,7 +86,7 @@ class ForYou extends Component{
                         }}
                     />
                     </View>
-                    <ListItem><Text>Recently Updated</Text></ListItem>
+                    <ListItem><Text>All Webtoons</Text></ListItem>
                     {this.state.data.map((item, index) => {
                       return (
                       <List key = {index}>
@@ -121,14 +112,6 @@ class ForYou extends Component{
       }
     else return(
       <View>
-        <ImageBackground source = {require('../assets/background.jpg')} style = {styles.loadingBackground}>
-        <View style = {{flexDirection:'row'}}>
-        <Image style = {styles.loadingImage} source = {require('../assets/loading.gif')}/>
-        <Image style = {styles.loadingImage} source = {require('../assets/loading2.gif')}/>
-        </View>
-        <Text>Wait</Text>
-        </ImageBackground>
-
       </View>
     )
   }

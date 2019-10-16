@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import Login from './src/screens/Login'
+import Loading from './src/screens/Loading'
 import Episode from './src/screens/Episode'
 import ForYou from './src/screens/ForYou'
 import Creation from './src/screens/Creation'
 import Details from './src/screens/Details'
-import Favourites from './src/screens/Favourites'
+import Favorites from './src/screens/Favorites'
 import Profile from './src/screens/Profile'
 import EditProfile from './src/screens/EditProfile'
 import EditWebtoon from './src/screens/EditWebtoon'
@@ -18,7 +19,7 @@ import {createBottomTabNavigator} from 'react-navigation-tabs'
 
 const BottomStack = createBottomTabNavigator({
   ForYou: ForYou,
-  Favourites: Favourites,
+  Favorites: Favorites,
   Profile: Profile
 },
 {
@@ -28,7 +29,7 @@ const BottomStack = createBottomTabNavigator({
       let iconName;
       if (routeName === 'ForYou') {
         iconName = `home`;
-      } else if (routeName === 'Favourites') {
+      } else if (routeName === 'Favorites') {
         iconName = `star`;
       }
       else iconName = `user`;
@@ -63,7 +64,8 @@ const HomeStack = createStackNavigator({
 
 export default createAppContainer(createSwitchNavigator(
   {
-    Login : HomeStack,
+    Loading: Loading,
+    Login : Login,
     Home: HomeStack,   
   },  
 ));

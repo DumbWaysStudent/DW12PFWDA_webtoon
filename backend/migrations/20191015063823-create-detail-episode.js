@@ -23,6 +23,15 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
+      id_episode: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'detail_webtoons',
+          key: 'id',
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -30,7 +39,9 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+
       }
     });
   },

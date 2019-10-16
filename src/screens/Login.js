@@ -31,7 +31,7 @@ class Login extends Component{
             if(password!==''){
                 if(regexResult==email){
                     if(email == this.state.data.email && password == this.state.data.password){
-                        this.props.navigation.navigate('Home')
+                        this.props.navigation.navigate('Loading')
                     }
                     else alert('Invalid Email / Password')
                 }
@@ -48,7 +48,7 @@ class Login extends Component{
             <Container style = {{justifyContent : 'center'}}>
                     <View style = {{alignItems : 'center'}}>
                     <Image style = {styles.Image} source = {{uri : 'https://static01.nyt.com/images/2015/07/06/business/06webtoons/06webtoons-articleLarge.jpg?quality=90&auto=webp'}}/>
-                    <Text style = {{paddingBottom : 15,fontSize : 20}} >Login with your WEBTOON account</Text>
+                    <Text style = {{paddingBottom : 15,fontSize : 20}} >Login with your WTHub account</Text>
                     </View>
                     <Form>
                         <Label style = {{marginLeft : 20}}>Email</Label>

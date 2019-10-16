@@ -9,7 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
-        type: Sequelize.STRING(30)
+        type: Sequelize.STRING(30),
+        unique: true
       },
       genre: {
         type: Sequelize.STRING(20)
@@ -22,7 +23,7 @@ module.exports = {
         references: {
           model: 'users',
           key: 'id',
-        },
+      },
       onUpdate: 'cascade',
       onDelete: 'cascade'
       },
@@ -33,7 +34,8 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
       }
     });
   },

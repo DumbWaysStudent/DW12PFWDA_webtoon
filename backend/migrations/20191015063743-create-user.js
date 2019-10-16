@@ -9,7 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       email: {
-        type: Sequelize.STRING(40)
+        type: Sequelize.STRING(40),
+        unique: true
       },
       password: {
         type: Sequelize.STRING
@@ -24,7 +25,8 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
       }
     });
   },

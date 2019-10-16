@@ -1,11 +1,12 @@
 const models = require('../models')
-const Webtoon = models.webtoons
-const User = models.user
+const webtoon = models.webtoons
+const detailWebtoon = models.detail_webtoon
+const user = models.user
 
 exports.index = (req, res) => {
-    Webtoon.findAll({
+    webtoon.findAll({
         include: [{
-            model: User,
+            model: user,
             as: "UserData"
         }]
     })
@@ -14,25 +15,26 @@ exports.index = (req, res) => {
 }
 
 // exports.show = (req, res) => {
-//     Webtoon.findOne({where:{id: req.params.id}})
+//     webtoon.findOne({where:{id: req.params.id}})
 //     .then(result => {
 //         res.send(result)
 //     }).catch(err => res.send(err))
     
 // }
 
-exports.show = async(req, res) => {
+exports.showDetail = async(req, res) => {
+    const webtoonId = req.params.id
     try {
-     const result = await Webtoon.findOne({where:{id:req.params.id}})
+    const result = await detailWebtoon.findOne({
+    where:{id:req.params.id}})
      res.send(result)   
     } catch (error) {
         res.send(error)
-    }
-    
+    }  
 }
 
 exports.store = (req, res) => {
-    Webtoon.create(req.body)
+    webtoon.create(req.body)
     .then(result=> {
         res.send({
             message: "success",
@@ -42,7 +44,7 @@ exports.store = (req, res) => {
 }
 
 exports.update = (req, res) => {
-    Webtoon.update(
+    webtoon.update(
         req.body,
         {where: {id: req.params.id}}
     )
@@ -56,7 +58,7 @@ exports.update = (req, res) => {
 
 exports.delete = async(req, res) => {
     try{
-        const result = await Webtoon.destroy({where:{id:req.params.id}})  
+        const result = await webtoon.destroy({where:{id:req.params.id}})  
         res.send({
             message:"success"
             ,result

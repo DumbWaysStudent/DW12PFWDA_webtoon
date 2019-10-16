@@ -26,7 +26,7 @@ module.exports = {
       title: 'Dice',
       genre: 'Fantasy',
       image : 'https://2.bp.blogspot.com/-96cYCK-LCEc/VwPfZMEramI/AAAAAAAAEIk/FGdI4G6cx-Y-6nstZXeBB04T6coSwUhiA/s1600/dice.jpg',
-      created_by : 1
+      created_by : 3
     },
 
   ], {});

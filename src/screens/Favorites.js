@@ -8,7 +8,7 @@ import HeaderMain from '../components/Headers/HeaderMain'
 
 const data = [...Dummy.data]
 
-class Details extends Component{
+class Favorites extends Component{
   constructor(){
     super()
     this.state = {
@@ -29,7 +29,7 @@ class Details extends Component{
             {data.map((item, index) => {
               return (
               <List key = {index}>
-                <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{title : item.title, url : item.url})}}>
+                <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Favorites',{title : item.title, url : item.url})}}>
                     <Left>
                     <Thumbnail square source={{uri: item.url}}/>
                     </Left>   
@@ -51,4 +51,4 @@ class Details extends Component{
     )
   }
 }
-export default Details
+export default Favorites

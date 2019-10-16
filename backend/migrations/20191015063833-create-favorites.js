@@ -8,19 +8,19 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
-        type: Sequelize.STRING
-      },
-      genre: {
-        type: Sequelize.STRING
-      },
-      image: {
-        type: Sequelize.STRING
-      },
       id_webtoon: {
         type: Sequelize.INTEGER,
         references: {
           model: 'webtoons',
+          key: 'id'
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
+      },
+      id_user: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
           key: 'id'
         },
         onUpdate: 'cascade',
@@ -33,7 +33,8 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
       }
     });
   },
