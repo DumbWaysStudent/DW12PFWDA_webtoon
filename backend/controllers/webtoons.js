@@ -2,19 +2,23 @@ const models = require('../models')
 const webtoon = models.webtoons
 const detailWebtoon = models.detail_webtoon
 const detailEpisode = models.detail_episode
-const user = models.user
 
 exports.index = (req, res) => {
-    webtoon.findAll({
-        include: [{
-            model: user,
-            as: "UserData"
-        }]
-    })
+    webtoon.findAll()
     .then(result=>res.send(result))
     .catch(err=>res.send(err))
 }
 
+// exports.index = (req, res) => {
+//     webtoon.findAll({
+//         include: [{
+//             model: user,
+//             as: "UserData"
+//         }]
+//     })
+//     .then(result=>res.send(result))
+//     .catch(err=>res.send(err))
+// }
 // exports.show = (req, res) => {
 //     webtoon.findOne({where:{id: req.params.id}})
 //     .then(result => {
