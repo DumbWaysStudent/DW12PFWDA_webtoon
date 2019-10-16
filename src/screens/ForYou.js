@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
-import {TouchableOpacity,View,Dimensions,ImageBackground,StyleSheet,StatusBar} from 'react-native'
-import {Text,Content,Container,List,ListItem,Left,Title, Thumbnail, Body,Right,Button, Image}from 'native-base'
+import {TouchableOpacity,View,Dimensions,ImageBackground,StyleSheet,Image} from 'react-native'
+import {Text,Content,Container,List,ListItem,Left,Title, Thumbnail, Body,Right,Button}from 'native-base'
 import Slideshow from 'react-native-image-slider-show'
 import Carousel from 'react-native-anchor-carousel'
 import {Dummy} from '../components/Dummy'
 import HeaderHome from '../components/Headers/HeaderHome'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import axios from 'axios'
 
 
 const data = [...Dummy.data]
@@ -16,10 +17,11 @@ class ForYou extends Component{
         this.state = {
             position : 0,
             interval : null,
-            button : ''
+            button : '',
+            data:'',
+            ready:false
         }
     }
-    onSharePress = () => Share.share(shareOptions);
     componentWillMount() {
         this.setState({
             interval: setInterval(() => {
@@ -29,19 +31,31 @@ class ForYou extends Component{
             }, 3500)
         });
     }
-    
+    componentDidMount() {
+      axios.get('http://192.168.43.24:9876/api/v1/webtoons')
+      .then(result=>{
+        setTimeout(() => {
+        this.setState({data: result.data,ready:true})
+        console.log(this.state.data)
+        }, 2000);
+        
+      })
+      .catch(error=>{
+        console.log(error)
+      })
+    }
     componentWillUnmount() {
     clearInterval(this.state.interval);
     }
     renderItem = ({ item, index }) => {
-        const { url, title, caption } = item;
+        const { image, title, caption } = item;
         return (
-          <TouchableOpacity onPress = {()=>this.props.navigation.navigate('Details', {url : item.url, webtoonTitle : item.title})}
+          <TouchableOpacity onPress = {()=>this.props.navigation.navigate('Details', {image : item.image, webtoonTitle : item.title})}
                 activeOpacity = {0.4}
                 style={styles.item}
             >
             <ImageBackground 
-              source={{ uri: url }}
+              source={{ uri: image }}
               style={styles.imageBackground}
             >
               <View style={styles.rightTextContainer}>
@@ -57,22 +71,21 @@ class ForYou extends Component{
       };
     
     render(){
+      if(this.state.ready==true){
         return(
-
-          
              <Container>
-              <HeaderHome/>            
-              <Content imageBackground = ''>
-                      <Slideshow 
-                        dataSource = {data}
+              <HeaderHome/>
+              <Content>
+                    <Slideshow 
+                        dataSource = {this.state.data}
                         position = {this.state.position}
                         onPositionChanged={position => this.setState({ position })}
                     />
-                    <ListItem><Text>Favoutites</Text></ListItem>
+                    <ListItem><Text>Favorites</Text></ListItem>
                     <View style = {styles.carouselContainer2}>
                     <Carousel
                         style={styles.carousel}
-                        data={data}
+                        data={this.state.data}
                         renderItem={this.renderItem}
                         itemWidth={0.7 * width}
                         inActiveOpacity={0.3}
@@ -83,12 +96,12 @@ class ForYou extends Component{
                     />
                     </View>
                     <ListItem><Text>Recently Updated</Text></ListItem>
-                    {data.map((item, index) => {
+                    {this.state.data.map((item, index) => {
                       return (
                       <List key = {index}>
-                        <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{title : item.title, url : item.url})}}>
+                        <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{title : item.title, url : item.image})}}>
                           <Left>
-                          <Thumbnail square source={{uri: item.url}}/>
+                          <Thumbnail square source={{uri: item.image}}/>
                           </Left>   
                           <Body>
                               <Text>{item.title}</Text>
@@ -102,14 +115,23 @@ class ForYou extends Component{
                       </List>
                       )
                     })}
-                  </Content>         
-            
+                  </Content>                      
           </Container>  
-          
-          
-         
         )
-    }
+      }
+    else return(
+      <View>
+        <ImageBackground source = {require('../assets/background.jpg')} style = {styles.loadingBackground}>
+        <View style = {{flexDirection:'row'}}>
+        <Image style = {styles.loadingImage} source = {require('../assets/loading.gif')}/>
+        <Image style = {styles.loadingImage} source = {require('../assets/loading2.gif')}/>
+        </View>
+        <Text>Wait</Text>
+        </ImageBackground>
+
+      </View>
+    )
+  }
 }
 
 export default ForYou
@@ -134,14 +156,14 @@ const styles = StyleSheet.create({
     }, 
     carousel: {
         flex: 1,
-        backgroundColor: '#141518'
+        backgroundColor: 'white'
       },
       item: {
-        borderWidth: 2,
+        borderWidth: 5,
         backgroundColor: 'white',
         flex: 1,
-        borderRadius: 5,
-        borderColor: 'white',
+        borderRadius: 9,
+        borderColor: 'grey',
         elevation: 3
       },
       imageBackground: {
@@ -166,10 +188,21 @@ const styles = StyleSheet.create({
       },
       titleText: {
         fontWeight: 'bold',
-        fontSize: 18
+        fontSize: 18,
+        textAlign:'center'
       },
       contentText: { 
-        fontSize:12
+        fontSize:12,
+        textAlign:'center'
       },
+      loadingBackground:{
+        height,width,
+        alignItems:'center',
+        justifyContent:'center'
+      },
+      loadingImage:{
+        height: height*0.2,
+        width:width*0.3
+      }
 
   });
