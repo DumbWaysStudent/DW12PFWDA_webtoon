@@ -209,9 +209,29 @@ exports.deleteCreation = async(req, res) => {
             id:webtoonId
         }})  
         res.send({
-            message:"success"
+            message:"delete success"
             ,result
         })  
+    }
+    catch(error){
+        res.send(error)
+    }
+}
+
+exports.deleteEpisode = async(req, res) => {
+    const userId=req.params.user_id
+    const webtoonId=req.params.webtoon_id
+    const episodeId = req.params.episode_id
+    try{
+        const result = await detailEpisode.destroy({where:{
+            id_user:userId,
+            id_webtoon:webtoonId,
+            id_episode:episodeId
+        }})  
+        res.send({
+            message : "deletion success",
+            result
+        })
     }
     catch(error){
         res.send(error)

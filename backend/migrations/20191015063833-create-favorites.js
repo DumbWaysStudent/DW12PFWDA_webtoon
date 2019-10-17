@@ -8,21 +8,21 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id_webtoon: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'webtoons',
-          key: 'id'
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade'
-      },
       id_user: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: 'users',
+          key: 'id'
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
+      },
+      id_webtoon: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'webtoons',
           key: 'id'
         },
         onUpdate: 'cascade',

@@ -16,6 +16,16 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(500)
       },
+      id_user: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id',
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
+      },
       id_webtoon: {
         allowNull: false,
         type: Sequelize.INTEGER,
@@ -31,16 +41,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'detail_webtoons',
-          key: 'id',
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade'
-      },
-      id_user: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'users',
           key: 'id',
         },
         onUpdate: 'cascade',

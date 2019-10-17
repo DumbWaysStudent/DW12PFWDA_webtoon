@@ -20,21 +20,21 @@ module.exports = {
         type: Sequelize.STRING(500),
         allowNull: false,
       },
-      id_webtoon: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'webtoons',
-          key: 'id',
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade'
-      },
       id_user: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'users',
+          key: 'id',
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
+      },
+      id_webtoon: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'webtoons',
           key: 'id',
         },
         onUpdate: 'cascade',
