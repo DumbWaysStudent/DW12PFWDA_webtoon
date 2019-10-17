@@ -13,7 +13,7 @@ exports.login = (req, res)=>{
             const token = jwt.sign({ id: user.id }, 'token')
             res.send({
                 message:"login succeed",
-                user,
+                email,
                 token
             }) 
         }else{
@@ -34,7 +34,6 @@ exports.register = (req, res)=>{
             user.create(req.body)
             .then(register=>{
                 const token = jwt.sign({ id: register.id }, 'token')
-                const email = register.email
                 res.send({
                     message : "register succeed",
                     email
