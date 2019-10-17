@@ -21,6 +21,8 @@ app.group("/api/v1",(router)=>{
     router.get('/webtoon/:id/episodes', webtoonsController.showDetails)
     router.get('/webtoon/:idWebtoon/episode/:idEpisode',webtoonsController.showEpisodes)
     router.get('/user/:id/webtoons',authenticated,webtoonsController.showCreations)
+    router.post('/user/:id/webtoon',authenticated,webtoonsController.addCreation)
+
 
 
 

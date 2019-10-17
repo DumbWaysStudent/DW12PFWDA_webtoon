@@ -10,13 +10,16 @@ module.exports = {
       },
       email: {
         type: Sequelize.STRING(40),
+        allowNull: false,
         unique: true
       },
       password: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       image: {
-        type: Sequelize.STRING(500)
+        type: Sequelize.STRING(500),
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

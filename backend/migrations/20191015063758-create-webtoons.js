@@ -13,13 +13,16 @@ module.exports = {
         unique: true
       },
       genre: {
-        type: Sequelize.STRING(20)
+        type: Sequelize.STRING(20),
+        allowNull: false,
       },
       image: {
-        type: Sequelize.STRING(500)
+        type: Sequelize.STRING(500),
+        allowNull: false,
       },
       created_by: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'users',
           key: 'id',

@@ -26,12 +26,13 @@ const Op = Sequelize.Op;
 //     }).catch(err => res.send(err))
     
 // }
+
 exports.index = (req, res) => {
     if(req.query.title){
         webtoon.findAll({
             where:{title:{[Op.like]:`%${req.query.title}%` }}
         })
-        .then(result=>res.send(req.query))
+        .then(result=>res.send(result))
         .catch(err=>res.send(err))
     }
     else if(req.query.id_user){
@@ -79,6 +80,7 @@ exports.showDetails = async(req, res) => {
     }  
 }
 
+
 exports.showCreations = async(req, res) => {
     try {
     const result = await webtoon.findAll({
@@ -99,13 +101,16 @@ exports.showEpisodes = async(req, res) => {
     }  
 }
 
-exports.store = (req, res) => {
+exports.addCreation = (req, res) => {
     webtoon.create(req.body)
     .then(result=> {
         res.send({
-            message: "success",
+            message: "add creation success",
             result
         })
+    })
+    .catch(err=>{
+        res.send(err)
     })
 }
 

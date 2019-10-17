@@ -9,6 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       id_webtoon: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: 'webtoons',
@@ -18,6 +19,7 @@ module.exports = {
         onDelete: 'cascade'
       },
       id_user: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: 'users',

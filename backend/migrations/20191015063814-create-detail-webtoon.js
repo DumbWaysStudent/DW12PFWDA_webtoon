@@ -9,13 +9,16 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
-        type: Sequelize.STRING(30)
+        type: Sequelize.STRING(30),
+        allowNull: false,
       },
       image: {
-        type: Sequelize.STRING(500)
+        type: Sequelize.STRING(500),
+        allowNull: false,
       },
       id_webtoon: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'webtoons',
           key: 'id',
