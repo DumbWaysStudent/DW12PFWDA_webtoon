@@ -93,6 +93,29 @@ exports.showCreations = async(req, res) => {
     }  
 }
 
+exports.addEpisode = (req, res) => {
+    const body = req.body
+    const id_user=req.params.user_id
+    const id_webtoon=req.params.webtoon_id
+    detailWebtoon.create({
+        ...body,
+        id_user,
+        id_webtoon
+    },{
+        where:{id_user :id_user,id_webtoon:id_webtoon}
+    })
+    .then(result=> {
+        res.send({
+
+            message: "add episode success",
+            result
+        })
+    })
+    .catch(err=>{
+        res.send(err)
+    })
+}
+
 exports.addCreation = (req, res) => {
     webtoon.create(req.body)
     .then(result=> {
