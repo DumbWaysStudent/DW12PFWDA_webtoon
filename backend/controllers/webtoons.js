@@ -1,12 +1,26 @@
+const Sequelize = require('sequelize')
 const models = require('../models')
 const webtoon = models.webtoons
 const detailWebtoon = models.detail_webtoon
 const detailEpisode = models.detail_episode
+const user = models.user
+const Op = Sequelize.Op;
 
 exports.index = (req, res) => {
-    webtoon.findAll()
+    if(req.query.title){
+    webtoon.findAll({
+        where:{title:{[Op.like]:`%${req.query.title}%` }}
+    })
     .then(result=>res.send(result))
     .catch(err=>res.send(err))
+    }
+    else{
+        webtoon.findAll()
+        .then(result=>res.send({
+            result
+        }))
+        .catch(err=>res.send(err))
+    }
 }
 
 // exports.index = (req, res) => {
@@ -43,7 +57,7 @@ exports.showCreations = async(req, res) => {
     where:{created_by:req.params.id}})
      res.send(result)   
     } catch (error) {
-    res.send(error)
+        res.send(error)
     }  
 }
 
