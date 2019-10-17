@@ -73,7 +73,7 @@ exports.showFavorites = async(req, res) => {
 exports.showDetails = async(req, res) => {
     try {
     const result = await detailWebtoon.findOne({
-    where:{id:req.params.id}})
+    where:{id:req.params.webtoon_id}})
      res.send(result)   
     } catch (error) {
         res.send(error)
@@ -84,7 +84,9 @@ exports.showDetails = async(req, res) => {
 exports.showCreations = async(req, res) => {
     try {
     const result = await webtoon.findAll({
-    where:{created_by:req.params.id}})
+    where:{
+        created_by:req.params.user_id
+    }})
      res.send(result)   
     } catch (error) {
         res.send(error)
@@ -107,7 +109,10 @@ exports.addCreation = (req, res) => {
 exports.updateCreation = (req, res) => {
     webtoon.update(
         req.body,   
-        {where: {created_by:req.params.id,id:req.params.webtoon_id}})
+        {where: {
+            created_by:req.params.user_id,
+            id:req.params.webtoon_id
+        }})
     .then(result=> {
         res.send({
             message: "update success",
@@ -135,24 +140,29 @@ exports.showContent = async(req, res) => {
 }
 
 exports.showEpisodes = async(req, res) => {
-    const userId=req.params.id
+    const userId=req.params.user_id
     const webtoonId=req.params.webtoon_id
     try {
-    const result = await detailEpisode.findAll({
-    where:{
-        id_user:userId,
-        id_webtoon:webtoonId
-    }})
-    console.log(req.params)
-     res.send(result)   
+        const result = await detailEpisode.findAll({
+        where:{
+            id_user:userId,
+            id_webtoon:webtoonId
+        }})
+        console.log(req.params)
+        res.send(result)   
     } catch (error) {
         res.send(error)
     }  
 }
 
-exports.delete = async(req, res) => {
+exports.deleteCreation = async(req, res) => {
+    const userId=req.params.user_id
+    const webtoonId=req.params.webtoon_id
     try{
-        const result = await webtoon.destroy({where:{id:req.params.id}})  
+        const result = await webtoon.destroy({where:{
+            created_by:userId,
+            id:webtoonId
+        }})  
         res.send({
             message:"success"
             ,result

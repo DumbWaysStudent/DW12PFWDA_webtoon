@@ -18,14 +18,18 @@ app.group("/api/v1",(router)=>{
     router.post('/login',AuthController.login)
     router.post('/register',AuthController.register)
     router.get('/webtoons', webtoonsController.index)
-    router.get('/webtoon/:id/episodes', webtoonsController.showDetails)
+
+    //SHOW DATA
+    router.get('/webtoon/:webtoon_id/episodes', webtoonsController.showDetails)
     router.get('/webtoon/:webtoon_id/episode/:episode_id',webtoonsController.showContent)
+    router.get('/user/:user_id/webtoons',authenticated,webtoonsController.showCreations)
+    router.get('/user/:user_id/webtoon/:webtoon_id/episodes',authenticated,webtoonsController.showEpisodes)
 
-    router.get('/user/:id/webtoons',authenticated,webtoonsController.showCreations)
-    router.post('/user/:id/webtoon/:webtoon_id',authenticated,webtoonsController.addCreation)
-    router.put('/user/:id/webtoon/:webtoon_id',authenticated,webtoonsController.updateCreation)
+    //CRUD CREATION
+    router.post('/user/:user_id/webtoon/:webtoon_id',authenticated,webtoonsController.addCreation)
+    router.put('/user/:user_id/webtoon/:webtoon_id',authenticated,webtoonsController.updateCreation)
+    router.delete('/user/:user_id/webtoon/:webtoon_id',authenticated,webtoonsController.deleteCreation)
 
-    router.get('/user/:id/webtoon/:webtoon_id/episodes',authenticated,webtoonsController.showEpisodes)
 
 })
 app.listen(port, () => console.log(`Listening on port ${port}!`))
