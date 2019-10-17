@@ -8,6 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      episode: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       title: {
         type: Sequelize.STRING(30),
         allowNull: false,
@@ -21,6 +25,16 @@ module.exports = {
         allowNull: false,
         references: {
           model: 'webtoons',
+          key: 'id',
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
+      },
+      id_user: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'users',
           key: 'id',
         },
         onUpdate: 'cascade',

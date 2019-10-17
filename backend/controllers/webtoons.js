@@ -91,16 +91,6 @@ exports.showCreations = async(req, res) => {
     }  
 }
 
-exports.showEpisodes = async(req, res) => {
-    try {
-    const result = await detailEpisode.findAll({
-    where:{id_webtoon:req.params.idWebtoon,id_episode:req.params.idEpisode}})
-     res.send(result)   
-    } catch (error) {
-        res.send(error)
-    }  
-}
-
 exports.addCreation = (req, res) => {
     webtoon.create(req.body)
     .then(result=> {
@@ -114,17 +104,50 @@ exports.addCreation = (req, res) => {
     })
 }
 
-exports.update = (req, res) => {
+exports.updateCreation = (req, res) => {
     webtoon.update(
-        req.body,
-        {where: {id: req.params.id}}
-    )
+        req.body,   
+        {where: {created_by:req.params.id,id:req.params.webtoon_id}})
     .then(result=> {
         res.send({
-            message: "success",
-            data: req.body
-        })
+            message: "update success",
+            result
+        })  
     })
+    .catch(err=>{
+        res.send(err)
+    })
+}
+
+exports.showContent = async(req, res) => {
+    const webtoonId=req.params.webtoon_id
+    const episodeId=req.params.episode_id
+    try {
+    const result = await detailEpisode.findAll({
+    where:{
+        id_webtoon:webtoonId,
+        id_episode:episodeId
+    }})
+     res.send(result)   
+    } catch (error) {
+        res.send(error)
+    }  
+}
+
+exports.showEpisodes = async(req, res) => {
+    const userId=req.params.id
+    const webtoonId=req.params.webtoon_id
+    try {
+    const result = await detailEpisode.findAll({
+    where:{
+        id_user:userId,
+        id_webtoon:webtoonId
+    }})
+    console.log(req.params)
+     res.send(result)   
+    } catch (error) {
+        res.send(error)
+    }  
 }
 
 exports.delete = async(req, res) => {
