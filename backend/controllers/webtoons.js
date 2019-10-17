@@ -106,9 +106,28 @@ exports.addEpisode = (req, res) => {
     })
     .then(result=> {
         res.send({
-
             message: "add episode success",
             result
+        })
+    })
+    .catch(err=>{
+        res.send(err)
+    })
+}
+
+exports.updateEpisode = (req, res) => {
+    const body = req.body
+    const id_user=req.params.user_id
+    const id_webtoon=req.params.webtoon_id
+    detailWebtoon.update({
+        ...body
+    },{
+        where:{id_user :id_user,id_webtoon:id_webtoon}
+    })
+    .then(result=> {
+        res.send({
+            message: "update episode success",
+            ...body,id_user,id_webtoon
         })
     })
     .catch(err=>{
@@ -130,16 +149,19 @@ exports.addCreation = (req, res) => {
 }
 
 exports.updateCreation = (req, res) => {
+    const body=req.body
+    const id_user=req.params.user_id
+    const id_webtoon=req.params.webtoon_id
     webtoon.update(
         req.body,   
         {where: {
-            created_by:req.params.user_id,
-            id:req.params.webtoon_id
+            created_by:id_user,
+            id:id_webtoon
         }})
     .then(result=> {
         res.send({
             message: "update success",
-            result
+            ...body,id_user,id_webtoon
         })  
     })
     .catch(err=>{

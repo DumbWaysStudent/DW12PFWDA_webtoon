@@ -28,6 +28,7 @@ app.group("/api/v1",(router)=>{
     //CRUD CREATION
     router.post('/user/:user_id/webtoon/:webtoon_id',authenticated,webtoonsController.addCreation)
     router.post('/user/:user_id/webtoon/:webtoon_id/episode',authenticated,webtoonsController.addEpisode)
+    router.put('/user/:user_id/webtoon/:webtoon_id/episode',authenticated,webtoonsController.updateEpisode)
     router.put('/user/:user_id/webtoon/:webtoon_id',authenticated,webtoonsController.updateCreation)
     router.delete('/user/:user_id/webtoon/:webtoon_id',authenticated,webtoonsController.deleteCreation)
 
