@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 
 const models = require('../models')
 const user = models.user
+const secret = require('../secret').SECRET
 
 exports.login = (req, res)=>{    
     //check if email and pass match in db tbl user
@@ -10,7 +11,8 @@ exports.login = (req, res)=>{
 
     user.findOne({where: {email, password}}).then(user=>{
         if(user){
-            const token = jwt.sign({ id: user.id }, 'token')
+            const token = jwt.sign({ id: user.id },secret)
+            
             res.send({
                 message:"login succeed",
                 email,
@@ -24,7 +26,6 @@ exports.login = (req, res)=>{
         }
     })
 }
-// const token = jwt.sign({ id: user.id }, 'token')
 
 exports.register = (req, res)=>{    
     //check if email and pass match in db tbl user
@@ -33,7 +34,7 @@ exports.register = (req, res)=>{
         if(!result){
             user.create(req.body)
             .then(register=>{
-                const token = jwt.sign({ id: register.id }, 'token')
+                const token = jwt.sign({ id: register.id }, secret)
                 res.send({
                     message : "register succeed",
                     email

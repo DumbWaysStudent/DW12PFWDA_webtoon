@@ -1,3 +1,4 @@
 const jwt = require('express-jwt')
+const {SECRET} = require('./secret')
 
-exports.authenticated = jwt({secret: 'token'})
+exports.authenticated = jwt({secret: SECRET})

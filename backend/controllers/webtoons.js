@@ -37,6 +37,16 @@ exports.showDetails = async(req, res) => {
     }  
 }
 
+exports.showCreations = async(req, res) => {
+    try {
+    const result = await webtoon.findAll({
+    where:{created_by:req.params.id}})
+     res.send(result)   
+    } catch (error) {
+    res.send(error)
+    }  
+}
+
 exports.showEpisodes = async(req, res) => {
     try {
     const result = await detailEpisode.findAll({
