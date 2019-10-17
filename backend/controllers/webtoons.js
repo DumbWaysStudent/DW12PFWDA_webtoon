@@ -3,25 +3,11 @@ const models = require('../models')
 const webtoon = models.webtoons
 const detailWebtoon = models.detail_webtoon
 const detailEpisode = models.detail_episode
+const favorites = models.favorites
 const user = models.user
 const Op = Sequelize.Op;
 
-exports.index = (req, res) => {
-    if(req.query.title){
-    webtoon.findAll({
-        where:{title:{[Op.like]:`%${req.query.title}%` }}
-    })
-    .then(result=>res.send(result))
-    .catch(err=>res.send(err))
-    }
-    else{
-        webtoon.findAll()
-        .then(result=>res.send({
-            result
-        }))
-        .catch(err=>res.send(err))
-    }
-}
+
 
 // exports.index = (req, res) => {
 //     webtoon.findAll({
@@ -40,6 +26,48 @@ exports.index = (req, res) => {
 //     }).catch(err => res.send(err))
     
 // }
+exports.index = (req, res) => {
+    if(req.query.title){
+        webtoon.findAll({
+            where:{title:{[Op.like]:`%${req.query.title}%` }}
+        })
+        .then(result=>res.send(req.query))
+        .catch(err=>res.send(err))
+    }
+    else if(req.query.id_user){
+        favorites.findAll({
+            where:{id_user:req.query.id_user},
+            include: [{
+                model: webtoon,
+                as: "webtoonData"
+            }]
+        })
+        .then(result=>res.send(result))
+        .catch(err=>res.send(err))
+    }
+    else{
+        webtoon.findAll()
+        .then(result=>res.send({
+            result
+        }))
+        .catch(err=>res.send(err))
+    }
+}
+
+exports.showFavorites = async(req, res) => {
+    try {
+    const result = await favorites.findAll({
+    where:{id_user:req.query.id_user},
+        include: [{
+            model: webtoon,
+            as: "webtoonData"
+        }]
+    })
+     res.send(result)   
+    } catch (error) {
+        res.send(error)
+    }  
+}
 
 exports.showDetails = async(req, res) => {
     try {
