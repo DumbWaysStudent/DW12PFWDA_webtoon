@@ -92,6 +92,18 @@ exports.showCreations = async(req, res) => {
         res.send(error)
     }  
 }
+exports.addCreation = (req, res) => {
+    webtoon.create(req.body)
+    .then(result=> {
+        res.send({
+            message: "add creation success",
+            result
+        })
+    })
+    .catch(err=>{
+        res.send(err)
+    })
+}
 
 exports.addEpisode = (req, res) => {
     const body = req.body
@@ -113,6 +125,28 @@ exports.addEpisode = (req, res) => {
     })
 }
 
+exports.addDetailEpisode = async(req, res) => {
+    const body = req.body
+    const userId=req.params.user_id
+    const webtoonId=req.params.webtoon_id
+    const episodeId = req.params.episode_id
+    try{
+        const result = await detailEpisode.create(
+            {...body,
+            userId,
+            webtoonId,
+            episodeId
+            })  
+        res.send({
+            message : "created",
+            result
+        })
+    }
+    catch(error){
+        res.send(error)
+    }
+}
+
 exports.updateEpisode = (req, res) => {
     const body = req.body
     const id_user=req.params.user_id
@@ -126,19 +160,6 @@ exports.updateEpisode = (req, res) => {
         res.send({
             message: "update episode success",
             ...body,id_user,id_webtoon
-        })
-    })
-    .catch(err=>{
-        res.send(err)
-    })
-}
-
-exports.addCreation = (req, res) => {
-    webtoon.create(req.body)
-    .then(result=> {
-        res.send({
-            message: "add creation success",
-            result
         })
     })
     .catch(err=>{
@@ -221,7 +242,7 @@ exports.deleteEpisode = async(req, res) => {
     const webtoonId=req.params.webtoon_id
     const episodeId = req.params.episode_id
     try{
-        const result = await detailEpisode.destroy({where:{
+        const result = await detalWebtoon.destroy({where:{
             id_user:userId,
             id_webtoon:webtoonId,
             id_episode:episodeId
@@ -236,21 +257,14 @@ exports.deleteEpisode = async(req, res) => {
     }
 }
 
-
-exports.addDetailEpisode = async(req, res) => {
-    const body = req.body
-    const userId=req.params.user_id
-    const webtoonId=req.params.webtoon_id
-    const episodeId = req.params.episode_id
+exports.deleteDetailEpisode = async(req, res) => {
+    const imageId = req.params.image_id
     try{
-        const result = await detailEpisode.create(
-            {...body,
-            userId,
-            webtoonId,
-            episodeId
-            })  
+        const result = await detailEpisode.destroy({where:{
+            id:imageId
+        }})  
         res.send({
-            message : "created",
+            message : "deletion success",
             result
         })
     }

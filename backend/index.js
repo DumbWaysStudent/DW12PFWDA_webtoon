@@ -33,6 +33,7 @@ app.group("/api/v1",(router)=>{
     router.put('/user/:user_id/webtoon/:webtoon_id',authenticated,webtoonsController.updateCreation)
     router.delete('/user/:user_id/webtoon/:webtoon_id',authenticated,webtoonsController.deleteCreation)
     router.delete('/user/:user_id/webtoon/:webtoon_id/episode/:episode_id',authenticated,webtoonsController.deleteEpisode)
+    router.delete('/user/:user_id/webtoon/:webtoon_id/episode/:episode_id/image/:image_id',authenticated,webtoonsController.deleteDetailEpisode)
 
 
 })
