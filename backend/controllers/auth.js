@@ -12,9 +12,8 @@ exports.login = (req, res)=>{
     user.findOne({where: {email, password}}).then(user=>{
         if(user){
             const token = jwt.sign({ id: user.id },secret)
-            
             res.send({
-                message:"login succeed",
+                message:"login success",
                 email,
                 token
             }) 
@@ -30,7 +29,8 @@ exports.login = (req, res)=>{
 exports.register = (req, res)=>{    
     //check if email and pass match in db tbl user
     const email = req.body.email
-    user.findOne({where: {email}}).then(result=>{
+    user.findOne({where: {email}})
+    .then(result=>{
         if(!result){
             user.create(req.body)
             .then(register=>{

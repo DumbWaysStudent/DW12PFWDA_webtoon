@@ -4,7 +4,6 @@ const webtoon = models.webtoons
 const detailWebtoon = models.detail_webtoon
 const detailEpisode = models.detail_episode
 const favorites = models.favorites
-const user = models.user
 const Op = Sequelize.Op;
 
 
@@ -56,9 +55,12 @@ exports.index = (req, res) => {
 }
 
 exports.showFavorites = async(req, res) => {
+    const userId = req.params.id_user
     try {
     const result = await favorites.findAll({
-    where:{id_user:req.query.id_user},
+    where:{
+        id_user:userId
+    },
         include: [{
             model: webtoon,
             as: "webtoonData"
@@ -80,18 +82,19 @@ exports.showDetails = async(req, res) => {
     }  
 }
 
-
 exports.showCreations = async(req, res) => {
+    const userId = req.params.user_id
     try {
     const result = await webtoon.findAll({
     where:{
-        created_by:req.params.user_id
+        created_by:userId
     }})
      res.send(result)   
     } catch (error) {
         res.send(error)
     }  
 }
+
 exports.addCreation = (req, res) => {
     webtoon.create(req.body)
     .then(result=> {
@@ -107,12 +110,12 @@ exports.addCreation = (req, res) => {
 
 exports.addEpisode = (req, res) => {
     const body = req.body
-    const id_user=req.params.user_id
-    const id_webtoon=req.params.webtoon_id
+    const userId = req.params.user_id
+    const webtoonId = req.params.webtoon_id
     detailWebtoon.create({
         ...body,
-        id_user,
-        id_webtoon
+        id_user : userId,
+        id_webtoon : webtoonId
     })
     .then(result=> {
         res.send({
@@ -127,15 +130,15 @@ exports.addEpisode = (req, res) => {
 
 exports.addDetailEpisode = async(req, res) => {
     const body = req.body
-    const userId=req.params.user_id
-    const webtoonId=req.params.webtoon_id
+    const userId = req.params.user_id
+    const webtoonId = req.params.webtoon_id
     const episodeId = req.params.episode_id
     try{
         const result = await detailEpisode.create(
             {...body,
-            userId,
-            webtoonId,
-            episodeId
+            id_user : userId,
+            id_webtoon : webtoonId,
+            id_episode : episodeId
             })  
         res.send({
             message : "created",
@@ -149,17 +152,17 @@ exports.addDetailEpisode = async(req, res) => {
 
 exports.updateEpisode = (req, res) => {
     const body = req.body
-    const id_user=req.params.user_id
-    const id_webtoon=req.params.webtoon_id
+    const userId = req.params.user_id
+    const id_webtoon = req.params.webtoon_id
     detailWebtoon.update({
         ...body
     },{
-        where:{id_user :id_user,id_webtoon:id_webtoon}
+        where:{id_user :userId,id_webtoon:id_webtoon}
     })
     .then(result=> {
         res.send({
             message: "update episode success",
-            ...body,id_user,id_webtoon
+            ...body,userId,id_webtoon
         })
     })
     .catch(err=>{
@@ -168,19 +171,19 @@ exports.updateEpisode = (req, res) => {
 }
 
 exports.updateCreation = (req, res) => {
-    const body=req.body
-    const id_user=req.params.user_id
-    const id_webtoon=req.params.webtoon_id
+    const body = req.body
+    const userId = req.params.user_id
+    const webtoonId = req.params.webtoon_id
     webtoon.update(
         req.body,   
         {where: {
-            created_by:id_user,
-            id:id_webtoon
+            created_by:userId,
+            id:webtoonId
         }})
     .then(result=> {
         res.send({
             message: "update success",
-            ...body,id_user,id_webtoon
+            ...body,userId,webtoonId
         })  
     })
     .catch(err=>{
@@ -189,8 +192,8 @@ exports.updateCreation = (req, res) => {
 }
 
 exports.showContent = async(req, res) => {
-    const webtoonId=req.params.webtoon_id
-    const episodeId=req.params.episode_id
+    const webtoonId = req.params.webtoon_id
+    const episodeId = req.params.episode_id
     try {
     const result = await detailEpisode.findAll({
     where:{
@@ -204,8 +207,8 @@ exports.showContent = async(req, res) => {
 }
 
 exports.showEpisodes = async(req, res) => {
-    const userId=req.params.user_id
-    const webtoonId=req.params.webtoon_id
+    const userId = req.params.user_id
+    const webtoonId = req.params.webtoon_id
     try {
         const result = await detailEpisode.findAll({
         where:{
@@ -220,11 +223,9 @@ exports.showEpisodes = async(req, res) => {
 }
 
 exports.deleteCreation = async(req, res) => {
-    const userId=req.params.user_id
-    const webtoonId=req.params.webtoon_id
+    const webtoonId = req.params.webtoon_id
     try{
         const result = await webtoon.destroy({where:{
-            created_by:userId,
             id:webtoonId
         }})  
         res.send({
@@ -238,14 +239,14 @@ exports.deleteCreation = async(req, res) => {
 }
 
 exports.deleteEpisode = async(req, res) => {
-    const userId=req.params.user_id
-    const webtoonId=req.params.webtoon_id
+    const userId = req.params.user_id
+    const webtoonId = req.params.webtoon_id
     const episodeId = req.params.episode_id
     try{
-        const result = await detalWebtoon.destroy({where:{
+        const result = await detailWebtoon.destroy({where:{
             id_user:userId,
             id_webtoon:webtoonId,
-            id_episode:episodeId
+            episode:episodeId
         }})  
         res.send({
             message : "deletion success",
