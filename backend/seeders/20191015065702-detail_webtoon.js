@@ -49,21 +49,21 @@ module.exports = {
       title: 'Irregular',
       image: 'https://steamuserimages-a.akamaihd.net/ugc/946221356513127145/9F5B3BC699447DEAC409282769957E1CC880A806/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true',
       id_webtoon : 3,
-      id_user : 1
+      id_user : 3
     },
     {
       episode:2,
       title: 'First Rule',
       image: 'hhttps://pm1.narvii.com/6359/631c8b2aecefc7e7e446b3fd57528b71f6815967_hq.jpg',
       id_webtoon : 3,
-      id_user : 1
+      id_user : 3
     },
     {
       episode:3,
       title: 'Who',
       image: 'https://66.media.tumblr.com/5ae738908ee22c45f5e375640056511b/tumblr_om3ustrrgd1slpxhzo1_400.jpg',
       id_webtoon : 3,
-      id_user : 1
+      id_user : 3
     },], {}); 
     /*
       Add altering commands here.

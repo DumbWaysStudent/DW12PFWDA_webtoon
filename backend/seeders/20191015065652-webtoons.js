@@ -11,12 +11,12 @@ module.exports = {
       title: 'Solo Leveling',
       genre: 'Fantasy',
       image : 'https://i0.wp.com/onmanga.com/wp-content/uploads/2019/06/Solo-Leveling.jpg?fit=480%2C710&ssl=1&resize=350%2C200',
-      created_by : 1
+      created_by : 2
     },{
       title: 'Tower of God',
       genre: 'Fantasy',
       image : 'https://i.kym-cdn.com/entries/icons/original/000/024/803/Slider2.jpg',
-      created_by : 2
+      created_by : 3
     },{
       title: 'A Good Day to be a Dog',
       genre: 'Romance',

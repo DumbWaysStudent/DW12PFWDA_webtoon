@@ -18,7 +18,7 @@ class ForYou extends Component{
             position : 0,
             interval : null,
             button : '',
-            data:'',
+            data:[...this.props.navigation.getParam('data')],
             ready:false
         }
     }
@@ -118,6 +118,18 @@ class ForYou extends Component{
           </Container>  
         )
       }
+    else return(
+      <View>
+        <ImageBackground source = {require('../assets/background.jpg')} style = {styles.loadingBackground}>
+        <View style = {{flexDirection:'row'}}>
+        <Image style = {styles.loadingImage} source = {require('../assets/loading.gif')}/>
+        <Image style = {styles.loadingImage} source = {require('../assets/loading2.gif')}/>
+        </View>
+        <Text>Wait</Text>
+        </ImageBackground>
+
+      </View>
+    )
   }
 }
 

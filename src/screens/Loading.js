@@ -1,11 +1,6 @@
 import React, {Component} from 'react'
-import {TouchableOpacity,View,Dimensions,ImageBackground,StyleSheet,Image} from 'react-native'
-import {Text,Content,Container,List,ListItem,Left,Title, Thumbnail, Body,Right,Button}from 'native-base'
-import Slideshow from 'react-native-image-slider-show'
-import Carousel from 'react-native-anchor-carousel'
-import {Dummy} from '../components/Dummy'
-import HeaderHome from '../components/Headers/HeaderHome'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import {View,Dimensions,ImageBackground,StyleSheet,Image} from 'react-native'
+import {Text}from 'native-base'
 import axios from 'axios'
 
 const {height, width } = Dimensions.get('window');
