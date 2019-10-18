@@ -26,6 +26,7 @@ app.group("/api/v1",(router)=>{
     router.get('/user/:user_id/webtoon/:webtoon_id/episodes',authenticated,webtoonsController.showEpisodes)
 
     //CRUD CREATION
+    router.post('/user/:user_id/webtoon/:webtoon_id/episode/:episode_id/image',authenticated,webtoonsController.addDetailEpisode)
     router.post('/user/:user_id/webtoon/:webtoon_id',authenticated,webtoonsController.addCreation)
     router.post('/user/:user_id/webtoon/:webtoon_id/episode',authenticated,webtoonsController.addEpisode)
     router.put('/user/:user_id/webtoon/:webtoon_id/episode',authenticated,webtoonsController.updateEpisode)
