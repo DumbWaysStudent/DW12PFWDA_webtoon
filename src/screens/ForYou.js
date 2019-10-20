@@ -3,13 +3,11 @@ import {TouchableOpacity,View,Dimensions,ImageBackground,StyleSheet,Image} from 
 import {Text,Content,Container,List,ListItem,Left,Title, Thumbnail, Body,Right,Button}from 'native-base'
 import Slideshow from 'react-native-image-slider-show'
 import Carousel from 'react-native-anchor-carousel'
-import {Dummy} from '../components/Dummy'
 import HeaderHome from '../components/Headers/HeaderHome'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import axios from 'axios'
+import { connect } from 'react-redux'
 
 
-const data = [...Dummy.data]
 const {height, width } = Dimensions.get('window');
 class ForYou extends Component{
     constructor(){
@@ -17,37 +15,25 @@ class ForYou extends Component{
         this.state = {
             position : 0,
             interval : null,
-            button : '',
-            data:[...this.props.navigation.getParam('data')],
-            ready:false
         }
     }
     componentWillMount() {
         this.setState({
             interval: setInterval(() => {
             this.setState({
-                position: this.state.position === data.length-1 ? 0 : this.state.position + 1
+                position: this.state.position === this.props.recentLocal.recent.length-1 ? 0 : this.state.position + 1
             });
             }, 3500)
         });
     }
-    componentDidMount() {
-      axios.get('http://192.168.43.24:9876/api/v1/webtoons')
-      .then(result=>{
-        setTimeout(() => {
-        this.setState({data:result.data,ready:true})
-        console.log(this.state.data)
-        }, 2000);
-      })
-      .catch(error=>{
-        console.log(error)
-      })
+    componentDidMount() {   
+      console.log(this.props.recentLocal.recent)   
     }
     componentWillUnmount() {
     clearInterval(this.state.interval);
     }
     renderItem = ({ item, index }) => {
-        const { image, title, caption } = item;
+        const { image, title, favorites } = item;
         return (
           <TouchableOpacity onPress = {()=>this.props.navigation.navigate('Details', {image : item.image, webtoonTitle : item.title})}
                 activeOpacity = {0.4}
@@ -58,25 +44,27 @@ class ForYou extends Component{
               style={styles.imageBackground}
             >
               <View style={styles.rightTextContainer}>
-                <Text style={styles.rightText}>{item.status}</Text>
+                <Text style={styles.rightText}>Hype!</Text>
               </View>
             </ImageBackground>
             <View style={styles.lowerContainer}>
               <Text style={styles.titleText}>{title}</Text>
-              <Text style={styles.contentText}>{caption}</Text>
+              <Text style={styles.contentText}>{favorites} Stars</Text>
             </View>
           </TouchableOpacity>
         );
       };
     
     render(){
-      if(this.state.ready==true){
+      const {webtoons}=this.props.webtoonsLocal
+      const {recent}=this.props.recentLocal
+      const {favorites}=this.props.favoritesLocal
         return(
              <Container>
               <HeaderHome/>
               <Content>
                     <Slideshow 
-                        dataSource = {this.state.data}
+                        dataSource = {recent}
                         position = {this.state.position}
                         onPositionChanged={position => this.setState({ position })}
                     />
@@ -84,7 +72,7 @@ class ForYou extends Component{
                     <View style = {styles.carouselContainer2}>
                     <Carousel
                         style={styles.carousel}
-                        data={this.state.data}
+                        data={favorites}
                         renderItem={this.renderItem}
                         itemWidth={0.7 * width}
                         inActiveOpacity={0.3}
@@ -94,8 +82,8 @@ class ForYou extends Component{
                         }}
                     />
                     </View>
-                    <ListItem><Text>Recently Updated</Text></ListItem>
-                    {this.state.data.map((item, index) => {
+                    <ListItem><Text>All Content</Text></ListItem>
+                    {webtoons.map((item, index) => {
                       return (
                       <List key = {index}>
                         <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{title : item.title, url : item.image})}}>
@@ -117,23 +105,26 @@ class ForYou extends Component{
                   </Content>                      
           </Container>  
         )
-      }
-    else return(
-      <View>
-        <ImageBackground source = {require('../assets/background.jpg')} style = {styles.loadingBackground}>
-        <View style = {{flexDirection:'row'}}>
-        <Image style = {styles.loadingImage} source = {require('../assets/loading.gif')}/>
-        <Image style = {styles.loadingImage} source = {require('../assets/loading2.gif')}/>
-        </View>
-        <Text>Wait</Text>
-        </ImageBackground>
-
-      </View>
-    )
+      
+  }
+}
+const mapStateToProps = state => {
+  return {
+    webtoonsLocal: state.webtoons,
+    recentLocal: state.recent,
+    favoritesLocal: state.favorites
   }
 }
 
-export default ForYou
+const mapDispatchToProps = dispatch => {
+  return {
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ForYou);
 const styles = StyleSheet.create({
     container: {
       flex: 1,

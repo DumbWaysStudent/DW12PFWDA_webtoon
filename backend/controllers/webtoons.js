@@ -46,7 +46,10 @@ exports.index = (req, res) => {
         .catch(err=>res.send(err))
     }
     else{
-        webtoon.findAll()
+        webtoon.findAll({
+            order:[['created_by','ASC']],
+            limit:3
+        })
         .then(result=>res.send({
             result
         }))

@@ -1,23 +1,20 @@
 import React, {Component} from 'react'
 import {View,Dimensions,ImageBackground,StyleSheet,Image} from 'react-native'
 import {Text}from 'native-base'
-import axios from 'axios'
+import * as actionWebtoons from '../redux/actions/actionWebtoons'
+import { connect } from 'react-redux'
+
+
 
 const {height, width } = Dimensions.get('window');
 class Loading extends Component{
-    componentDidMount = async() => {
-        try {
-        const result = await axios.get('http://192.168.43.24:9876/api/v1/webtoons')
-        setTimeout(() => {
-        this.props.navigation.navigate('ForYou',{data:result.data})
-        }, 2000);
-          
-        }
-        catch (error) {
-            console.log(error)
-            alert("There's Problem while Fetching Data")
-        }
-        
+    componentDidMount(){
+    setTimeout(async () => {
+        await this.props.handleGetWebtoons()
+        await this.props.handleGetRecent()
+        await this.props.handleGetFavorites()
+        this.props.navigation.navigate('Home')
+      }, 1000)
     }
     render(){
         return(
@@ -33,8 +30,6 @@ class Loading extends Component{
         )
     }
 }
-
-export default Loading
 const styles = StyleSheet.create({
       loadingBackground:{
         height,width,
@@ -47,3 +42,21 @@ const styles = StyleSheet.create({
       }
 
   });
+  
+  const mapStateToProps = state => {
+    return {
+    }
+  }
+  const mapDispatchToProps = dispatch => {
+    return {
+      handleGetWebtoons: () => dispatch(actionWebtoons.handleGetWebtoons()),
+      handleGetRecent: () => dispatch(actionWebtoons.handleGetRecent()),
+      handleGetFavorites: () => dispatch(actionWebtoons.handleGetFavorites()),
+    }
+  }
+  
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Loading);
+  

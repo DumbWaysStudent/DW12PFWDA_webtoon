@@ -16,17 +16,20 @@ module.exports = {
       title: 'Tower of God',
       genre: 'Fantasy',
       image : 'https://i.kym-cdn.com/entries/icons/original/000/024/803/Slider2.jpg',
-      created_by : 3
+      created_by : 3,
+      favorites:30
     },{
       title: 'A Good Day to be a Dog',
       genre: 'Romance',
       image : 'https://swebtoon-phinf.pstatic.net/20180904_277/1536059595536c1T81_JPEG/thumb_ipad.jpg',
-      created_by : 2
+      created_by : 2,
+      favorites:50
     },{
       title: 'Dice',
       genre: 'Fantasy',
       image : 'https://2.bp.blogspot.com/-96cYCK-LCEc/VwPfZMEramI/AAAAAAAAEIk/FGdI4G6cx-Y-6nstZXeBB04T6coSwUhiA/s1600/dice.jpg',
-      created_by : 3
+      created_by : 3,
+      favorites:40
     },
 
   ], {});
