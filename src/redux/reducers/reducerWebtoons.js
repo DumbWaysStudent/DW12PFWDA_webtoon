@@ -1,6 +1,7 @@
 import * as types from './../types'
 
 const initialState = {
+  isError:false,
   webtoons: [],
 };
 
@@ -20,8 +21,10 @@ export default function reducerWebtoons(state = initialState, action) {
       case `${types.GET_WEBTOONS}_REJECTED`:
         return {
           ...state,
+          isError:true
         }
     default:
       return state;
+
   }
 }

@@ -4,7 +4,7 @@ import axios from 'axios'
 
 export const handleGetWebtoons = () => ({
   type: types.GET_WEBTOONS,
-  payload: axios.get('https://wthub.herokuapp.com/api/v1/webtoons')
+  payload: axios.get('https://wthub.herokuapp.com/api/v1/webtoons') 
 });
 
 export const handleGetRecent = () => ({

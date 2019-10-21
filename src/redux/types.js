@@ -1,7 +1,11 @@
+//ACCOUNTS HANDLER
+export const LOGIN = 'LOGIN'
+export const REGISTER = 'REGISTER'
+
+//WEBTONS HANDLER
 export const GET_WEBTOONS = 'GET_WEBTOONS'
 export const GET_RECENT = 'GET_RECENT'
 export const GET_FAVORITES = 'GET_FAVORITES'
-export const LOGIN = 'LOGIN'
 
 export const GET_EPISODES = 'GET_EPISODES'
 export const ADD_EPISODE = 'ADD_EPISODE'

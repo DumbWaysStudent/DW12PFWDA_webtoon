@@ -13,14 +13,15 @@ export default function reducerLogin(state = initialState, action) {
         };
   
       case `${types.LOGIN}_FULFILLED`:
+        
         console.log(action.payload)
         return {
           ...state,
-          login: action.payload.data,
-          isLogin:true
-        };
+          login: action.payload.data
+        }
   
       case `${types.LOGIN}_REJECTED`:
+
         return {
           ...state,
         }

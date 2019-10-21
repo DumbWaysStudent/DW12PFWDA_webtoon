@@ -1,8 +1,8 @@
 import React,{Component} from 'react';
-import {Keyboard,View,Image,Dimensions,StyleSheet}from 'react-native';
+import {Keyboard,View,Image,Dimensions,StyleSheet,Alert}from 'react-native';
 import {Button,Input,Text,Container,Form,Label} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import * as actionLogin from '../redux/actions/actionLogin'
+import * as actionAccount from '../redux/actions/actionAccount'
 
 import { connect } from 'react-redux'
 
@@ -25,29 +25,70 @@ class Login extends Component{
     changeeyeState = ()=>{
         {this.state.eye=='eye' ? this.setState({eye : 'eye-slash',hidePassword : true}): this.setState({eye : 'eye',hidePassword : false})}
     }
-    inputChecker=()=>{  
+    loginChecker=async()=>{  
         Keyboard.dismiss()
         const email = String(this.state.emailInput).toLowerCase()
         const password = String(this.state.passwordInput)
         const regex = this.state.emailRegex
         let regexResult = email.match(regex)
+        
         {regexResult==null? regexResult = '' : regexResult = regexResult[0]}
         if(email!==''){
             if(password!==''){
                 if(regexResult==email){
-                    if(email == this.state.data.email && password == this.state.data.password){
-                        this.props.navigation.navigate('Home')
+                    await this.props.handleLogin(email,password)
+                    if(this.props.loginLocal.login.error==false){
+                        Alert.alert(
+                            'Login Success',
+                            'Welcome to WTHub !!',
+                            [
+                                {text: 'OK', onPress: () => this.props.navigation.navigate('Loading')},
+                            ],
+                            {cancelable: false},
+                            )
                     }
-                    else console.log(this.state.data.password)
+                    else Alert.alert('Invalid email or Password',{cancelable:false})
                 }
-                else alert('Invalid Email Syntax')
+                else Alert.alert('Invalid Email Syntax',{cancelable:false})
             }
-            else alert('Password cannot be blank')
+            else Alert.alert('Password cannot be blank',{cancelable:false})
         }
-    else alert('Email cannot be blank')
-
-        
+        else Alert.alert('Email cannot be blank',{cancelable:false})        
     }
+
+    // registerChecker=async()=>{  
+    //     Keyboard.dismiss()
+    //     const email = String(this.state.emailInput).toLowerCase()
+    //     const password = String(this.state.passwordInput)
+    //     const regex = this.state.emailRegex
+    //     let regexResult = email.match(regex)
+        
+    //     {regexResult==null? regexResult = '' : regexResult = regexResult[0]}
+    //     if(email!==''){
+    //         if(password!==''){
+    //             if(confipi)
+    //             if(regexResult==email){
+    //                 await this.props.handleLogin(email,password)
+    //                 if(this.props.loginLocal.login.error==false){
+    //                     Alert.alert(
+    //                         'Login Success',
+    //                         'Welcome to WTHub !!',
+    //                         [
+    //                             {text: 'OK', onPress: () => this.props.navigation.navigate('Loading')},
+    //                         ],
+    //                         {cancelable: false},
+    //                         )
+    //                 }
+    //                 else Alert.alert('Invalid email or Password',{cancelable:false})
+    //             }
+    //             else alert('Invalid Email Syntax')
+    //         }
+    //         else alert('Password cannot be blank')
+    //     }
+    //     else alert('Email cannot be blank')        
+    // }
+
+
     render(){
         if(this.state.form=='login'){
             return(
@@ -66,7 +107,7 @@ class Login extends Component{
                                 <Input secureTextEntry = {this.state.hidePassword} onChangeText = {(e)=>this.setState({passwordInput : e})}/>
                                 <Icon style={{paddingVertical: 10,paddingRight : 10}} name = {this.state.eye} size={25} onPress = {()=>this.changeeyeState()}></Icon>
                             </View>
-                            <Button success block rounded style = {styles.Button} onPress = {()=>this.inputChecker()}><Text>Log In</Text></Button>
+                            <Button success block rounded style = {styles.Button} onPress = {()=>this.loginChecker()}><Text>Log In</Text></Button>
                         </Form> 
                         <Text>Don't have an account?</Text><Text onPress={()=>this.setState({form:'register',eye:'eye-slash'})} style = {styles.Text}>Become a Hubbers</Text>  
                 </Container>
@@ -75,6 +116,10 @@ class Login extends Component{
         else{
             return(
                 <Container style = {{justifyContent : 'center'}}>
+                    <View style = {{alignItems : 'center'}}>
+                        <Image style = {{width : width,height : 200}} source = {{uri : 'https://avvesione.files.wordpress.com/2015/12/death_parade-07-quin-nona-ginti-decim-quindecim-alcohol-drinks-cheers-raising_glasses-bar.jpg'}}/>
+                        <Text style = {{paddingBottom : 15,fontSize : 20}} >Join WTPub</Text>
+                        </View>
                         <Form>
                             <Label style = {{marginLeft : 20}}>Email</Label>
                             <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
@@ -89,7 +134,7 @@ class Login extends Component{
                             <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
                                 <Input secureTextEntry = {true} onChangeText = {(e)=>this.setState({confirmPasswordInput : e})}/>
                             </View>
-                            <Button success block rounded style = {styles.Button} onPress = {()=>this.inputChecker()}><Text>Register</Text></Button>
+                            <Button success block rounded style = {styles.Button} onPress = {()=>this.loginChecker()}><Text>Register</Text></Button>
                         </Form> 
                         <Text>Already have an account?</Text><Text onPress={()=>this.setState({form:'login',eye:'eye-slash'})} style = {styles.Text}>Log in</Text>  
                 </Container>
@@ -99,14 +144,17 @@ class Login extends Component{
 }
 const mapStateToProps = state => {
     return {
-        usersLocal: state.users
+        loginLocal: state.login,
+        registerLocal: state.register
     }
   }
   const mapDispatchToProps = dispatch => {
     return {
-      handleLogin: () => dispatch(actionLogin.handleLogin()),
+      handleLogin: (email,password) => dispatch(actionAccount.handleLogin(email,password)),
+      handleRegister: (email,password) => dispatch(actionAccount.handleRegister(email,password)),
     }
   }
+  
   
   export default connect(
     mapStateToProps,
