@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Login from '../screens/Login'
 import Loading from '../screens/Loading'
 import Episode from '../screens/Episode'
+import Register from '../screens/Register'
 import ForYou from '../screens/ForYou'
 import Creation from '../screens/Creation'
 import Details from '../screens/Details'
@@ -59,10 +60,15 @@ const HomeStack = createStackNavigator({
   CreateEpisode : {screen : CreateEpisode, navigationOptions : ()=>({header : null})}
 },{initialRouteName : 'BottomStack'}
 )
+const AccountStack = createStackNavigator({
+  Login : {screen : Login, navigationOptions : ()=>({header : null})},
+  Register : {screen : Register, navigationOptions : ()=>({header : null})}
+},{initialRouteName : 'Login'}
+)
 
 const RootNavigator = createSwitchNavigator({
   
-  Login : Login,
+  Account : AccountStack,
   Loading: Loading,
   Home: HomeStack,   
 })

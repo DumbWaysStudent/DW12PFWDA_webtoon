@@ -38,11 +38,11 @@ class Login extends Component{
         if(email!==''){
             if(password!==''){
                 if(regexResult==email){
-                    await this.props.handleLogin(email,password)
+                    await this.props.handleRegister(email,password)
                     if(this.props.loginLocal.login.token){
                         await AsyncStorage.setItem("token",this.props.loginLocal.login.token)
                         Alert.alert(
-                            'Login Success',
+                            'new WTHubber Arise !!',
                             'Welcome to The Club, LULULU',
                             [
                                 {text: 'Yay', onPress: () => this.props.navigation.navigate('Loading')},
@@ -95,7 +95,7 @@ const mapStateToProps = state => {
   }
   const mapDispatchToProps = dispatch => {
     return {
-      handleLogin: (email,password) => dispatch(actionAccount.handleLogin(email,password)),
+      handleRegister: (email,password) => dispatch(actionAccount.handleRegister(email,password)),
     }
   }
   
