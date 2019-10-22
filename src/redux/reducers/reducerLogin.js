@@ -1,8 +1,7 @@
 import * as types from '../types'
 
 const initialState = {
-  login: [],
-  isLogin:false
+  login: []
 };
 
 export default function reducerLogin(state = initialState, action) {

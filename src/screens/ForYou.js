@@ -55,7 +55,7 @@ class ForYou extends Component{
     render(){
       const {webtoons}=this.props.webtoonsLocal
       const {recent}=this.props.recentLocal
-      const {favorites}=this.props.favoritesLocal
+      const {populars}=this.props.popularsLocal
         return(
              <Container>
               <HeaderHome/>
@@ -65,11 +65,11 @@ class ForYou extends Component{
                         position = {this.state.position}
                         onPositionChanged={position => this.setState({ position })}
                     />
-                    <ListItem><Text>Favorites</Text></ListItem>
+                    <ListItem><Text>Populars</Text></ListItem>
                     <View style = {styles.carouselContainer2}>
                     <Carousel
                         style={styles.carousel}
-                        data={favorites}
+                        data={populars}
                         renderItem={this.renderItem}
                         itemWidth={0.7 * width}
                         inActiveOpacity={0.3}
@@ -109,7 +109,7 @@ const mapStateToProps = state => {
   return {
     webtoonsLocal: state.webtoons,
     recentLocal: state.recent,
-    favoritesLocal: state.favorites
+    popularsLocal: state.populars
   }
 }
 

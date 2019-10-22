@@ -12,6 +12,7 @@ export const handleLogin = (email,password) => ({
         }
     })
   });
+
 export const handleRegister = (email,password) => ({
     type: types.REGISTER,
     payload: axios({
@@ -23,4 +24,6 @@ export const handleRegister = (email,password) => ({
         }
     })
 });
+
+
   

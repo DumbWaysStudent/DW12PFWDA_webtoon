@@ -5,11 +5,12 @@ import { createNavigationReducer } from 'react-navigation-redux-helpers';
 import RootNavigator from '../../navigators/RootNavigator'
 import reducerWebtoons from '../reducers/reducerWebtoons';
 import reducerRecent from '../reducers/reducerRecent';
-import reducerFavorites from './reducerFavorites';
+import reducerPopulars from './reducerPopulars';
 import reducerLogin from './reducerLogin';
 import reducerRegister from './reducerRegister';
 import reducerEpisodes from './reducerEpisodes';
 import reducerDetailEpisodes from './reducerDetailEpisodes';
+import reducerFavorites from './reducerFavorites';
 
 
 
@@ -23,6 +24,7 @@ const appReducer = combineReducers({
   episodes: reducerEpisodes,
   detailEpisodes: reducerDetailEpisodes,
   recent: reducerRecent,
+  populars: reducerPopulars,
   favorites: reducerFavorites,
 
 })

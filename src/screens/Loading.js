@@ -12,8 +12,11 @@ class Loading extends Component{
     setTimeout(async () => {
         await this.props.handleGetWebtoons()
         await this.props.handleGetRecent()
-        await this.props.handleGetFavorites()
+        await this.props.handleGetPopulars()
         await this.props.handleGetEpisodes()
+        await this.props.handleGetFavorites({
+          id:this.props.loginLocal.login.id
+        })
         this.props.navigation.navigate('Home')
       }, 1000)
     }
@@ -46,14 +49,17 @@ const styles = StyleSheet.create({
   
   const mapStateToProps = state => {
     return {
+      loginLocal: state.login,
     }
   }
   const mapDispatchToProps = dispatch => {
     return {
       handleGetWebtoons: () => dispatch(actionWebtoons.handleGetWebtoons()),
       handleGetRecent: () => dispatch(actionWebtoons.handleGetRecent()),
-      handleGetFavorites: () => dispatch(actionWebtoons.handleGetFavorites()),
+      handleGetPopulars: () => dispatch(actionWebtoons.handleGetPopulars()),
       handleGetEpisodes: () => dispatch(actionWebtoons.handleGetEpisodes()),
+      handleGetFavorites: (params) => dispatch(actionWebtoons.handleGetFavorites(params)),
+      
     }
   }
   

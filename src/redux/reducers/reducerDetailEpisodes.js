@@ -12,6 +12,7 @@ export default function reducerDetailEpisodes(state = initialState, action) {
         };
   
       case `${types.GET_DETAIL_EPISODES}_FULFILLED`:
+        console.log(action.payload)
         return {
           ...state,
           detailEpisodes: action.payload.data

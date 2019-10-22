@@ -12,9 +12,9 @@ export const handleGetRecent = () => ({
   payload: axios.get('https://wthub.herokuapp.com/api/v1/recent')
 });
 
-export const handleGetFavorites = () => ({
-  type: types.GET_FAVORITES,
-  payload: axios.get('https://wthub.herokuapp.com/api/v1/favorites')
+export const handleGetPopulars = () => ({
+  type: types.GET_POPULARS,
+  payload: axios.get('https://wthub.herokuapp.com/api/v1/populars')
 });
 
 export const handleGetEpisodes = () => ({
@@ -25,4 +25,9 @@ export const handleGetEpisodes = () => ({
 export const handleGetDetailEpisodes = (params) => ({
   type: types.GET_DETAIL_EPISODES,
   payload: axios.get(`https://wthub.herokuapp.com/api/v1/webtoon/${params.id_webtoon}/episode/${params.episode}`)
+});
+
+export const handleGetFavorites = (params) => ({
+  type: types.GET_FAVORITES,
+  payload: axios.get(`https://wthub.herokuapp.com/api/v1/webtoons?id_user=${params.id}`)
 });

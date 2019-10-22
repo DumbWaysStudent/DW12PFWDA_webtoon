@@ -1,9 +1,12 @@
 import React, {Component} from 'react'
-import {TouchableOpacity,Share} from 'react-native'
-import {View,Text,Content,Container,ListItem,Left, Thumbnail, Body,Button, Right,Header}from 'native-base'
+import {TouchableOpacity,Share,Image,Dimensions,StyleSheet} from 'react-native'
+import {View,Text,Content,Container,ListItem,Left, Body, Right}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import HeaderMain from '../components/Headers/HeaderMain'
+import { connect } from 'react-redux'
 
+
+const {height,width} = Dimensions.get('window')
 const shareOptions = {
     title: 'Title',
     message: 'Message to share', // Note that according to the documentation at least one of "message" or "url" fields is required
@@ -11,35 +14,19 @@ const shareOptions = {
     subject: 'Subject'
   };
 class Profile extends Component{
-    constructor(){
-        super()
-        this.state = {
-            position : 0,
-            interval : null,
-            button : ''
-        }
-    }
     onSharePress = () => Share.share(shareOptions);
-
     render(){
-        this.props.navigation.getParam('profileName')==''?profileName = 'Jaina P'
-        : profileName = this.props.navigation.getParam('profileName')
-        this.props.navigation.getParam('imageUrl')==''?imageUrl = 'https://i.ytimg.com/vi/01Y1F9mWXiQ/maxresdefault.jpg'
-        : imageUrl = this.props.navigation.getParam('imageUrl')
+        const{login}=this.props.loginLocal
+        console.log(login)
         return(
             <Container>
                 <Content>
                 <HeaderMain title = 'My Profile'/>
                   <View>
-                    <TouchableOpacity  onPress = {()=>this.props.navigation.navigate('EditProfile',{profileName : profileName,title : 'Edit Profile'})}>
+                    <TouchableOpacity  onPress = {()=>this.props.navigation.navigate('EditProfile',{title : 'Edit Profile'})}>
                         <Body>
-                        <Thumbnail large 
-    
-                        ></Thumbnail>
-                            {this.props.navigation.getParam('profileName')==null? 
-                            <Text>Jaina P</Text>
-                            : 
-                            <Text>{this.props.navigation.getParam('profileName')}</Text>}
+                        <Image source = {{uri:login.image}} style={styles.profilePic} ></Image>
+                            <Text>{login.name}</Text>
                         </Body>
                     </TouchableOpacity>
                     <View>
@@ -59,12 +46,32 @@ class Profile extends Component{
                     </View>
                   </View>
                 </Content>
-                
-               
             </Container>   
                   
         )
     }
 }
 
-export default Profile
+const mapStateToProps = state => {
+    return {
+        loginLocal: state.login,
+    }
+  }
+  const mapDispatchToProps = dispatch => {
+    return {
+    }
+  }
+  
+  
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Profile);
+  
+  const styles = StyleSheet.create({
+    profilePic:{
+        height:width*0.5,
+        width:width*0.5,
+        borderRadius:width*0.25
+    }
+})

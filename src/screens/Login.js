@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {Keyboard,View,Image,Dimensions,StyleSheet,Alert,AsyncStorage,ImageBackground}from 'react-native';
-import {Button,Input,Text,Container,Form,Label} from 'native-base';
+import {Button,Input,Text,Form,Label,Toast} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as actionAccount from '../redux/actions/actionAccount'
 
@@ -45,7 +45,11 @@ class Login extends Component{
                             'Login Success',
                             'Welcome to The Club, LULULU',
                             [
-                                {text: 'Yay', onPress: () => this.props.navigation.navigate('Loading')},
+                                {text: 'Yay', onPress: () => this.props.navigation.navigate('Loading',{
+                                    id : this.props.loginLocal.login.id,
+                                    email : this.props.loginLocal.login.email,
+                                    image : this.props.loginLocal.login.image
+                                })},
                             ],
                             {cancelable: false},
                             )
@@ -62,18 +66,17 @@ class Login extends Component{
     render(){
         return(
             <View>
-                <ImageBackground source = {require('../assets/background.jpg')} style = {styles.loadingBackground}>
-                <View style = {{marginBottom:height*0.02,alignItems:'center'}}>
-
-                    <Image style = {{width : width,height : height*0.3}} source = {{uri : 'https://static01.nyt.com/images/2015/07/06/business/06webtoons/06webtoons-articleLarge.jpg?quality=90&auto=webp'}}/>
-                    <Text style = {{paddingBottom : 15,fontSize : 20}} >Login with your WTHub account</Text>
+                <ImageBackground source = {require('../assets/background.jpg')} style = {styles.Background}>
+                <View style = {styles.Header}>
+                    <Image style = {styles.Banner} source = {{uri : 'https://static01.nyt.com/images/2015/07/06/business/06webtoons/06webtoons-articleLarge.jpg?quality=90&auto=webp'}}/>
+                    <Text style = {{fontSize : 20}} >Login with your WTHub account</Text>
                 </View>    
-                    <Form>
-                        <Label style = {{marginLeft : width*0.1}}>Email</Label>
+                    <Form style = {styles.Form}>
+                        <Label style = {styles.Label}>Email</Label>
                         <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
                             <Input onChangeText = {(e)=>this.setState({emailInput : e})}/>
                         </View>
-                        <Label style = {{marginLeft : width*0.1}}>Password</Label>
+                        <Label style = {styles.Label}>Password</Label>
                         <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
                             <Input secureTextEntry = {this.state.hidePassword} onChangeText = {(e)=>this.setState({passwordInput : e})}/>
                             <Icon style={{marginVertical: width*0.03,marginRight : width*0.03}} name = {this.state.eye} size={25} onPress = {()=>this.changeeyeState()}></Icon>
@@ -91,7 +94,8 @@ class Login extends Component{
 const mapStateToProps = state => {
     return {
         loginLocal: state.login,
-        registerLocal: state.register
+        registerLocal: state.register,
+        favoritesLocal:state.favorites
     }
   }
   const mapDispatchToProps = dispatch => {
@@ -107,19 +111,29 @@ const mapStateToProps = state => {
   )(Login);
   
 const styles = StyleSheet.create({
-    loadingBackground:{
+    Background:{
         height,width,
         alignItems:'center',
         justifyContent:'center'
-        },
+    },
     Button : {
-    marginHorizontal : width*0.3,
-    marginBottom:height*0.1,
-    borderWidth : 2,
-    borderColor : 'black'
+        marginHorizontal : width*0.3,
+        marginBottom:height*0.06,
+        borderWidth : 2,
+        borderColor : 'black'
     },
     Text : {
-    textDecorationLine:'underline',
-    color:'blue'
-    }
+        textDecorationLine:'underline',
+        color:'blue'
+    },
+    Banner:{
+        width : width,
+        height : height*0.3
+    },
+    Header:{
+        marginTop:-height*0.03,
+        alignItems:'center'
+    },
+    Form:{marginTop:height*0.1},
+    Label:{marginLeft : width*0.1}
 })

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { TouchableOpacity, Dimensions, TextInput, View, StyleSheet, Image } from 'react-native'
-import { Text, Content, Container,Body} from 'native-base'
+import { Content, Container,Body} from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import ImagePicker from 'react-native-image-picker';
 import HeaderEdit from '../components/Headers/HeaderEdit'
+import { connect } from 'react-redux'
 
 
 const { width } = Dimensions.get('window');
@@ -12,7 +13,6 @@ class EditProfile extends Component {
         super()
 
         this.state = {
-            profileName: 'Jaina P',
             imageUrl: ''
         }
     }
@@ -48,24 +48,20 @@ class EditProfile extends Component {
         });
     }
 
-    renderProfile() {
-        if (this.state.imageUrl === '') {
-            return <Image source={{ uri: 'https://i.ytimg.com/vi/01Y1F9mWXiQ/maxresdefault.jpg' }} style={styles.profileStyle} />;
-        }
-        return <Image source={this.state.imageUrl} style={styles.profileStyle} />;
-    }
+
 
     render() {
+        const{login}=this.props.loginLocal
         return (
             <Container>
                 <HeaderEdit title = {this.props.navigation.getParam('title')} navigation = {this.props.navigation}/>
                 <Content>
                     <Body>
-                        {this.renderProfile()}
-                        <TouchableOpacity onPress={() => console.log(this.props)} style={styles.cameraStyle}>
+                        <Image source={{ uri: 'https://i.ytimg.com/vi/01Y1F9mWXiQ/maxresdefault.jpg' }} style={styles.profilePic} />
+                        <TouchableOpacity style={styles.cameraStyle}>
                             <Icon name='camera' size={25} />
                         </TouchableOpacity>
-                        <TextInput style={{ borderWidth: 2, width: width * 0.6, textAlign: 'center', marginTop: 20 }} value={this.state.profileName} onChangeText={(text) => { this.setState({ profileName: text }) }} />
+                        <TextInput style={{ borderWidth: 2, width: width * 0.6, textAlign: 'center', marginTop: 20 }}/>
                     </Body>
                 </Content>
             </Container>
@@ -74,21 +70,34 @@ class EditProfile extends Component {
     }
 }
 
-export default EditProfile;
+const mapStateToProps = state => {
+    return {
+        loginLocal: state.login,
+    }
+  }
+  const mapDispatchToProps = dispatch => {
+    return {
+    }
+  }
+  
+  
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(EditProfile);
 
 const styles = StyleSheet.create({
-    profileStyle: {
-        height: 140,
-        width: 140,
-        borderRadius: 70
-    },
     cameraStyle: {
-        marginTop: -30,
-        marginLeft: 80
+        marginTop: -width*0.07,
+        marginLeft: width*0.4
     },
     textinput : {
         borderWidth : 2,
         width : width*0.6,
-        
+    },
+    profilePic:{
+        height:width*0.5,
+        width:width*0.5,
+        borderRadius:width*0.25
     }
 });

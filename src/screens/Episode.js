@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
-import {Image,Dimensions} from 'react-native'
+import {Image,Dimensions,View,Text} from 'react-native'
 import {Content,Container,List}from 'native-base'
-import {Dummy} from '../components/Dummy'
 import HeaderShare from '../components/Headers/HeaderShare'
 import { connect } from 'react-redux'
 import * as actionWebtoons from '../redux/actions/actionWebtoons'
@@ -19,6 +18,7 @@ class Episode extends Component{
         })
     }
     render(){
+        console.log(this.props.navigation.getParam('episode'))
         const {detailEpisodes}=this.props.detailEpisodesLocal
         console.log(detailEpisodes)
         const webtoonTitle = this.props.navigation.getParam('title')
@@ -26,17 +26,21 @@ class Episode extends Component{
             <Container>
                 <Content>
                     <HeaderShare title = {webtoonTitle} navigation = {this.props.navigation}/>
-                    <List>
-                        <List>
-                        {detailEpisodes.map((item, index) => {
-                          return (
-                          <List key = {index}>
-                                <Image style = {{height,width}} source ={{uri : item.image}}></Image>
-                          </List>
-                          )
-                        })}
+                    {detailEpisodes.length!==0 ? 
+                    detailEpisodes.map((item, index) => {
+                        return (
+                        <List key = {index}>
+                            <Image style = {{height,width}} source ={{uri : item.image}}></Image>
                         </List>
-                    </List>
+                        )
+                    })
+                        :
+                    <View style={{alignItems:'center',justifyContent:'center',marginTop:height*0.1}}>
+                    <Image style={{height:height*0.2,width:width*0.3}} source={require('../assets/nocontent.gif')}/>
+                    <Text>Coming Soon</Text>
+                    </View>
+                    }
+                    
                 </Content>
             </Container>            
         )

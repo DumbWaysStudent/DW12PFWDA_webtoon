@@ -54,7 +54,11 @@ class Register extends Component{
                                     'new WTHubber Arise !!',
                                     'Welcome to The Club, LULULU',
                                     [
-                                        {text: 'Yay', onPress: () => this.props.navigation.navigate('Loading')},
+                                        {text: 'Yay', onPress: () => this.props.navigation.navigate('Loading',{
+                                            id : this.props.registerLocal.register.id,
+                                            email : this.props.registerLocal.register.email,
+                                            image : this.props.registerLocal.register.image
+                                        })},
                                     ],
                                     {cancelable: false},
                                     )
@@ -75,22 +79,22 @@ class Register extends Component{
     render(){
         return(
             <View>
-                <ImageBackground source = {require('../assets/background.jpg')} style = {styles.loadingBackground}>
-                    <View style = {{marginBottom:height*0.02,alignItems:'center'}}>
-                        <Image style = {{width : width,height : height*0.3}} source = {{uri : 'https://avvesione.files.wordpress.com/2015/12/death_parade-07-quin-nona-ginti-decim-quindecim-alcohol-drinks-cheers-raising_glasses-bar.jpg'}}/>
+                <ImageBackground source = {require('../assets/background.jpg')} style = {styles.Background}>
+                    <View style = {styles.Header}>
+                        <Image style = {styles.Banner} source = {{uri : 'https://avvesione.files.wordpress.com/2015/12/death_parade-07-quin-nona-ginti-decim-quindecim-alcohol-drinks-cheers-raising_glasses-bar.jpg'}}/>
                         <Text style = {{fontSize : 20}} >Join the Hubbers</Text>
                     </View>
                     <Form>
-                        <Label style = {{marginLeft : width*0.1}}>Email</Label>
+                        <Label style = {styles.Label}>Email</Label>
                         <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
                             <Input onChangeText = {(e)=>this.setState({emailInput : e})}/>
                         </View>
-                        <Label style = {{marginLeft : width*0.1}}>Password</Label>
+                        <Label style = {styles.Label}>Password</Label>
                         <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
                             <Input secureTextEntry = {this.state.hidePassword} onChangeText = {(e)=>this.setState({passwordInput : e})}/>
                             <Icon style={{marginVertical: width*0.03,marginRight : width*0.03}} name = {this.state.eye} size={25} onPress = {()=>this.changeeyeState()}></Icon>
                         </View>
-                        <Label style = {{marginLeft : width*0.1}}>Confirm Password</Label>
+                        <Label style = {styles.Label}>Confirm Password</Label>
                         <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
                             <Input secureTextEntry = {this.state.hidePassword2} onChangeText = {(e)=>this.setState({confirmPasswordInput : e})}/>
                             <Icon style={{marginVertical: width*0.03,marginRight : width*0.03}} name = {this.state.eye2} size={25} onPress = {()=>this.changeeyeState2()}></Icon>
@@ -121,20 +125,26 @@ const mapStateToProps = state => {
     mapDispatchToProps
   )(Register);
   
-const styles = StyleSheet.create({
-    loadingBackground:{
+  const styles = StyleSheet.create({
+    Background:{
         height,width,
         alignItems:'center',
         justifyContent:'center'
-        },
+    },
     Button : {
-    marginHorizontal : width*0.3,
-    marginBottom:height*0.04,
-    borderWidth : 2,
-    borderColor : 'black'
+        marginHorizontal : width*0.3,
+        marginBottom:height*0.06,
+        borderWidth : 2,
+        borderColor : 'black'
     },
     Text : {
-    textDecorationLine:'underline',
-    color:'blue'
-    }
+        textDecorationLine:'underline',
+        color:'blue'
+    },
+    Banner:{
+        width : width,
+        height : height*0.3
+    },
+    Header:{marginBottom:height*0.02,alignItems:'center'},
+    Label:{marginLeft : width*0.1}
 })
