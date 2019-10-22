@@ -9,16 +9,18 @@ import { connect } from 'react-redux'
 
 
 const {width,height} = Dimensions.get('window') 
-class Login extends Component{
+class Register extends Component{
     constructor(){
         super();
         this.state = {
             emailInput : '',
             passwordInput : '',
+            confirmPasswordInput : '',
             hidePassword : true,
+            hidePassword2 : true,
             eye : 'eye-slash',
+            eye2 : 'eye-slash',
             emailRegex : '[a-z0-9]*[a-z0-9\.]+@[a-z0-9]+(\.[a-z0-9]+)*(\.[a-z0-9]+)',
-            form:'login'
         }
     }
     // componentDidMount(){
@@ -27,32 +29,43 @@ class Login extends Component{
     changeeyeState = ()=>{
         {this.state.eye=='eye' ? this.setState({eye : 'eye-slash',hidePassword : true}): this.setState({eye : 'eye',hidePassword : false})}
     }
-    loginChecker=async()=>{  
+    changeeyeState2 = ()=>{
+        {this.state.eye2=='eye' ? this.setState({eye2 : 'eye-slash',hidePassword2 : true}): this.setState({eye2 : 'eye',hidePassword2 : false})}
+    }
+    registerChecker=async()=>{  
         Keyboard.dismiss()
         const email = String(this.state.emailInput).toLowerCase()
         const password = String(this.state.passwordInput)
+        const confirmPassword = String(this.state.confirmPasswordInput)
         const regex = this.state.emailRegex
         let regexResult = email.match(regex)
-        
+        console.log(this.state.confirmPasswordInput)
         {regexResult==null? regexResult = '' : regexResult = regexResult[0]}
         if(email!==''){
             if(password!==''){
-                if(regexResult==email){
-                    await this.props.handleRegister(email,password)
-                    if(this.props.loginLocal.login.token){
-                        await AsyncStorage.setItem("token",this.props.loginLocal.login.token)
-                        Alert.alert(
-                            'new WTHubber Arise !!',
-                            'Welcome to The Club, LULULU',
-                            [
-                                {text: 'Yay', onPress: () => this.props.navigation.navigate('Loading')},
-                            ],
-                            {cancelable: false},
-                            )
+                if(confirmPassword!==''){
+                    if(password==confirmPassword){
+                        if(regexResult==email){
+                            await this.props.handleRegister(email,password)
+                            console.log(this.props.registerLocal.register.token)
+                            if(this.props.registerLocal.register.token){
+                                await AsyncStorage.setItem("token",this.props.registerLocal.register.token)
+                                Alert.alert(
+                                    'new WTHubber Arise !!',
+                                    'Welcome to The Club, LULULU',
+                                    [
+                                        {text: 'Yay', onPress: () => this.props.navigation.navigate('Loading')},
+                                    ],
+                                    {cancelable: false},
+                                    )
+                            }
+                            else alert('Email had been Registered',{cancelable:false})
+                        }
+                        else alert('Invalid Email Syntax',{cancelable:false})
                     }
-                    else alert('Invalid email or Password',{cancelable:false})
+                    else alert('Password Confirmation Does Not Match',{cancelable:false})
                 }
-                else alert('Invalid Email Syntax',{cancelable:false})
+                else alert('Please Confirm Your Password',{cancelable:false})
             }
             else alert('Password cannot be blank',{cancelable:false})
         }
@@ -63,10 +76,10 @@ class Login extends Component{
         return(
             <View>
                 <ImageBackground source = {require('../assets/background.jpg')} style = {styles.loadingBackground}>
-                <Image style = {{width : width,height : height*0.3}} source = {{uri : 'https://static01.nyt.com/images/2015/07/06/business/06webtoons/06webtoons-articleLarge.jpg?quality=90&auto=webp'}}/>
-
-                
-                    <Text style = {{paddingBottom : 15,fontSize : 20}} >Login with your WTHub account</Text>
+                    <View style = {{marginBottom:height*0.02,alignItems:'center'}}>
+                        <Image style = {{width : width,height : height*0.3}} source = {{uri : 'https://avvesione.files.wordpress.com/2015/12/death_parade-07-quin-nona-ginti-decim-quindecim-alcohol-drinks-cheers-raising_glasses-bar.jpg'}}/>
+                        <Text style = {{fontSize : 20}} >Join the Hubbers</Text>
+                    </View>
                     <Form>
                         <Label style = {{marginLeft : width*0.1}}>Email</Label>
                         <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
@@ -77,10 +90,14 @@ class Login extends Component{
                             <Input secureTextEntry = {this.state.hidePassword} onChangeText = {(e)=>this.setState({passwordInput : e})}/>
                             <Icon style={{marginVertical: width*0.03,marginRight : width*0.03}} name = {this.state.eye} size={25} onPress = {()=>this.changeeyeState()}></Icon>
                         </View>
-                        <Button success block rounded style = {styles.Button} onPress = {()=>this.loginChecker()}><Text>Log In</Text></Button>
+                        <Label style = {{marginLeft : width*0.1}}>Confirm Password</Label>
+                        <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
+                            <Input secureTextEntry = {this.state.hidePassword2} onChangeText = {(e)=>this.setState({confirmPasswordInput : e})}/>
+                            <Icon style={{marginVertical: width*0.03,marginRight : width*0.03}} name = {this.state.eye2} size={25} onPress = {()=>this.changeeyeState2()}></Icon>
+                        </View>
+                        <Button success block rounded style = {styles.Button} onPress = {()=>this.registerChecker()}><Text>Register</Text></Button>
                     </Form> 
-                    <Text>Don't have an account?</Text><Text onPress={()=>this.props.navigation.navigate('register')} style = {styles.Text}>Become a Hubbers</Text>  
-
+                    <Text>Already have an account?</Text><Text onPress={()=>this.props.navigation.navigate('Login')} style = {styles.Text}>Log In</Text>  
                 </ImageBackground>
 
             </View>
@@ -89,7 +106,6 @@ class Login extends Component{
 }
 const mapStateToProps = state => {
     return {
-        loginLocal: state.login,
         registerLocal: state.register
     }
   }
@@ -103,7 +119,7 @@ const mapStateToProps = state => {
   export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )(Login);
+  )(Register);
   
 const styles = StyleSheet.create({
     loadingBackground:{
@@ -113,7 +129,7 @@ const styles = StyleSheet.create({
         },
     Button : {
     marginHorizontal : width*0.3,
-    marginBottom:width*0.3,
+    marginBottom:height*0.04,
     borderWidth : 2,
     borderColor : 'black'
     },

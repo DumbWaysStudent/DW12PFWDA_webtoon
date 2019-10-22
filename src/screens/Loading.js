@@ -13,6 +13,7 @@ class Loading extends Component{
         await this.props.handleGetWebtoons()
         await this.props.handleGetRecent()
         await this.props.handleGetFavorites()
+        await this.props.handleGetEpisodes()
         this.props.navigation.navigate('Home')
       }, 1000)
     }
@@ -52,6 +53,7 @@ const styles = StyleSheet.create({
       handleGetWebtoons: () => dispatch(actionWebtoons.handleGetWebtoons()),
       handleGetRecent: () => dispatch(actionWebtoons.handleGetRecent()),
       handleGetFavorites: () => dispatch(actionWebtoons.handleGetFavorites()),
+      handleGetEpisodes: () => dispatch(actionWebtoons.handleGetEpisodes()),
     }
   }
   

@@ -63,10 +63,11 @@ class Login extends Component{
         return(
             <View>
                 <ImageBackground source = {require('../assets/background.jpg')} style = {styles.loadingBackground}>
-                <Image style = {{width : width,height : height*0.3}} source = {{uri : 'https://static01.nyt.com/images/2015/07/06/business/06webtoons/06webtoons-articleLarge.jpg?quality=90&auto=webp'}}/>
+                <View style = {{marginBottom:height*0.02,alignItems:'center'}}>
 
-                
+                    <Image style = {{width : width,height : height*0.3}} source = {{uri : 'https://static01.nyt.com/images/2015/07/06/business/06webtoons/06webtoons-articleLarge.jpg?quality=90&auto=webp'}}/>
                     <Text style = {{paddingBottom : 15,fontSize : 20}} >Login with your WTHub account</Text>
+                </View>    
                     <Form>
                         <Label style = {{marginLeft : width*0.1}}>Email</Label>
                         <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
@@ -79,7 +80,7 @@ class Login extends Component{
                         </View>
                         <Button success block rounded style = {styles.Button} onPress = {()=>this.loginChecker()}><Text>Log In</Text></Button>
                     </Form> 
-                    <Text>Don't have an account?</Text><Text onPress={()=>this.props.navigation.navigate('register')} style = {styles.Text}>Become a Hubbers</Text>  
+                    <Text>Don't have an account?</Text><Text onPress={()=>this.props.navigation.navigate('Register')} style = {styles.Text}>Become a Hubbers</Text>  
 
                 </ImageBackground>
 
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
         },
     Button : {
     marginHorizontal : width*0.3,
-    marginBottom:width*0.3,
+    marginBottom:height*0.1,
     borderWidth : 2,
     borderColor : 'black'
     },

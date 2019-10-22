@@ -17,6 +17,11 @@ export const handleGetFavorites = () => ({
   payload: axios.get('https://wthub.herokuapp.com/api/v1/favorites')
 });
 
+export const handleGetEpisodes = () => ({
+  type: types.GET_EPISODES,
+  payload: axios.get('https://wthub.herokuapp.com/api/v1/episodes')
+});
+
 export const handleDeleteTodos = (params) => ({
   type: types.DELETE_WEBTOON,
   payload: params

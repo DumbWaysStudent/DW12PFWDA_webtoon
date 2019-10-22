@@ -7,8 +7,8 @@ export const handleLogin = (email,password) => ({
         method:'POST',
         url:'https://wthub.herokuapp.com/api/v1/login',
         data:{
-            email:email,
-            password:password
+            email,
+            password
         }
     })
   });
@@ -18,8 +18,8 @@ export const handleRegister = (email,password) => ({
         method:'POST',
         url:'https://wthub.herokuapp.com/api/v1/register',
         data:{
-            email:email,
-            password:password
+            email,
+            password
         }
     })
 });
