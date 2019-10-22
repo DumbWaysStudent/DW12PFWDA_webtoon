@@ -26,16 +26,13 @@ class ForYou extends Component{
             }, 3500)
         });
     }
-    componentDidMount() {   
-      console.log(this.props.recentLocal.recent)   
-    }
     componentWillUnmount() {
     clearInterval(this.state.interval);
     }
     renderItem = ({ item, index }) => {
         const { image, title, favorites } = item;
         return (
-          <TouchableOpacity onPress = {()=>this.props.navigation.navigate('Details', {image : item.image, webtoonTitle : item.title})}
+          <TouchableOpacity onPress = {()=>this.props.navigation.navigate('Details', {id:item.id, banner : item.image, title : item.title})}
                 activeOpacity = {0.4}
                 style={styles.item}
             >
@@ -86,7 +83,7 @@ class ForYou extends Component{
                     {webtoons.map((item, index) => {
                       return (
                       <List key = {index}>
-                        <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{title : item.title, url : item.image})}}>
+                        <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{id:item.id, title : item.title, banner : item.image})}}>
                           <Left>
                           <Thumbnail square source={{uri: item.image}}/>
                           </Left>   
@@ -125,6 +122,7 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(ForYou);
+
 const styles = StyleSheet.create({
     container: {
       flex: 1,

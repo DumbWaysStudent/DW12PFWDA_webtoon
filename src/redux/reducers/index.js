@@ -9,6 +9,7 @@ import reducerFavorites from './reducerFavorites';
 import reducerLogin from './reducerLogin';
 import reducerRegister from './reducerRegister';
 import reducerEpisodes from './reducerEpisodes';
+import reducerDetailEpisodes from './reducerDetailEpisodes';
 
 
 
@@ -20,6 +21,7 @@ const appReducer = combineReducers({
   router: reducerRouter,
   webtoons: reducerWebtoons,
   episodes: reducerEpisodes,
+  detailEpisodes: reducerDetailEpisodes,
   recent: reducerRecent,
   favorites: reducerFavorites,
 

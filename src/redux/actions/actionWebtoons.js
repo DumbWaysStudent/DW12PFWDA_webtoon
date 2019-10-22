@@ -22,7 +22,7 @@ export const handleGetEpisodes = () => ({
   payload: axios.get('https://wthub.herokuapp.com/api/v1/episodes')
 });
 
-export const handleDeleteTodos = (params) => ({
-  type: types.DELETE_WEBTOON,
-  payload: params
+export const handleGetDetailEpisodes = (params) => ({
+  type: types.GET_DETAIL_EPISODES,
+  payload: axios.get(`https://wthub.herokuapp.com/api/v1/webtoon/${params.id_webtoon}/episode/${params.episode}`)
 });
