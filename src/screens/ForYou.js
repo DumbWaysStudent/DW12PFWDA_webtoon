@@ -10,11 +10,12 @@ import { connect } from 'react-redux'
 
 const {height, width } = Dimensions.get('window');
 class ForYou extends Component{
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state = {
             position : 0,
             interval : null,
+            starId:[-1],
         }
     }
     componentWillMount() {
@@ -56,10 +57,25 @@ class ForYou extends Component{
         );
       };
     
+    async handlerStar(id){
+      const starChecker=this.state.starId.filter(e=>e==id)
+      let stars=[...this.state.starId]  
+      if(starChecker==''){ 
+        
+        stars.push(id)
+        await this.setState({starId:stars})
+      }
+      else {
+        const newArr=stars.filter(e=>e!==id)
+        await this.setState({starId:newArr})
+      }
+        
+    }
     render(){
       const {webtoons}=this.props.webtoonsLocal
       const {recent}=this.props.recentLocal
       const {populars}=this.props.popularsLocal
+      const color = 'orange'
         return(
              <Container>
               <HeaderHome/>
@@ -95,8 +111,8 @@ class ForYou extends Component{
                               <Text>{item.title}</Text>
                           </Body>
                           <Right>
-                            <TouchableOpacity>
-                              <Icon color = 'orange' size = {25} name = 'star'/>
+                            <TouchableOpacity onPress={()=>this.handlerStar(index)}>
+                              <Icon color ={this.state.starId.filter(e=>e==index)=='' ? 'grey':'orange'} size = {25} name = 'star'/>
                             </TouchableOpacity>
                           </Right>
                         </ListItem>
