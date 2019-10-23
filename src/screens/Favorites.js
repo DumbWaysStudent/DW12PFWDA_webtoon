@@ -44,7 +44,10 @@ class Favorites extends Component{
                           <Text>{item.webtoonData.title}</Text>
                           {/* <Text note numberOfLines={1}>{item.webtoonData.title}</Text> */}
                       </Body>
-                      <Right>
+                      <Right style={{flexDirection:'row'}}>
+                          <Button danger transparent>
+                            <Text>Delete</Text>
+                          </Button>
                           <Button transparent>
                             <Text>View</Text>
                           </Button>

@@ -14,22 +14,38 @@ const shareOptions = {
     subject: 'Subject'
   };
 class Profile extends Component{
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            isRefresh:1
+        }
+    }
     async componentDidMount(){
+        this.setState({isRefresh:1})
         const token= await AsyncStorage.getItem('token')
         if(!token) this.props.navigation.navigate('Account')
     }
     onSharePress = () => Share.share(shareOptions);
+
     render(){
         const{login}=this.props.loginLocal
+        const name = this.props.navigation.getParam('name')
+        const image = this.props.navigation.getParam('image')
         return(
             <Container>
                 <Content>
                 <HeaderMain title = 'My Profile'/>
                   <View>
-                    <TouchableOpacity  onPress = {()=>this.props.navigation.navigate('EditProfile',{title : 'Edit Profile'})}>
+                    <TouchableOpacity  onPress = {()=>this.props.navigation.navigate('EditProfile',{title : 'Edit Profile',
+                    name:!name? login.name:name,
+                    image:!image? login.image:image
+                    })}>
                         <Body>
-                        <Image source = {{uri:login.image}} style={styles.profilePic} ></Image>
-                            <Text>{login.name}</Text>
+                        <Image source = {{uri:!image ? login.image : image}} style={styles.profilePic} ></Image>
+                            <Text>
+                            {!name ? login.name : name}
+                            </Text>
                         </Body>
                     </TouchableOpacity>
                     <View>

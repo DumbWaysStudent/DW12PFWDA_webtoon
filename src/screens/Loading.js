@@ -8,8 +8,8 @@ import { connect } from 'react-redux'
 
 const {height, width } = Dimensions.get('window');
 class Loading extends Component{
-    componentDidMount(){
-    setTimeout(async () => {
+    async componentDidMount(){
+    
         await this.props.handleGetWebtoons()
         await this.props.handleGetRecent()
         await this.props.handleGetPopulars()
@@ -18,7 +18,7 @@ class Loading extends Component{
           id:this.props.loginLocal.login.id
         })
         this.props.navigation.navigate('Home')
-      }, 1000)
+
     }
     render(){
         return(

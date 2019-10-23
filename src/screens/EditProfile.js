@@ -9,8 +9,8 @@ import * as actionAccount from '../redux/actions/actionAccount'
 
 const { width } = Dimensions.get('window');
 class EditProfile extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.state = {
             newProfilePic: '',
@@ -19,25 +19,26 @@ class EditProfile extends Component {
         }
     }
 
-    nameInit(){
-        if(this.state.newProfileName==''&&this.state.isInit==0) this.setState({newProfileName:this.props.loginLocal.login.name,isInit:1})
-    }
-    async componentDidMount(){  
+    async componentDidMount(){ 
+         
+        this.setState({newProfileName:this.props.navigation.getParam('name')})
         const token= await AsyncStorage.getItem('token')
         if(!token) this.props.navigation.navigate('Account')
-        
     }
 
     async updateProfile(){
         if(this.state.newProfilePic=='' ) this.setState({newProfilePic:this.props.loginLocal.login.image})
         const token= await AsyncStorage.getItem('token')
         await this.props.handleUpdateUser({
-            token:token,
+            token:String('Bearer '+token),
             id:this.props.loginLocal.login.id,
             newProfileName:this.state.newProfileName,
             newProfilePic:this.state.newProfilePic
         })
-        this.props.navigation.goBack()
+        this.props.navigation.navigate('Profile',{
+            name:this.props.updateUserLocal.updateUser.name,
+            image:this.props.updateUserLocal.updateUser.image
+        })
     }
     handleCamera() {
         const options = {
@@ -72,10 +73,9 @@ class EditProfile extends Component {
 
 
     render() {
+        console.log(this.props.navigation.getParam('name'))
         const{login}=this.props.loginLocal
-        this.nameInit()
         return (
-            
             <Container>
                   <Header transparent>
                     <Left>
@@ -84,7 +84,7 @@ class EditProfile extends Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Text>Edit profile</Text>
+                        <Text>Edit Profile</Text>
                     </Body>
                     <Right>
                         <Button transparent onPress={()=>this.updateProfile()}>
@@ -110,6 +110,7 @@ class EditProfile extends Component {
 const mapStateToProps = state => {
     return {
         loginLocal: state.login,
+        updateUserLocal: state.updateUser,
     }
   }
   const mapDispatchToProps = dispatch => {
