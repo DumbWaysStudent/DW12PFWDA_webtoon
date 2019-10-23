@@ -14,8 +14,9 @@ const shareOptions = {
     subject: 'Subject'
   };
 class Profile extends Component{
-    componentDidMount(){
-        if(AsyncStorage.getItem('token')=='') this.props.navigation.navigate('Account')
+    async componentDidMount(){
+        const token= await AsyncStorage.getItem('token')
+        if(!token) this.props.navigation.navigate('Account')
     }
     onSharePress = () => Share.share(shareOptions);
     render(){

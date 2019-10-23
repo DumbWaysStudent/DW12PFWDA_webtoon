@@ -14,18 +14,25 @@ class EditProfile extends Component {
 
         this.state = {
             newProfilePic: '',
-            newProfileName:''
+            newProfileName:'',
+            isInit:0
         }
     }
 
-    componentDidMount(){  
-        if(AsyncStorage.getItem('token')=='') this.props.navigation.navigate('Account')
-        this.setState({newProfileName:this.props.loginLocal.login.name})
-        if(this.state.newProfilePic=='' ) this.state.newProfilePic=this.props.loginLocal.login.image
+    nameInit(){
+        if(this.state.newProfileName==''&&this.state.isInit==0) this.setState({newProfileName:this.props.loginLocal.login.name,isInit:1})
+    }
+    async componentDidMount(){  
+        const token= await AsyncStorage.getItem('token')
+        if(!token) this.props.navigation.navigate('Account')
+        
     }
 
     async updateProfile(){
+        if(this.state.newProfilePic=='' ) this.setState({newProfilePic:this.props.loginLocal.login.image})
+        const token= await AsyncStorage.getItem('token')
         await this.props.handleUpdateUser({
+            token:token,
             id:this.props.loginLocal.login.id,
             newProfileName:this.state.newProfileName,
             newProfilePic:this.state.newProfilePic
@@ -66,7 +73,9 @@ class EditProfile extends Component {
 
     render() {
         const{login}=this.props.loginLocal
+        this.nameInit()
         return (
+            
             <Container>
                   <Header transparent>
                     <Left>

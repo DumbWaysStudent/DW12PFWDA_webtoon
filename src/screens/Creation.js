@@ -8,8 +8,9 @@ import HeaderShare from '../components/Headers/HeaderShare'
 const data = [...Dummy.data]
 
 class Creation extends Component{
-  componentDidMount(){
-    if(AsyncStorage.getItem('token')=='') this.props.navigation.navigate('Account')
+  async componentDidMount(){
+    const token= await AsyncStorage.getItem('token')
+    if(!token) this.props.navigation.navigate('Account')
   }
   render(){
     return(

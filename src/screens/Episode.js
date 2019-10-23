@@ -11,9 +11,9 @@ import * as actionWebtoons from '../redux/actions/actionWebtoons'
 const { width,height } = Dimensions.get('window');
 
 class Episode extends Component{ 
-
     componentDidMount=async()=>{
-        if(AsyncStorage.getItem('token')=='') this.props.navigation.navigate('Account')
+        const token= await AsyncStorage.getItem('token')
+        if(!token) this.props.navigation.navigate('Account')
         await this.props.handleGetDetailEpisodes({
             id_webtoon:this.props.navigation.getParam('id_webtoon'),
             episode:this.props.navigation.getParam('episode')

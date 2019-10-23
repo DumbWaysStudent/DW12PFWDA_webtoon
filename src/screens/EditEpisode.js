@@ -11,9 +11,11 @@ import ImagePicker from 'react-native-image-picker';
 const data = [...Dummy.data]
 
 class EditEpisode extends Component{
-  componentDidMount(){
-    if(AsyncStorage.getItem('token')=='') this.props.navigation.navigate('Account')
+  async componentDidMount(){
+    const token= await AsyncStorage.getItem('token')
+    if(!token) this.props.navigation.navigate('Account')
   }
+
   handlerCamera() {
     const options = {
         title: 'Select Avatar',

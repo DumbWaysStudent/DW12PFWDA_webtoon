@@ -7,8 +7,9 @@ import { connect } from 'react-redux'
 const {height,width} = Dimensions.get('window')
 
 class Details extends Component{  
-  componentDidMount(){
-    if(AsyncStorage.getItem('token')=='') this.props.navigation.navigate('Account')
+  async componentDidMount(){
+    const token= await AsyncStorage.getItem('token')
+    if(!token) this.props.navigation.navigate('Account')
   }
     render(){
     const id = this.props.navigation.getParam('id')

@@ -33,6 +33,9 @@ export const handleUpdateUser = (params) => ({
         data:{
             name : params.newProfileName,
             image : params.newProfilePic
+        },
+        headers:{
+            Authorization:params.token
         }
     })
 });

@@ -8,9 +8,10 @@ import {Dummy} from '../components/Dummy'
 const data = [...Dummy.data]
 
 class CreateWebtoon extends Component{
-  
-  componentDidMount(){
-    if(AsyncStorage.getItem('token')=='') this.props.navigation.navigate('Account')
+
+  async componentDidMount(){
+    const token= await AsyncStorage.getItem('token')
+    if(!token) this.props.navigation.navigate('Account')
   }
   renderRecent = ({item,index}) => {
     return(

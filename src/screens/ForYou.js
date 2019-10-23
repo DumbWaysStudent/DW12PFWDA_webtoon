@@ -18,7 +18,6 @@ class ForYou extends Component{
         }
     }
     componentWillMount() {
-      if(AsyncStorage.getItem('token')=='') this.props.navigation.navigate('Account')
         this.setState({
             interval: setInterval(() => {
             this.setState({
@@ -27,6 +26,10 @@ class ForYou extends Component{
             }, 3500)
         });
     }
+    async componentDidMount(){
+      const token= await AsyncStorage.getItem('token')
+      if(!token) this.props.navigation.navigate('Account')
+  }
     componentWillUnmount() {
     clearInterval(this.state.interval);
     }
