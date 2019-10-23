@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import {View,Text,Content,Container,ListItem,Left, Thumbnail, Body,Header,Right,Button, Label,Input,List}from 'native-base'
+import {AsyncStorage} from 'react-native'
+import {View,Text,Content,Container,ListItem,Left, Thumbnail, Body,Right,Button, Label,Input,List}from 'native-base'
 import HeaderShare from '../components/Headers/HeaderShare'
 import {Dummy} from '../components/Dummy'
 
@@ -7,6 +8,10 @@ import {Dummy} from '../components/Dummy'
 const data = [...Dummy.data]
 
 class CreateWebtoon extends Component{
+  
+  componentDidMount(){
+    if(AsyncStorage.getItem('token')=='') this.props.navigation.navigate('Account')
+  }
   renderRecent = ({item,index}) => {
     return(
         <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{id : index})}}>

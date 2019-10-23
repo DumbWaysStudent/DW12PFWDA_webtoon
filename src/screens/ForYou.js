@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {TouchableOpacity,View,Dimensions,ImageBackground,StyleSheet,Image} from 'react-native'
+import {TouchableOpacity,View,Dimensions,ImageBackground,StyleSheet,AsyncStorage} from 'react-native'
 import {Text,Content,Container,List,ListItem,Left,Title, Thumbnail, Body,Right,Button}from 'native-base'
 import Slideshow from 'react-native-image-slider-show'
 import Carousel from 'react-native-anchor-carousel'
@@ -18,6 +18,7 @@ class ForYou extends Component{
         }
     }
     componentWillMount() {
+      if(AsyncStorage.getItem('token')=='') this.props.navigation.navigate('Account')
         this.setState({
             interval: setInterval(() => {
             this.setState({

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {StyleSheet} from 'react-native'
+import {StyleSheet,AsyncStorage} from 'react-native'
 import {Text,Content,Container,ListItem,Left, Thumbnail, Body,Right,Button, Label,View,Input,List}from 'native-base'
 import {Dummy} from '../components/Dummy'
 import HeaderEdit from '../components/Headers/HeaderEdit'
@@ -8,6 +8,9 @@ import HeaderEdit from '../components/Headers/HeaderEdit'
 const data = [...Dummy.data]
 
 class EditWebtoon extends Component{
+  componentDidMount(){
+    if(AsyncStorage.getItem('token')=='') this.props.navigation.navigate('Account')
+  }
   handlerCamera() {
     const options = {
         title: 'Select Avatar',

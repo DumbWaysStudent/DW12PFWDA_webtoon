@@ -27,7 +27,7 @@ export const handleGetDetailEpisodes = (params) => ({
   payload: axios.get(`https://wthub.herokuapp.com/api/v1/webtoon/${params.id_webtoon}/episode/${params.episode}`)
 });
 
-export const handleGetFavorites = (params) => ({
-  type: types.GET_FAVORITES,
+export const handleUpdateUser = (params) => ({
+  type: types.UPDATE_USER,
   payload: axios.get(`https://wthub.herokuapp.com/api/v1/webtoons?id_user=${params.id}`)
 });

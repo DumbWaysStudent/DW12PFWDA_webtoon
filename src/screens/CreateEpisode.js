@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
-import {List,Text,Content,Container,ListItem,Left, Thumbnail, Body,Header,Right,Button, Label,View,Input}from 'native-base'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import {List,AsyncStorage,Text,Content,Container,ListItem,Left, Thumbnail, Body,Header,Right,Button, Label,View,Input}from 'native-base'
 import {Dummy} from '../components/Dummy'
 import HeaderShare from '../components/Headers/HeaderShare'
 
 
 const data = [...Dummy.data]
 class CreateEpisode extends Component{
+  componentDidMount(){
+    if(AsyncStorage.getItem('token')=='') this.props.navigation.navigate('Account')
+  }
   render(){
     return(
       <Container>

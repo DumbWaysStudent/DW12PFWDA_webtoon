@@ -11,7 +11,7 @@ import reducerRegister from './reducerRegister';
 import reducerEpisodes from './reducerEpisodes';
 import reducerDetailEpisodes from './reducerDetailEpisodes';
 import reducerFavorites from './reducerFavorites';
-
+import reducerUpdateUser from './reducerUpdateUser';
 
 
 const reducerRouter = createNavigationReducer(RootNavigator);
@@ -26,6 +26,7 @@ const appReducer = combineReducers({
   recent: reducerRecent,
   populars: reducerPopulars,
   favorites: reducerFavorites,
+  updateUser: reducerUpdateUser,
 
 })
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Image,Dimensions,View,Text} from 'react-native'
+import {Image,Dimensions,View,Text,AsyncStorage} from 'react-native'
 import {Content,Container,List}from 'native-base'
 import HeaderShare from '../components/Headers/HeaderShare'
 import { connect } from 'react-redux'
@@ -11,7 +11,9 @@ import * as actionWebtoons from '../redux/actions/actionWebtoons'
 const { width,height } = Dimensions.get('window');
 
 class Episode extends Component{ 
+
     componentDidMount=async()=>{
+        if(AsyncStorage.getItem('token')=='') this.props.navigation.navigate('Account')
         await this.props.handleGetDetailEpisodes({
             id_webtoon:this.props.navigation.getParam('id_webtoon'),
             episode:this.props.navigation.getParam('episode')

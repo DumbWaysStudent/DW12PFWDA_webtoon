@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Header,Right,Button,Fab}from 'native-base'
+import {AsyncStorage,Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Header,Right,Button,Fab}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {Dummy} from '../components/Dummy'
 import HeaderShare from '../components/Headers/HeaderShare'
@@ -8,6 +8,9 @@ import HeaderShare from '../components/Headers/HeaderShare'
 const data = [...Dummy.data]
 
 class Creation extends Component{
+  componentDidMount(){
+    if(AsyncStorage.getItem('token')=='') this.props.navigation.navigate('Account')
+  }
   render(){
     return(
       <Container>

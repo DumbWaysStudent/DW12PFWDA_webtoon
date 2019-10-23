@@ -23,9 +23,6 @@ class Register extends Component{
             emailRegex : '[a-z0-9]*[a-z0-9\.]+@[a-z0-9]+(\.[a-z0-9]+)*(\.[a-z0-9]+)',
         }
     }
-    // componentDidMount(){
-    //     AsyncStorage.clear()
-    // }
     changeeyeState = ()=>{
         {this.state.eye=='eye' ? this.setState({eye : 'eye-slash',hidePassword : true}): this.setState({eye : 'eye',hidePassword : false})}
     }
@@ -84,7 +81,7 @@ class Register extends Component{
                         <Image style = {styles.Banner} source = {{uri : 'https://avvesione.files.wordpress.com/2015/12/death_parade-07-quin-nona-ginti-decim-quindecim-alcohol-drinks-cheers-raising_glasses-bar.jpg'}}/>
                         <Text style = {{fontSize : 20}} >Join the Hubbers</Text>
                     </View>
-                    <Form>
+                    <Form style={styles.Form}>
                         <Label style = {styles.Label}>Email</Label>
                         <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
                             <Input onChangeText = {(e)=>this.setState({emailInput : e})}/>
@@ -100,8 +97,11 @@ class Register extends Component{
                             <Icon style={{marginVertical: width*0.03,marginRight : width*0.03}} name = {this.state.eye2} size={25} onPress = {()=>this.changeeyeState2()}></Icon>
                         </View>
                         <Button success block rounded style = {styles.Button} onPress = {()=>this.registerChecker()}><Text>Register</Text></Button>
+                        <View style={{alignItems:'center'}}>
+                        <Text>Already have an account?</Text>
+                        <Text onPress={()=>this.props.navigation.navigate('Login')} style = {styles.Text}>Log In</Text>  
+                        </View>
                     </Form> 
-                    <Text>Already have an account?</Text><Text onPress={()=>this.props.navigation.navigate('Login')} style = {styles.Text}>Log In</Text>  
                 </ImageBackground>
 
             </View>
@@ -133,7 +133,7 @@ const mapStateToProps = state => {
     },
     Button : {
         marginHorizontal : width*0.3,
-        marginBottom:height*0.06,
+        marginBottom:height*0.02,
         borderWidth : 2,
         borderColor : 'black'
     },
@@ -145,6 +145,8 @@ const mapStateToProps = state => {
         width : width,
         height : height*0.3
     },
-    Header:{marginBottom:height*0.02,alignItems:'center'},
-    Label:{marginLeft : width*0.1}
+    Header:{flex:1,alignItems:'center'},
+    Label:{marginLeft : width*0.1},
+    Form:{flex:1.5},
+
 })

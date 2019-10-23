@@ -21,9 +21,9 @@ class Login extends Component{
             form:'login'
         }
     }
-    // componentDidMount(){
-    //     AsyncStorage.clear()
-    // }
+    componentDidMount(){
+        AsyncStorage.clear()
+    }
     changeeyeState = ()=>{
         {this.state.eye=='eye' ? this.setState({eye : 'eye-slash',hidePassword : true}): this.setState({eye : 'eye',hidePassword : false})}
     }
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         height : height*0.3
     },
     Header:{
-        marginTop:-height*0.03,
+        marginTop:-height*0.1,
         alignItems:'center'
     },
     Form:{marginTop:height*0.1},

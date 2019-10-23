@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { TouchableOpacity, Dimensions, TextInput, View, StyleSheet, Image } from 'react-native'
-import { Content, Container,Body} from 'native-base'
+import { TouchableOpacity, Dimensions, TextInput, AsyncStorage,Text, StyleSheet, Image } from 'react-native'
+import { Content, Container,Body,Button,Left,Right,Header} from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import ImagePicker from 'react-native-image-picker';
-import HeaderEdit from '../components/Headers/HeaderEdit'
 import { connect } from 'react-redux'
+import * as actionAccount from '../redux/actions/actionAccount'
 
 
 const { width } = Dimensions.get('window');
@@ -13,11 +13,26 @@ class EditProfile extends Component {
         super()
 
         this.state = {
-            imageUrl: ''
+            newProfilePic: '',
+            newProfileName:''
         }
     }
 
-    handlerCamera() {
+    componentDidMount(){  
+        if(AsyncStorage.getItem('token')=='') this.props.navigation.navigate('Account')
+        this.setState({newProfileName:this.props.loginLocal.login.name})
+        if(this.state.newProfilePic=='' ) this.state.newProfilePic=this.props.loginLocal.login.image
+    }
+
+    async updateProfile(){
+        await this.props.handleUpdateUser({
+            id:this.props.loginLocal.login.id,
+            newProfileName:this.state.newProfileName,
+            newProfilePic:this.state.newProfilePic
+        })
+        this.props.navigation.goBack()
+    }
+    handleCamera() {
         const options = {
             title: 'Select Avatar',
             storageOptions: {
@@ -25,7 +40,6 @@ class EditProfile extends Component {
                 path: 'images',
             },
         };
-
         ImagePicker.showImagePicker(options, (response) => {
             console.log('Response = ', response);
 
@@ -42,7 +56,7 @@ class EditProfile extends Component {
                 // const source = { uri: 'data:image/jpeg;base64,' + response.data };
 
                 this.setState({
-                    imageUrl: source,
+                    newProfilePic: source,
                 });
             }
         });
@@ -54,14 +68,28 @@ class EditProfile extends Component {
         const{login}=this.props.loginLocal
         return (
             <Container>
-                <HeaderEdit title = {this.props.navigation.getParam('title')} navigation = {this.props.navigation}/>
+                  <Header transparent>
+                    <Left>
+                        <Button transparent onPress = {()=>this.props.navigation.goBack()}>
+                        <Icon size = {25} name='arrow-left' />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Text>Edit profile</Text>
+                    </Body>
+                    <Right>
+                        <Button transparent onPress={()=>this.updateProfile()}>
+                        <Icon  size = {25}name='check' color = 'orange'/>
+                        </Button>
+                    </Right>
+                </Header>
                 <Content>
                     <Body>
-                        <Image source={{ uri: 'https://i.ytimg.com/vi/01Y1F9mWXiQ/maxresdefault.jpg' }} style={styles.profilePic} />
-                        <TouchableOpacity style={styles.cameraStyle}>
+                        <Image source={{ uri: login.image }} style={styles.profilePic} />
+                        <TouchableOpacity onPress={()=>this.handleCamera()} style={styles.cameraStyle}>
                             <Icon name='camera' size={25} />
                         </TouchableOpacity>
-                        <TextInput style={{ borderWidth: 2, width: width * 0.6, textAlign: 'center', marginTop: 20 }}/>
+                        <TextInput value={this.state.newProfileName} onChangeText={(e)=>this.setState({newProfileName:e})} style={styles.TextInput}></TextInput>
                     </Body>
                 </Content>
             </Container>
@@ -77,6 +105,7 @@ const mapStateToProps = state => {
   }
   const mapDispatchToProps = dispatch => {
     return {
+        handleUpdateUser: (params) => dispatch(actionAccount.handleUpdateUser(params)),
     }
   }
   
@@ -91,10 +120,12 @@ const styles = StyleSheet.create({
         marginTop: -width*0.07,
         marginLeft: width*0.4
     },
-    textinput : {
-        borderWidth : 2,
-        width : width*0.6,
-    },
+    TextInput : { 
+        borderWidth: 2, 
+        width: width * 0.6, 
+        textAlign: 'center', 
+        marginTop: 20 },
+
     profilePic:{
         height:width*0.5,
         width:width*0.5,

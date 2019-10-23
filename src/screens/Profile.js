@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {TouchableOpacity,Share,Image,Dimensions,StyleSheet} from 'react-native'
+import {TouchableOpacity,Share,Image,Dimensions,StyleSheet,AsyncStorage} from 'react-native'
 import {View,Text,Content,Container,ListItem,Left, Body, Right}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import HeaderMain from '../components/Headers/HeaderMain'
@@ -14,10 +14,12 @@ const shareOptions = {
     subject: 'Subject'
   };
 class Profile extends Component{
+    componentDidMount(){
+        if(AsyncStorage.getItem('token')=='') this.props.navigation.navigate('Account')
+    }
     onSharePress = () => Share.share(shareOptions);
     render(){
         const{login}=this.props.loginLocal
-        console.log(login)
         return(
             <Container>
                 <Content>

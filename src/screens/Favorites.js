@@ -1,15 +1,13 @@
 import React, {Component} from 'react'
-import {Dimensions,Image} from 'react-native'
+import {Dimensions,Image,AsyncStorage} from 'react-native'
 import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Right,Button,View,Input}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import {Dummy} from '../components/Dummy'
 import HeaderMain from '../components/Headers/HeaderMain'
 import { connect } from 'react-redux'
 
 
 
-const data = [...Dummy.data]
 const {height,width}=Dimensions.get('window')
 class Favorites extends Component{
   constructor(){
@@ -17,6 +15,9 @@ class Favorites extends Component{
     this.state = {
       input : ''
     }
+  }
+  componentDidMount(){
+    if(AsyncStorage.getItem('token')=='') this.props.navigation.navigate('Account')
   }
   render(){
     const {favorites} = this.props.favoritesLocal
