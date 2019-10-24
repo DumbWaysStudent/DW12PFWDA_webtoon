@@ -10,8 +10,10 @@ import reducerLogin from './reducerLogin';
 import reducerRegister from './reducerRegister';
 import reducerEpisodes from './reducerEpisodes';
 import reducerDetailEpisodes from './reducerDetailEpisodes';
-import reducerFavorites from './reducerFavorites';
+import reducerGetFavorites from './reducerGetFavorites';
 import reducerUpdateUser from './reducerUpdateUser';
+import reducerAddFavorite from './reducerAddFavorite';
+import reducerDeleteFavorite from './reducerDeleteFavorite';
 
 
 const reducerRouter = createNavigationReducer(RootNavigator);
@@ -25,8 +27,10 @@ const appReducer = combineReducers({
   detailEpisodes: reducerDetailEpisodes,
   recent: reducerRecent,
   populars: reducerPopulars,
-  favorites: reducerFavorites,
+  favorites: reducerGetFavorites,
   updateUser: reducerUpdateUser,
+  addFavorite: reducerAddFavorite,
+  deleteFavorite: reducerDeleteFavorite,
 
 })
 

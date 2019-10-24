@@ -40,5 +40,28 @@ export const handleUpdateUser = (params) => ({
     })
 });
 
-
+export const handleAddFavorite = (params) => ({
+    type: types.ADD_FAVORITE,
+    payload: axios({
+        method:'POST',
+        url:`https://wthub.herokuapp.com/api/v1/user/${params.userId}/favorites`,
+        data:{
+            id_webtoon:params.webtoonId,
+            id_user:params.userId
+        },
+        headers:{
+            Authorization:params.token
+        }
+    })
+});
   
+export const handleDeleteFavorite = (params) => ({
+    type: types.DELETE_FAVORITE,
+    payload: axios({
+        method:'DELETE',
+        url:`https://wthub.herokuapp.com/api/v1/user/${params.userId}/favorite?id_webtoon=${params.webtoonId}`,
+        headers:{
+            Authorization:params.token
+        }
+    })
+});

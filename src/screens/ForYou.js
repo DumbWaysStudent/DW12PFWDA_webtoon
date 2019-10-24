@@ -5,6 +5,7 @@ import Slideshow from 'react-native-image-slider-show'
 import Carousel from 'react-native-anchor-carousel'
 import HeaderHome from '../components/Headers/HeaderHome'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import * as actionAccount from '../redux/actions/actionAccount'
 import { connect } from 'react-redux'
 
 
@@ -30,10 +31,18 @@ class ForYou extends Component{
     async componentDidMount(){
       const token= await AsyncStorage.getItem('token')
       if(!token) this.props.navigation.navigate('Account')
-  }
+      const favorites=this.props.favoritesLocal.favorites
+      let fav = []
+      favorites.forEach(item => {
+        fav.push(item.id_webtoon)
+      });
+      this.setState({starId:fav})
+      // console.log(this.state.starId)
+    }
     componentWillUnmount() {
     clearInterval(this.state.interval);
     }
+
     renderItem = ({ item, index }) => {
         const { image, title, favorites } = item;
         return (
@@ -57,25 +66,34 @@ class ForYou extends Component{
         );
       };
     
-    async handlerStar(id){
-      const starChecker=this.state.starId.filter(e=>e==id)
+    async handlerStar(webtoonId){
+      const starChecker=this.state.starId.filter(e=>e==webtoonId)
       let stars=[...this.state.starId]  
       if(starChecker==''){ 
-        
-        stars.push(id)
-        await this.setState({starId:stars})
+        const token= await AsyncStorage.getItem('token')
+        await this.props.handleAddFavorite({
+            token:String('Bearer '+token),
+            userId:this.props.loginLocal.login.id,
+            webtoonId:webtoonId
+        })
+        stars.push(webtoonId)
+        this.setState({starId:stars})
       }
       else {
-        const newArr=stars.filter(e=>e!==id)
-        await this.setState({starId:newArr})
+        const token= await AsyncStorage.getItem('token')
+        await this.props.handleDeleteFavorite({
+            token:String('Bearer '+token),
+            userId:this.props.loginLocal.login.id,
+            webtoonId:webtoonId
+        })
+        const newArr=stars.filter(e=>e!==webtoonId)
+        this.setState({starId:newArr})
       }
-        
     }
     render(){
       const {webtoons}=this.props.webtoonsLocal
       const {recent}=this.props.recentLocal
       const {populars}=this.props.popularsLocal
-      const color = 'orange'
         return(
              <Container>
               <HeaderHome/>
@@ -111,8 +129,9 @@ class ForYou extends Component{
                               <Text>{item.title}</Text>
                           </Body>
                           <Right>
-                            <TouchableOpacity onPress={()=>this.handlerStar(index)}>
-                              <Icon color ={this.state.starId.filter(e=>e==index)=='' ? 'grey':'orange'} size = {25} name = 'star'/>
+                            <TouchableOpacity onPress={()=>this.handlerStar(item.id)}>
+                              <Icon color ={this.state.starId.filter(e=>e==item.id)=='' ? 'grey':'orange'} size = {25} name = 'star'/>
+                              {console.log(this.state.starId.filter(e=>e==item.id))}
                             </TouchableOpacity>
                           </Right>
                         </ListItem>
@@ -129,12 +148,17 @@ const mapStateToProps = state => {
   return {
     webtoonsLocal: state.webtoons,
     recentLocal: state.recent,
-    popularsLocal: state.populars
+    popularsLocal: state.populars,
+    loginLocal: state.login,
+    favoritesLocal: state.favorites
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
+    handleAddFavorite: (params) => dispatch(actionAccount.handleAddFavorite(params)),
+    handleDeleteFavorite: (params) => dispatch(actionAccount.handleDeleteFavorite(params)),
+
   }
 }
 
