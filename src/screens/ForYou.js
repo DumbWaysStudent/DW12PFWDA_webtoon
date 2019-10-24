@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {TouchableOpacity,View,Dimensions,ImageBackground,StyleSheet,AsyncStorage} from 'react-native'
 import {Text,Content,Container,List,ListItem,Left,Title, Thumbnail, Body,Right,Button}from 'native-base'
+import {NavigationEvents} from 'react-navigation'
 import Slideshow from 'react-native-image-slider-show'
 import Carousel from 'react-native-anchor-carousel'
 import HeaderHome from '../components/Headers/HeaderHome'
@@ -33,6 +34,10 @@ class ForYou extends Component{
     async componentDidMount(){
       const token= await AsyncStorage.getItem('token')
       if(!token) this.props.navigation.navigate('Account')
+      this.getFav()
+    }
+
+    getFav(){
       const favorites=this.props.favoritesLocal.favorites
       let fav = []
       favorites.forEach(item => {

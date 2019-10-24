@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
       loginLocal: state.login,
     }
   }
+  
   const mapDispatchToProps = dispatch => {
     return {
       handleGetWebtoons: () => dispatch(actionWebtoons.handleGetWebtoons()),

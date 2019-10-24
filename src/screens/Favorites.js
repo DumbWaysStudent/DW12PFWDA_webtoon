@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Dimensions,Image,AsyncStorage} from 'react-native'
 import {Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Right,Button,View,Input}from 'native-base'
+import {NavigationEvents} from 'react-navigation'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import HeaderMain from '../components/Headers/HeaderMain'
@@ -46,6 +47,9 @@ class Favorites extends Component{
     return(
       <Container>
       <HeaderMain title = 'My Favorites'/>
+      {/* <NavigationEvents onWillFocus = {this.}
+      
+      /> */}
         <Content>
             <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
                 <Input onChangeText = {(e)=>this.setState({input : e})}/>
