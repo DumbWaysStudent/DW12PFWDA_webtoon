@@ -5,6 +5,9 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import HeaderMain from '../components/Headers/HeaderMain'
 import { connect } from 'react-redux'
+import * as actionWebtoons from '../redux/actions/actionWebtoons'
+import * as actionAccount from '../redux/actions/actionAccount'
+
 
 
 
@@ -13,12 +16,29 @@ class Favorites extends Component{
   constructor(){
     super()
     this.state = {
-      input : ''
+      input : '',
+      refresh:1,
+      interval : null,
     }
   }
+
   async componentDidMount(){
     const token= await AsyncStorage.getItem('token')
     if(!token) this.props.navigation.navigate('Account')
+  }
+
+  async removeFavorite(webtoonId){
+    const token= await AsyncStorage.getItem('token')
+    await this.props.handleDeleteFavorite({
+        token:String('Bearer '+token),
+        userId:this.props.loginLocal.login.id,
+        webtoonId:webtoonId
+    })
+    await this.props.handleGetFavorites({
+      id:this.props.loginLocal.login.id
+    })
+    alert('Removed from Favorites')
+    this.setState(this.state)
   }
   render(){
     const {favorites} = this.props.favoritesLocal
@@ -45,7 +65,7 @@ class Favorites extends Component{
                           {/* <Text note numberOfLines={1}>{item.webtoonData.title}</Text> */}
                       </Body>
                       <Right style={{flexDirection:'row'}}>
-                          <Button danger transparent>
+                          <Button danger transparent onPress={()=>this.removeFavorite(item.id_webtoon)}>
                             <Text>Delete</Text>
                           </Button>
                           <Button transparent>
@@ -70,12 +90,15 @@ class Favorites extends Component{
 
 const mapStateToProps = state => {
   return {
-      favoritesLocal: state.favorites
+      favoritesLocal: state.favorites,
+      loginLocal: state.login,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
+    handleGetFavorites: (params) => dispatch(actionWebtoons.handleGetFavorites(params)),
+    handleDeleteFavorite: (params) => dispatch(actionAccount.handleDeleteFavorite(params)),
   }
 }
 

@@ -27,7 +27,6 @@ class Profile extends Component{
         if(!token) this.props.navigation.navigate('Account')
     }
     onSharePress = () => Share.share(shareOptions);
-
     render(){
         const{login}=this.props.loginLocal
         const name = this.props.navigation.getParam('name')

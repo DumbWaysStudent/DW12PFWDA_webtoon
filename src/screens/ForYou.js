@@ -27,6 +27,8 @@ class ForYou extends Component{
             });
             }, 3500)
         });
+        clearInterval(this.state.interval);
+
     }
     async componentDidMount(){
       const token= await AsyncStorage.getItem('token')
@@ -37,10 +39,6 @@ class ForYou extends Component{
         fav.push(item.id_webtoon)
       });
       this.setState({starId:fav})
-      // console.log(this.state.starId)
-    }
-    componentWillUnmount() {
-    clearInterval(this.state.interval);
     }
 
     renderItem = ({ item, index }) => {
@@ -78,6 +76,7 @@ class ForYou extends Component{
         })
         stars.push(webtoonId)
         this.setState({starId:stars})
+        alert('Added to favorites')
       }
       else {
         const token= await AsyncStorage.getItem('token')
@@ -88,6 +87,8 @@ class ForYou extends Component{
         })
         const newArr=stars.filter(e=>e!==webtoonId)
         this.setState({starId:newArr})
+        alert('Removed from Favorites')
+
       }
     }
     render(){

@@ -13,9 +13,9 @@ class EditProfile extends Component {
         super(props)
 
         this.state = {
-            newProfilePic: '',
             newProfileName:'',
-            isInit:0
+            isInit:0,
+            imageUrl:''
         }
     }
 
@@ -27,20 +27,22 @@ class EditProfile extends Component {
     }
 
     async updateProfile(){
-        if(this.state.newProfilePic=='' ) this.setState({newProfilePic:this.props.loginLocal.login.image})
+        if(this.state.imageUrl=='' ) this.setState({imageUrl:this.props.loginLocal.login.image})
         const token= await AsyncStorage.getItem('token')
         await this.props.handleUpdateUser({
             token:String('Bearer '+token),
             id:this.props.loginLocal.login.id,
             newProfileName:this.state.newProfileName,
-            newProfilePic:this.state.newProfilePic
+            newProfilePic:this.state.imageUrl
         })
+        console.log('---------------------------------')
+        console.log(this.state.imageUrl)
         this.props.navigation.navigate('Profile',{
             name:this.props.updateUserLocal.updateUser.name,
             image:this.props.updateUserLocal.updateUser.image
         })
     }
-    handleCamera() {
+    handlerCamera() {
         const options = {
             title: 'Select Avatar',
             storageOptions: {
@@ -48,6 +50,7 @@ class EditProfile extends Component {
                 path: 'images',
             },
         };
+
         ImagePicker.showImagePicker(options, (response) => {
             console.log('Response = ', response);
 
@@ -58,18 +61,23 @@ class EditProfile extends Component {
             } else if (response.customButton) {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
-                const source = { uri: response.uri };
-
+                const source = response.uri ;
                 // You can also display the image using data:
                 // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-
+                console.log(source)
                 this.setState({
-                    newProfilePic: source,
+                    imageUrl: source,
                 });
             }
         });
     }
 
+    renderProfile() {
+        if (this.state.imageUrl == '') {
+            return <Image source={{ uri: this.props.navigation.getParam('image') }} style={styles.profilePic} />;
+        }
+        return <Image source={{uri : this.state.imageUrl}} style={styles.profilePic} />;
+    }
 
 
     render() {
@@ -94,8 +102,8 @@ class EditProfile extends Component {
                 </Header>
                 <Content>
                     <Body>
-                        <Image source={{ uri: login.image }} style={styles.profilePic} />
-                        <TouchableOpacity onPress={()=>this.handleCamera()} style={styles.cameraStyle}>
+                    {this.renderProfile()}
+                        <TouchableOpacity onPress={()=>this.handlerCamera()} style={styles.cameraStyle}>
                             <Icon name='camera' size={25} />
                         </TouchableOpacity>
                         <TextInput value={this.state.newProfileName} onChangeText={(e)=>this.setState({newProfileName:e})} style={styles.TextInput}></TextInput>
