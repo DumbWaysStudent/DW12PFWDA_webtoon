@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Image,Dimensions,View,Text,AsyncStorage} from 'react-native'
+import {Image,Dimensions,View,Text,AsyncStorage,ImageBackground} from 'react-native'
 import {Content,Container,List}from 'native-base'
 import HeaderShare from '../components/Headers/HeaderShare'
 import { connect } from 'react-redux'
@@ -26,24 +26,26 @@ class Episode extends Component{
         const webtoonTitle = this.props.navigation.getParam('title')
         return(
             <Container>
-                <Content>
-                    <HeaderShare title = {webtoonTitle} navigation = {this.props.navigation}/>
-                    {detailEpisodes.length!==0 ? 
-                    detailEpisodes.map((item, index) => {
-                        return (
-                        <List key = {index}>
-                            <Image style = {{height,width}} source ={{uri : item.image}}></Image>
-                        </List>
-                        )
-                    })
-                        :
-                    <View style={{alignItems:'center',justifyContent:'center',marginTop:height*0.1}}>
-                    <Image style={{height:height*0.2,width:width*0.3}} source={require('../assets/nocontent.gif')}/>
-                    <Text>Coming Soon</Text>
-                    </View>
-                    }
-                    
-                </Content>
+            <ImageBackground source = {require('../assets/background.png')} style = {{height,width}}>
+            <Content>
+                <HeaderShare title = {webtoonTitle} navigation = {this.props.navigation}/>
+                {detailEpisodes.length!==0 ? 
+                detailEpisodes.map((item, index) => {
+                    return (
+                    <List key = {index}>
+                        <Image style = {{height,width}} source ={{uri : item.image}}></Image>
+                    </List>
+                    )
+                })
+                    :
+                <View style={{alignItems:'center',justifyContent:'center',marginTop:height*0.1}}>
+                <Image style={{height:height*0.2,width:width*0.3}} source={require('../assets/nocontent.gif')}/>
+                <Text>Coming Soon</Text>
+                </View>
+                }
+            </Content>
+            </ImageBackground>
+                
             </Container>            
         )
     }

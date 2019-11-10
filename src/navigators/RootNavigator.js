@@ -18,6 +18,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs'
 
+
 const BottomStack = createBottomTabNavigator({
   ForYou: ForYou,
   Favorites: Favorites,
@@ -39,6 +40,13 @@ const BottomStack = createBottomTabNavigator({
       // icon component from react-native-vector-icons
       return <Icon name={iconName} size={25} color={tintColor} />;
     },
+    // tabBarOnPress: ({ navigation, defaultHandler }) => {
+    //   // if(navigation.state.index > 0) {
+    //   //   navigation.dispatch(StackActions.popToTop());
+    //   // }
+    //   // defaultHandler();
+    //   console
+    // },
   }
   ),
   tabBarOptions: {

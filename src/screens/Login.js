@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 
 
 
-const {width,height} = Dimensions.get('window') 
+const {width,height} = Dimensions.get('window')
 class Login extends Component{
     constructor(){
         super();
@@ -66,12 +66,9 @@ class Login extends Component{
     render(){
         return(
             <View>
-                <ImageBackground source = {require('../assets/background.jpg')} style = {styles.Background}>
-                <View style = {styles.Header}>
-                    <Image style = {styles.Banner} source = {{uri : 'https://static01.nyt.com/images/2015/07/06/business/06webtoons/06webtoons-articleLarge.jpg?quality=90&auto=webp'}}/>
-                    <Text style = {{fontSize : 20}} >Login with your WTHub account</Text>
-                </View>    
+                <ImageBackground source = {require('../assets/background.png')} style = {styles.Background}>
                     <Form style = {styles.Form}>
+                    <Text style = {{fontSize : 20, marginBottom:20,marginLeft:width*0.25}} >WTHub Login</Text>
                         <Label style = {styles.Label}>Email</Label>
                         <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
                             <Input onChangeText = {(e)=>this.setState({emailInput : e})}/>
@@ -83,7 +80,10 @@ class Login extends Component{
                         </View>
                         <Button success block rounded style = {styles.Button} onPress = {()=>this.loginChecker()}><Text>Log In</Text></Button>
                     </Form> 
-                    <Text>Don't have an account?</Text><Text onPress={()=>this.props.navigation.navigate('Register')} style = {styles.Text}>Become a Hubbers</Text>  
+                    <View style={{justifyContent:'flex-end',alignItems:'center'}}>
+                    <Text >Don't have an account?</Text>
+                    <Text onPress={()=>this.props.navigation.navigate('Register')} style = {styles.Text}>Become a Hubbers</Text>  
+                    </View>
 
                 </ImageBackground>
 
@@ -134,6 +134,6 @@ const styles = StyleSheet.create({
         marginTop:-height*0.1,
         alignItems:'center'
     },
-    Form:{marginTop:height*0.1},
+    Form:{marginTop:height*0.1,flex:1,justifyContent:'center'},
     Label:{marginLeft : width*0.1}
 })

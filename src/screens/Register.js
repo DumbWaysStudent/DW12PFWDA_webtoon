@@ -76,12 +76,9 @@ class Register extends Component{
     render(){
         return(
             <View>
-                <ImageBackground source = {require('../assets/background.jpg')} style = {styles.Background}>
-                    <View style = {styles.Header}>
-                        <Image style = {styles.Banner} source = {{uri : 'https://avvesione.files.wordpress.com/2015/12/death_parade-07-quin-nona-ginti-decim-quindecim-alcohol-drinks-cheers-raising_glasses-bar.jpg'}}/>
-                        <Text style = {{fontSize : 20}} >Join the Hubbers</Text>
-                    </View>
+                <ImageBackground source = {require('../assets/background.png')} style = {styles.Background}>
                     <Form style={styles.Form}>
+                    <Text style = {{fontSize : 20,marginBottom:20,marginLeft:width*0.25}} >Join the Hubbers</Text>
                         <Label style = {styles.Label}>Email</Label>
                         <View style = {{flexDirection : 'row',borderWidth : 2, marginHorizontal : 40,marginVertical : 10}}>
                             <Input onChangeText = {(e)=>this.setState({emailInput : e})}/>
@@ -97,11 +94,11 @@ class Register extends Component{
                             <Icon style={{marginVertical: width*0.03,marginRight : width*0.03}} name = {this.state.eye2} size={25} onPress = {()=>this.changeeyeState2()}></Icon>
                         </View>
                         <Button success block rounded style = {styles.Button} onPress = {()=>this.registerChecker()}><Text>Register</Text></Button>
-                        <View style={{alignItems:'center'}}>
+                    </Form> 
+                    <View style={{alignItems:'center',justifyContent:'flex-end'}}>
                         <Text>Already have an account?</Text>
                         <Text onPress={()=>this.props.navigation.navigate('Login')} style = {styles.Text}>Log In</Text>  
-                        </View>
-                    </Form> 
+                    </View>
                 </ImageBackground>
 
             </View>
@@ -147,6 +144,6 @@ const mapStateToProps = state => {
     },
     Header:{flex:1,alignItems:'center'},
     Label:{marginLeft : width*0.1},
-    Form:{flex:1.5},
+    Form:{marginTop:height*0.1,flex:1,justifyContent:'center'},
 
 })

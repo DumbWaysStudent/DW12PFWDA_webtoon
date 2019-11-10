@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Dimensions,Image,View,AsyncStorage} from 'react-native'
+import {Dimensions,Image,View,AsyncStorage,ImageBackground} from 'react-native'
 import {Content,Container,List,ListItem,Left, Thumbnail, Body,Text}from 'native-base'
 import HeaderShare from '../components/Headers/HeaderShare'
 import { connect } from 'react-redux'
@@ -17,7 +17,8 @@ class Details extends Component{
     const webtoonTitle = this.props.navigation.getParam('title')
         return(
             <Container>
-                <HeaderShare title = {webtoonTitle} navigation = {this.props.navigation}/>
+              <ImageBackground source = {require('../assets/background.png')} style = {{height,width}}>
+              <HeaderShare title = {webtoonTitle} navigation = {this.props.navigation}/>
               <Content>
                   <Image style = {{height : height*0.3,width}} source ={{uri :this.props.navigation.getParam('banner')}}></Image>
                   {episodes.length!==0 ? 
@@ -47,6 +48,8 @@ class Details extends Component{
                     </View>
                   }
               </Content>
+              </ImageBackground>
+                
             </Container>   
                   
         )

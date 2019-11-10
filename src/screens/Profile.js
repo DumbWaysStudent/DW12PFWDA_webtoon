@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {TouchableOpacity,Share,Image,Dimensions,StyleSheet,AsyncStorage} from 'react-native'
+import {TouchableOpacity,Share,Image,Dimensions,StyleSheet,AsyncStorage,ImageBackground} from 'react-native'
 import {View,Text,Content,Container,ListItem,Left, Body, Right}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import HeaderMain from '../components/Headers/HeaderMain'
@@ -33,7 +33,9 @@ class Profile extends Component{
         const image = this.props.navigation.getParam('image')
         return(
             <Container>
+                <ImageBackground source = {require('../assets/background.png')} style = {{height,width}}>
                 <Content>
+               
                 <HeaderMain title = 'My Profile'/>
                   <View>
                     <TouchableOpacity  onPress = {()=>this.props.navigation.navigate('EditProfile',{title : 'Edit Profile',
@@ -64,6 +66,7 @@ class Profile extends Component{
                     </View>
                   </View>
                 </Content>
+                </ImageBackground>
             </Container>   
                   
         )

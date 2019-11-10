@@ -23,7 +23,7 @@ class Loading extends Component{
     render(){
         return(
         <View>
-            <ImageBackground source = {require('../assets/background.jpg')} style = {styles.loadingBackground}>
+            <ImageBackground source = {require('../assets/background.png')} style = {styles.loadingBackground}>
             <View style = {{flexDirection:'row'}}>
             <Image style = {styles.loadingImage} source = {require('../assets/loading.gif')}/>
             <Image style = {styles.loadingImage} source = {require('../assets/loading2.gif')}/>

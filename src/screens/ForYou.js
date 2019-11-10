@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {TouchableOpacity,View,Dimensions,ImageBackground,StyleSheet,AsyncStorage} from 'react-native'
 import {Text,Content,Container,List,ListItem,Left,Title, Thumbnail, Body,Right,Button}from 'native-base'
-import {NavigationEvents} from 'react-navigation'
+import {NavigationEvents, withNavigation} from 'react-navigation'
 import Slideshow from 'react-native-image-slider-show'
 import Carousel from 'react-native-anchor-carousel'
 import HeaderHome from '../components/Headers/HeaderHome'
@@ -29,21 +29,31 @@ class ForYou extends Component{
             }, 3500)
         });
         clearInterval(this.state.interval);
-
     }
     async componentDidMount(){
+      const {navigation}=this.props
+      console.log(navigation)
+      this.focusListener = navigation.addListener('didFocus', () => {
+        this.setState(this.state)
+      });
       const token= await AsyncStorage.getItem('token')
       if(!token) this.props.navigation.navigate('Account')
       this.getFav()
     }
-
+    componentWillUnmount() {
+      // Remove the event listener
+      this.focusListener.remove();
+    }
+  
     getFav(){
       const favorites=this.props.favoritesLocal.favorites
       let fav = []
+      if(favorites.length!=0){
       favorites.forEach(item => {
         fav.push(item.id_webtoon)
       });
       this.setState({starId:fav})
+      }
     }
 
     renderItem = ({ item, index }) => {
@@ -102,8 +112,10 @@ class ForYou extends Component{
       const {populars}=this.props.popularsLocal
         return(
              <Container>
+              <ImageBackground source = {require('../assets/background.png')} style = {styles.loadingBackground}>
               <HeaderHome/>
               <Content>
+
                     <Slideshow 
                         dataSource = {recent}
                         position = {this.state.position}
@@ -137,14 +149,14 @@ class ForYou extends Component{
                           <Right>
                             <TouchableOpacity onPress={()=>this.handlerStar(item.id)}>
                               <Icon color ={this.state.starId.filter(e=>e==item.id)=='' ? 'grey':'orange'} size = {25} name = 'star'/>
-                              {console.log(this.state.starId.filter(e=>e==item.id))}
                             </TouchableOpacity>
                           </Right>
                         </ListItem>
                       </List>
                       )
                     })}
-                  </Content>                      
+                  </Content>    
+              </ImageBackground>          
           </Container>  
         )
       
@@ -171,7 +183,7 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ForYou);
+)(withNavigation(ForYou));
 
 const styles = StyleSheet.create({
     container: {
@@ -234,9 +246,7 @@ const styles = StyleSheet.create({
         textAlign:'center'
       },
       loadingBackground:{
-        height,width,
-        alignItems:'center',
-        justifyContent:'center'
+        height,width
       },
       loadingImage:{
         height: height*0.2,
