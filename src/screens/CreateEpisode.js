@@ -7,8 +7,6 @@ import HeaderShare from '../components/Headers/HeaderShare'
 const data = [...Dummy.data]
 class CreateEpisode extends Component{
   async componentDidMount(){
-    const token= await AsyncStorage.getItem('token')
-    if(!token) this.props.navigation.navigate('Account')
   }
   render(){
     return(

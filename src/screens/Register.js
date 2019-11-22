@@ -36,7 +36,6 @@ class Register extends Component{
         const confirmPassword = String(this.state.confirmPasswordInput)
         const regex = this.state.emailRegex
         let regexResult = email.match(regex)
-        console.log(this.state.confirmPasswordInput)
         {regexResult==null? regexResult = '' : regexResult = regexResult[0]}
         if(email!==''){
             if(password!==''){
@@ -46,7 +45,7 @@ class Register extends Component{
                             await this.props.handleRegister(email,password)
                             console.log(this.props.registerLocal.register.token)
                             if(this.props.registerLocal.register.token){
-                                await AsyncStorage.setItem("token",this.props.registerLocal.register.token)
+                                await AsyncStorage.setItem("data",this.props.registerLocal.register.token)
                                 Alert.alert(
                                     'new WTHubber Arise !!',
                                     'Welcome to The Club, LULULU',

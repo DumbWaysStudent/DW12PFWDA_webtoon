@@ -7,10 +7,6 @@ import { connect } from 'react-redux'
 const {height,width} = Dimensions.get('window')
 
 class Details extends Component{  
-  async componentDidMount(){
-    const token= await AsyncStorage.getItem('token')
-    if(!token) this.props.navigation.navigate('Account')
-  }
     render(){
     const id = this.props.navigation.getParam('id')
     const episodes = this.props.episodesLocal.episodes.filter(item=>item.id_webtoon==id).reverse()

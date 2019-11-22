@@ -3,11 +3,12 @@ import * as types from './../types'
 const initialState = {
   isError:false,
   webtoons: [],
+  favorites : []
 };
 
 export default function reducerWebtoons(state = initialState, action) {
   switch (action.type) {
-    case `${types.GET_WEBTOONS}_PENDING`:
+      case `${types.GET_WEBTOONS}_PENDING`:
         return {
           ...state,
         };
@@ -22,6 +23,19 @@ export default function reducerWebtoons(state = initialState, action) {
         return {
           ...state,
           isError:true
+        }
+      case `${types.ADD_FAVORITE}_PENDING`:
+        return {
+          ...state,
+        };
+  
+      case `${types.ADD_FAVORITE}_FULFILLED`:
+        return {
+          ...state,
+        };
+      case `${types.ADD_FAVORITE}_REJECTED`:
+        return {
+          ...state,
         }
     default:
       return state;

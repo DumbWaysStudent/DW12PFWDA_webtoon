@@ -12,11 +12,6 @@ const data = [...Dummy.data]
 const {height,width} = Dimensions.get('window')
 
 class EditEpisode extends Component{
-  async componentDidMount(){
-    const token= await AsyncStorage.getItem('token')
-    if(!token) this.props.navigation.navigate('Account')
-  }
-
   handlerCamera() {
     const options = {
         title: 'Select Avatar',

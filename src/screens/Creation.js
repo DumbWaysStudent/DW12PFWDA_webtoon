@@ -1,51 +1,68 @@
 import React, {Component} from 'react'
-import {ImageBackground,Dimensions} from 'react-native'
-import {AsyncStorage,Text,Content,Container,List,ListItem,Left, Thumbnail, Body,Header,Right,Button,Fab}from 'native-base'
+import {ImageBackground,Dimensions,FlatList,View} from 'react-native'
+import {AsyncStorage,Text,ListItem,Left, Thumbnail,List, Body,Header,Right,Button,Fab}from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import {withNavigation} from 'react-navigation'
 import {Dummy} from '../components/Dummy'
 import HeaderShare from '../components/Headers/HeaderShare'
+import { connect } from 'react-redux'
 
 
 const data = [...Dummy.data]
 const {height,width} = Dimensions.get('window')
 
 class Creation extends Component{
-  async componentDidMount(){
-    const token= await AsyncStorage.getItem('token')
-    if(!token) this.props.navigation.navigate('Account')
-  }
-  render(){
+  renderItem = ({item,index}) =>{
     return(
-      <Container>
+          <ListItem key ={index} thumbnail onPress = {()=>{this.props.navigation.navigate('EditWebtoon',{
+            webtoonTitle : item.title})}}>
+              <Left>
+              <Thumbnail square source={{uri: item.image}}/>
+              </Left>   
+              <Body>
+                  <Text>{item.title}</Text>
+                  <Text note numberOfLines={1}>{item.caption}</Text>
+              </Body>
+              <Right></Right>
+          </ListItem>
+        )
+    }
+  render(){
+    const {webtoons}=this.props.webtoonsLocal
+    return(
+      <View>
         <ImageBackground source = {require('../assets/backgroundUser.jpg')} style = {{height,width}}>
         <HeaderShare title = {this.props.navigation.getParam('title')} navigation = {this.props.navigation}/>
-        <Content>
-        {data.map((item, index) => {
-              return (
-              <List key = {index}>
-                <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('EditWebtoon',{
-                  webtoonTitle : item.title})}}>
-                    <Left>
-                    <Thumbnail square source={{uri: item.url}}/>
-                    </Left>   
-                    <Body>
-                        <Text>{item.title}</Text>
-                        <Text note numberOfLines={1}>{item.caption}</Text>
-                    </Body>
-                    <Right></Right>
-                </ListItem>
+              <List>
+                <FlatList
+                data = {webtoons}
+                renderItem = {this.renderItem}
+                extraData = {this.state}
+                />
               </List>
-              )
-            })}
-        </Content>  
         </ImageBackground>
         <Fab onPress = {()=>this.props.navigation.navigate('CreateWebtoon')}
           style={{ backgroundColor: '#5067FF' }}
           position="bottomRight">            
           <Icon name="plus" />
         </Fab> 
-    </Container> 
+    </View> 
     )
   }
 }
-export default Creation
+
+const mapStateToProps = state => {
+  return {
+    webtoonsLocal: state.webtoons,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withNavigation(Creation));

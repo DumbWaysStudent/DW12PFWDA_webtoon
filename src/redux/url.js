@@ -1,0 +1,1 @@
+export const url = 'https://wthub.herokuapp.com/api/v1'

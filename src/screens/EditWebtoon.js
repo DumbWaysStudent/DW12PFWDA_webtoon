@@ -8,10 +8,6 @@ import HeaderEdit from '../components/Headers/HeaderEdit'
 const data = [...Dummy.data]
 
 class EditWebtoon extends Component{
-  async componentDidMount(){
-    const token= await AsyncStorage.getItem('token')
-    if(!token) this.props.navigation.navigate('Account')
-  }
   handlerCamera() {
     const options = {
         title: 'Select Avatar',

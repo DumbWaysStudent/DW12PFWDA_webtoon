@@ -23,8 +23,6 @@ class Profile extends Component{
     }
     async componentDidMount(){
         this.setState({isRefresh:1})
-        const token= await AsyncStorage.getItem('token')
-        if(!token) this.props.navigation.navigate('Account')
     }
     onSharePress = () => Share.share(shareOptions);
     render(){

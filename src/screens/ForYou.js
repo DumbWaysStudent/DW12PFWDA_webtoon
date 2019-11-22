@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {TouchableOpacity,View,Dimensions,ImageBackground,StyleSheet,AsyncStorage} from 'react-native'
 import {Text,Content,Container,List,ListItem,Left,Title, Thumbnail, Body,Right,Button}from 'native-base'
-import {NavigationEvents, withNavigation} from 'react-navigation'
+import {withNavigation} from 'react-navigation'
 import Slideshow from 'react-native-image-slider-show'
 import Carousel from 'react-native-anchor-carousel'
 import HeaderHome from '../components/Headers/HeaderHome'
@@ -20,25 +20,20 @@ class ForYou extends Component{
             starId:[-1],
         }
     }
-    componentWillMount() {
-        this.setState({
-            interval: setInterval(() => {
-            this.setState({
-                position: this.state.position === this.props.recentLocal.recent.length-1 ? 0 : this.state.position + 1
-            });
-            }, 3500)
-        });
-        clearInterval(this.state.interval);
-    }
     async componentDidMount(){
       const {navigation}=this.props
-      console.log(navigation)
       this.focusListener = navigation.addListener('didFocus', () => {
         this.setState(this.state)
       });
-      const token= await AsyncStorage.getItem('token')
-      if(!token) this.props.navigation.navigate('Account')
       this.getFav()
+      this.setState({
+        interval: setInterval(() => {
+        this.setState({
+            position: this.state.position === this.props.recentLocal.recent.length-1 ? 0 : this.state.position + 1
+        });
+        }, 3500)
+      });
+      clearInterval(this.state.interval);
     }
     componentWillUnmount() {
       // Remove the event listener
@@ -47,6 +42,7 @@ class ForYou extends Component{
   
     getFav(){
       const favorites=this.props.favoritesLocal.favorites
+      console.log(favorites)
       let fav = []
       if(favorites.length!=0){
       favorites.forEach(item => {
@@ -83,7 +79,7 @@ class ForYou extends Component{
       const starChecker=this.state.starId.filter(e=>e==webtoonId)
       let stars=[...this.state.starId]  
       if(starChecker==''){ 
-        const token= await AsyncStorage.getItem('token')
+        const token= this.props.loginLocal.login.token
         await this.props.handleAddFavorite({
             token:String('Bearer '+token),
             userId:this.props.loginLocal.login.id,
@@ -94,7 +90,7 @@ class ForYou extends Component{
         alert('Added to favorites')
       }
       else {
-        const token= await AsyncStorage.getItem('token')
+        const token= this.props.loginLocal.login.token
         await this.props.handleDeleteFavorite({
             token:String('Bearer '+token),
             userId:this.props.loginLocal.login.id,
@@ -103,7 +99,6 @@ class ForYou extends Component{
         const newArr=stars.filter(e=>e!==webtoonId)
         this.setState({starId:newArr})
         alert('Removed from Favorites')
-
       }
     }
     render(){
@@ -115,7 +110,6 @@ class ForYou extends Component{
               <ImageBackground source = {require('../assets/background.png')} style = {styles.loadingBackground}>
               <HeaderHome/>
               <Content>
-
                     <Slideshow 
                         dataSource = {recent}
                         position = {this.state.position}

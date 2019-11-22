@@ -19,11 +19,8 @@ class EditProfile extends Component {
         }
     }
 
-    async componentDidMount(){ 
-         
+    async componentDidMount(){        
         this.setState({newProfileName:this.props.navigation.getParam('name')})
-        const token= await AsyncStorage.getItem('token')
-        if(!token) this.props.navigation.navigate('Account')
     }
 
     async updateProfile(){

@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-import {View,Dimensions,ImageBackground,StyleSheet,Image} from 'react-native'
+import {View,Dimensions,ImageBackground,StyleSheet,Image,AsyncStorage} from 'react-native'
 import {Text}from 'native-base'
 import * as actionWebtoons from '../redux/actions/actionWebtoons'
+import * as actionAccount from '../redux/actions/actionAccount'
 import { connect } from 'react-redux'
 
 
@@ -9,16 +10,27 @@ import { connect } from 'react-redux'
 const {height, width } = Dimensions.get('window');
 class Loading extends Component{
     async componentDidMount(){
-    
-        await this.props.handleGetWebtoons()
-        await this.props.handleGetRecent()
-        await this.props.handleGetPopulars()
-        await this.props.handleGetEpisodes()
-        await this.props.handleGetFavorites({
-          id:this.props.loginLocal.login.id
+        await AsyncStorage.getItem('data',(err,res)=>{
+          const data = JSON.parse(res)
+          if(!data){
+            this.props.navigation.navigate('Account')
+          }
+          else{
+            console.log(data)
+            setTimeout(async () => {
+            await this.props.handleStoreData(data)
+            await this.props.handleGetWebtoons()
+            await this.props.handleGetRecent()
+            await this.props.handleGetPopulars()
+            await this.props.handleGetEpisodes()
+            await this.props.handleGetFavorites({
+              id:this.props.loginLocal.login.id
+            })
+            this.props.navigation.navigate('Home')
+            }, 0);
+            
+          }
         })
-        this.props.navigation.navigate('Home')
-
     }
     render(){
         return(
@@ -60,7 +72,7 @@ const styles = StyleSheet.create({
       handleGetPopulars: () => dispatch(actionWebtoons.handleGetPopulars()),
       handleGetEpisodes: () => dispatch(actionWebtoons.handleGetEpisodes()),
       handleGetFavorites: (params) => dispatch(actionWebtoons.handleGetFavorites(params)),
-      
+      handleStoreData: (params) => dispatch(actionAccount.handleStoreData(params)),
     }
   }
   

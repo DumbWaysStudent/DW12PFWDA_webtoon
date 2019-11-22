@@ -6,7 +6,7 @@ import RootNavigator from '../../navigators/RootNavigator'
 import reducerWebtoons from '../reducers/reducerWebtoons';
 import reducerRecent from '../reducers/reducerRecent';
 import reducerPopulars from './reducerPopulars';
-import reducerLogin from './reducerLogin';
+import reducerAccount from './reducerAccount';
 import reducerRegister from './reducerRegister';
 import reducerEpisodes from './reducerEpisodes';
 import reducerDetailEpisodes from './reducerDetailEpisodes';
@@ -19,7 +19,7 @@ import reducerDeleteFavorite from './reducerDeleteFavorite';
 const reducerRouter = createNavigationReducer(RootNavigator);
 
 const appReducer = combineReducers({
-  login: reducerLogin,
+  login: reducerAccount,
   register: reducerRegister,
   router: reducerRouter,
   webtoons: reducerWebtoons,

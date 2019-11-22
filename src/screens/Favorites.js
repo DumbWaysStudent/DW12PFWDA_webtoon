@@ -24,8 +24,6 @@ class Favorites extends Component{
   }
 
    async componentDidMount(){  
-    // const token= await AsyncStorage.getItem('token')
-    // if(!token) this.props.navigation.navigate('Account')
     const { navigation } = this.props;
     this.focusListener = navigation.addListener('didFocus', () => {
         this.props.handleGetFavorites({
@@ -52,11 +50,51 @@ class Favorites extends Component{
     // Remove the event listener
     this.focusListener.remove();
   }
-
-  render(){
-    console.log(this.props)
+  renderItem = ({item,index}) =>{
+    return(
+        <ListItem key = {index} thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{id:item.id, title : item.webtoonData.title, banner : item.webtoonData.image})}}>
+            <Left>
+            <Thumbnail square source={{uri: item.webtoonData.image}}/>
+            </Left>   
+            <Body>
+                <Text>{item.webtoonData.title}</Text>
+                {/* <Text note numberOfLines={1}>{item.webtoonData.title}</Text> */}
+            </Body>
+            <Right style={{flexDirection:'row'}}>
+                <Button danger transparent onPress={()=>this.removeFavorite(item.id_webtoon)}>
+                  <Text>Delete</Text>
+                </Button>
+                <Button transparent>
+                  <Text>View</Text>
+                </Button>
+              </Right>
+        </ListItem>
+        )
+    }
+  favChecker(){
     const {favorites} = this.props.favoritesLocal
-    console.log(favorites)
+    if(favorites.length>0){
+      return(
+        <List>
+          <FlatList
+          data = {favorites}
+          renderItem = {this.renderItem}
+          extraData = {this.state}
+          />
+        </List>
+      )
+    }
+    else {
+      return(
+        <View style={{alignItems:'center',justifyContent:'center',marginTop:height*0.1}}>
+          <Image source={require('../assets/mad.gif')}/>
+          <Text>No Favorites Yet</Text>
+        </View>
+      )
+    }
+  }
+  render(){
+    const {favorites} = this.props.favoritesLocal
     return(
       <Container>
       <ImageBackground source = {require('../assets/background.png')} style = {{height,width}}>
@@ -68,35 +106,7 @@ class Favorites extends Component{
                 <Icon style={{paddingVertical: 10,paddingRight : 10}} name = 'pencil' size={25}></Icon>
               </TouchableOpacity>
           </View>
-          {favorites.length >0 ? favorites.map((item,index)=>{
-            return(
-              <List key = {index}>
-                <ListItem thumbnail onPress = {()=>{this.props.navigation.navigate('Details',{id:item.id, title : item.webtoonData.title, banner : item.webtoonData.image})}}>
-                    <Left>
-                    <Thumbnail square source={{uri: item.webtoonData.image}}/>
-                    </Left>   
-                    <Body>
-                        <Text>{item.webtoonData.title}</Text>
-                        {/* <Text note numberOfLines={1}>{item.webtoonData.title}</Text> */}
-                    </Body>
-                    <Right style={{flexDirection:'row'}}>
-                        <Button danger transparent onPress={()=>this.removeFavorite(item.id_webtoon)}>
-                          <Text>Delete</Text>
-                        </Button>
-                        <Button transparent>
-                          <Text>View</Text>
-                        </Button>
-                      </Right>
-                </ListItem>
-              </List>
-            )
-          }) 
-          : 
-          <View style={{alignItems:'center',justifyContent:'center',marginTop:height*0.1}}>
-          <Image source={require('../assets/mad.gif')}/>
-          <Text>No Favorites Yet</Text>
-          </View>
-        }              
+          {this.favChecker()}         
       </Content>
       </ImageBackground>
       
